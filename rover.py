@@ -228,9 +228,10 @@ class rover:
 
 			self.__motors = motors()
 
-		except:
+		except Exception as e:
 
 			print("Motors not online ... Check connection")
+			print(e)
 
 		if (camera):
 
@@ -268,9 +269,10 @@ class rover:
 
 				self.__servo = Servo(self.__servoPin, min_pulse_width = self.__minPW, max_pulse_width = self.__maxPW)
 
-			except:
+			except Exception as e:
 
 				print("Servo not online ... Check connection")
+				print(e)
 
 		if (ultraSonic):
 
@@ -280,9 +282,10 @@ class rover:
 
 				self.__ultra_sonic = DistanceSensor(self.__echoPin, self.__triggerPin)
 
-			except:
+			except Exception as e:
 
 				print("Ultrasonic not online ... Check connection")
+				print(e)
 
 	# TODO: Needs implimentation
 	def moveDistance (self, distance, cm = False):
