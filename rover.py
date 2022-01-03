@@ -348,7 +348,7 @@ class rover:
 
 		for i in range(numPulses):
 
-			totalDistance += (self.__ultra_sonic.distance * 100)
+			totalDistance += (self.__ultra_sonic.distance)
 
 			sleep(pulse_wait)
 
@@ -356,7 +356,7 @@ class rover:
 
 	def getDistance (self):
 
-		return (self.__ultra_sonic.distance * 100)
+		return (self.__ultra_sonic.distance)
 
 	def getMag (self):
 
