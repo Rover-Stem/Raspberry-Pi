@@ -84,7 +84,7 @@ class server ():
 
 				if (str(msg, 'utf-8') == "stop"):
 
-					conn.shutdown(conn.SHUT_RDWR)
+					#conn.shutdown(conn.SHUT_RDWR)
 
 					conn.close()
 

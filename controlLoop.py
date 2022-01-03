@@ -171,3 +171,5 @@ while True:
 		elif(cmd == "stop"):
 
 			break
+
+print("stopped")
