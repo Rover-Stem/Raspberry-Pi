@@ -281,6 +281,7 @@ class rover:
 			try:
 
 				self.__ultra_sonic = DistanceSensor(self.__echoPin, self.__triggerPin)
+				self.__ultra_sonic.distance
 
 			except Exception as e:
 
