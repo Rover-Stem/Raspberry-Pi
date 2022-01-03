@@ -218,9 +218,7 @@ class rover:
 		self.__minPW = (1.0 - self.__correction) / 1000
 		self.__maxPW = (2.0 + self.__correction + self.__servo_correction) / 1000
 
-		self.__echoPin = echoPin
 		self.__servoPin = servoPin
-		self.__triggerPin = triggerPin
 
 		self.__defaultThrottle = defaultThrottle
 
