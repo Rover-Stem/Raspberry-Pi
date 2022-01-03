@@ -309,6 +309,8 @@ class rover:
 
 				self.__usError = True
 
+		print("Sending Update")
+
 		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded = magAndAccel}:{self.__maError},S:{self.__servoNeeded = servo}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
 
 	# TODO: Needs implimentation
