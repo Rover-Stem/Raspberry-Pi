@@ -296,7 +296,7 @@ class rover:
 
 			self.__servo.value = (servoAngle - (self.__servo_correction / 2))
 
-		elif (new_servo_angle > 0):
+		elif (servoAngle > 0):
 
 			self.__servo.value = (servoAngle + (self.__servo_correction / 2))
 
