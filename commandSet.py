@@ -11,6 +11,8 @@ def move (cmd, rover):
 
 		time = 1
 
+		storage.messagesOut.put("S,Time was set to 1")
+
 	try:
 
 		ratio = float(cmd[4])
