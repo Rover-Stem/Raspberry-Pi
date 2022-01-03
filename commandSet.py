@@ -103,9 +103,10 @@ def moveServo (cmd, rover):
 
 		return
 
-	except:
+	except Exception as e:
 
 		storage.messagesOut.put("E,Angle Must Be Provided")
+		storage.messagesOut.put(f"E,{e}")
 
 		return
 
