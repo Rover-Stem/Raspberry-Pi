@@ -62,6 +62,8 @@ class server ():
 
 				storage.messagesIn.put(str(data, 'utf-8'))
 
+				print(str(data, 'utf-8'))
+
 				if (str(data, 'utf-8') == "stop"):
 
 					storage.messagesOut.put("stop")

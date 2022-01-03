@@ -1,10 +1,10 @@
-from rover import rover
 import queue
 import storage
 import threading
 import commandSet
 
 from time import sleep
+from rover import rover
 from server import server
 
 def switch ():
