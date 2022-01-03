@@ -13,8 +13,6 @@ def move (cmd, rover):
 
 		time = 1
 
-		storage.messagesOut.put("S,Time was set to 1")
-
 	try:
 
 		ratio = float(cmd[4])
@@ -177,7 +175,7 @@ def redoMotors (cmd, rover):
 
 	rover.redoMotors()
 
-	storage.messagesOut.put(f"ST,Motors Reset")
+	storage.messagesOut.put(f"S,Motors Reset")
 
 	return
 
@@ -185,7 +183,7 @@ def redoCamera (cmd, rover):
 
 	rover.redoCamera()
 
-	storage.messagesOut.put(f"ST,Camera Reset")
+	storage.messagesOut.put(f"S,Camera Reset")
 
 	return
 
@@ -193,7 +191,7 @@ def redoMagAndAccel (cmd, rover):
 
 	rover.redoMagAndAccel()
 
-	storage.messagesOut.put(f"ST,Magnetometer And Accelerometer Reset")
+	storage.messagesOut.put(f"S,Magnetometer And Accelerometer Reset")
 
 	return
 
@@ -201,7 +199,7 @@ def redoServo (cmd, rover):
 
 	rover.redoServo()
 
-	storage.messagesOut.put(f"ST,Servo Reset")
+	storage.messagesOut.put(f"S,Servo Reset")
 
 	return
 
@@ -209,7 +207,7 @@ def redoUltraSonic (cmd, rover):
 
 	rover.redoUltraSonic()
 
-	storage.messagesOut.put(f"ST,Ultra Sonic Sensor Reset")
+	storage.messagesOut.put(f"S,Ultra Sonic Sensor Reset")
 
 	return
 
