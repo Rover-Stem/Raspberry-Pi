@@ -443,13 +443,13 @@ class rover:
 
 		try:
 
-			self.__usNeeded = True
+			self.__ultra_sonic = adafruit_hcsr04.HCSR04(trigger_pin = board.D5, echo_pin = board.D6)
+			self.__ultra_sonic.distance
 
-			self.__ultra_sonic = DistanceSensor(self.__echoPin, self.__triggerPin)
-
-		except:
+		except Exception as e:
 
 			print("Ultrasonic not online ... Check connection")
+			print(e)
 
 			self.__usError = True
 
