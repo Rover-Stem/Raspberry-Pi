@@ -130,7 +130,7 @@ def getAverageDistance (cmd, rover):
 
 			avrDistance = rover.getAvrDistance(pulse_wait, numPulses)
 
-			storage.messagesOut.put(f"S,DA,{avrDistance}")
+			storage.messagesOut.put(f"S,D,{avrDistance}")
 
 			return
 
@@ -138,7 +138,7 @@ def getAverageDistance (cmd, rover):
 
 			avrDistance = rover.getAvrDistance(pulse_wait)
 
-			storage.messagesOut.put(f"S,DA,{avrDistance}")
+			storage.messagesOut.put(f"S,D,{avrDistance}")
 
 			return
 
@@ -146,7 +146,7 @@ def getAverageDistance (cmd, rover):
 
 		avrDistance = rover.getAvrDistance()
 
-		storage.messagesOut.put(f"S,DA,{avrDistance}")
+		storage.messagesOut.put(f"S,D,{avrDistance}")
 
 		return
 
