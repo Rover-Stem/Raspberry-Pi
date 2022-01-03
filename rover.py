@@ -286,9 +286,9 @@ class rover:
 
 		if (throttle == None):
 
-			speed = self.__defaultThrottle
+			throttle = self.__defaultThrottle
 
-		self.__motors.move(movementOption, ratio = percent, throttle = speed)
+		self.__motors.move(movementOption, ratio = percent, speed = throttle)
 
 	def moveServo (self, servoAngle):
 
