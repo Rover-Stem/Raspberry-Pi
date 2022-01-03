@@ -1,12 +1,9 @@
 import board
 import queue
 import storage
-import adafruit_lsm303_accel
-import adafruit_lsm303dlh_mag
 
 from time import sleep
 from PCA9685 import PCA9685
-from gpiozero import DistanceSensor, Servo
 
 class motors:
 
@@ -239,7 +236,8 @@ class rover:
 
 			try:
 
-				self.__camera = PiCamera()
+				import picamera
+				self.__camera = picamera.PiCamera()
 
 			except Exception as e:
 
@@ -249,6 +247,9 @@ class rover:
 		if (magAndAccel):
 
 			try:
+
+				import adafruit_lsm303_accel
+				import adafruit_lsm303dlh_mag
 
 				self.__i2c = board.I2C()
 				self.__mag = adafruit_lsm303dlh_mag.LSM303DLH_Mag(self.__i2c)
@@ -261,6 +262,8 @@ class rover:
 
 		if (servo):
 
+			from gpiozero import Servo
+
 			try:
 
 				self.__servo = Servo(self.__servoPin, min_pulse_width = self.__minPW, max_pulse_width = self.__maxPW)
@@ -270,6 +273,8 @@ class rover:
 				print("Servo not online ... Check connection")
 
 		if (ultraSonic):
+
+			from gpiozero import DistanceSensor
 
 			try:
 
