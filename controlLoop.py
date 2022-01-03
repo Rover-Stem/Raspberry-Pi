@@ -162,6 +162,8 @@ while True:
 
 			switch(cmd)
 
+			storage.messagesOut.put("F")
+
 		elif (cmd[0] == "F"):
 
 			parseCmdSet()
