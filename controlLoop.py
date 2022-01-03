@@ -167,3 +167,7 @@ while True:
 		elif (cmd[0] == "F"):
 
 			parseCmdSet()
+
+		elif(cmd == "stop"):
+
+			break
