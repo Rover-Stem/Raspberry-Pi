@@ -203,7 +203,7 @@ class motors:
 
 class rover:
 
-	def __init__ (self, camera = True, magAndAccel = True, servo = True, ultraSonic = True, defaultThrottle = 100, echoPin = 24, triggerPin = 23, servoPin = 22):
+	def __init__ (self, camera = True, magAndAccel = True, servo = True, ultraSonic = True, defaultThrottle = 100, servoPin = 22):
 
 		self.__i2c = None
 		self.__mag = None
@@ -295,11 +295,11 @@ class rover:
 
 		if (self.__usNeeded):
 
-			from gpiozero import DistanceSensor
+			import adafruit_hcsr04
 
 			try:
 
-				self.__ultra_sonic = DistanceSensor(self.__echoPin, self.__triggerPin)
+				self.__ultra_sonic = adafruit_hcsr04.HCSR04(trigger_pin = board.D5, echo_pin = board.D6)
 				self.__ultra_sonic.distance
 
 			except Exception as e:
