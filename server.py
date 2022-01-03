@@ -80,7 +80,7 @@ class server ():
 
 				conn.send(msg)
 
-				print(f"Sent: {}")
+				print(f"Sent: {msg}")
 
 				if (str(msg, 'utf-8') == "stop"):
 
