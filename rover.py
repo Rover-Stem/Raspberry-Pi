@@ -260,7 +260,7 @@ class rover:
 
 				self.__cameraError = True
 
-		if (self.__maNeeded = magAndAccel):
+		if (self.__maNeeded):
 
 			try:
 
@@ -278,7 +278,7 @@ class rover:
 
 				self.__maError = True
 
-		if (self.__servoNeeded = servo):
+		if (self.__servoNeeded):
 
 			from gpiozero import Servo
 
