@@ -80,8 +80,6 @@ class server ():
 
 				conn.send(msg)
 
-				print(f"Sent: {msg}")
-
 				if (str(msg, 'utf-8') == "stop"):
 
 					#conn.shutdown(conn.SHUT_RDWR)
