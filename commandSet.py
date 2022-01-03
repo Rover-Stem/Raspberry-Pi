@@ -1,6 +1,8 @@
 import queue
 import storage
 
+from time import sleep
+
 def move (cmd, rover):
 
 	try:
