@@ -7,7 +7,7 @@ from time import sleep
 from rover import rover
 from server import server
 
-def switch ():
+def switch (cmd):
 
 	if (cmd[1] in presets):
 
