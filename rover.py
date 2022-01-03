@@ -241,9 +241,10 @@ class rover:
 
 				self.__camera = PiCamera()
 
-			except:
+			except Exception as e:
 
 				print("Camera not online ... Check connection")
+				print(e)
 
 		if (magAndAccel):
 
@@ -253,9 +254,10 @@ class rover:
 				self.__mag = adafruit_lsm303dlh_mag.LSM303DLH_Mag(self.__i2c)
 				self.__accel = adafruit_lsm303_accel.LSM303_Accel(self.__i2c)
 
-			except:
+			except Exception as e:
 
 				print("Magnetometer and accelerometer not online ... Check connection")
+				print(e)
 
 		if (servo):
 
