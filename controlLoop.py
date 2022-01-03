@@ -156,7 +156,15 @@ while True:
 
 	if not(storage.messagesIn.empty()):
 
-		cmd = storage.messagesIn.get().split(",")
+		cmd = storage.messagesIn.get()
+
+		if (cmd == "stop"):
+
+			break
+
+		else:
+
+			cmd = cmd.split(",")
 
 		if (cmd[0] == "R"):
 
@@ -167,9 +175,5 @@ while True:
 		elif (cmd[0] == "F"):
 
 			parseCmdSet()
-
-		elif(cmd == "stop"):
-
-			break
 
 print("stopped")
