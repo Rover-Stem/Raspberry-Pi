@@ -224,6 +224,17 @@ class rover:
 
 		self.__defaultThrottle = defaultThrottle
 
+		self.__cameraNeeded = camera
+		self.__maNeeded = magAndAccel
+		self.__servoNeeded = servo
+		self.__usNeeded = ultraSonic
+
+		self.__motorError = False
+		self.__cameraError = False
+		self.__maError = False
+		self.__servoError = False
+		self.__usError = False
+
 		try:
 
 			self.__motors = motors()
@@ -233,7 +244,9 @@ class rover:
 			print("Motors not online ... Check connection")
 			print(e)
 
-		if (camera):
+			self.__motorError = True
+
+		if (self.__cameraNeeded):
 
 			try:
 
@@ -245,7 +258,9 @@ class rover:
 				print("Camera not online ... Check connection")
 				print(e)
 
-		if (magAndAccel):
+				self.__cameraError = True
+
+		if (self.__maNeeded = magAndAccel):
 
 			try:
 
@@ -261,7 +276,9 @@ class rover:
 				print("Magnetometer and accelerometer not online ... Check connection")
 				print(e)
 
-		if (servo):
+				self.__maError = True
+
+		if (self.__servoNeeded = servo):
 
 			from gpiozero import Servo
 
@@ -274,7 +291,9 @@ class rover:
 				print("Servo not online ... Check connection")
 				print(e)
 
-		if (ultraSonic):
+				self.__servoError = True
+
+		if (self.__usNeeded):
 
 			from gpiozero import DistanceSensor
 
@@ -287,6 +306,10 @@ class rover:
 
 				print("Ultrasonic not online ... Check connection")
 				print(e)
+
+				self.__usError = True
+
+		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded = magAndAccel}:{self.__maError},S:{self.__servoNeeded = servo}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
 
 	# TODO: Needs implimentation
 	def moveDistance (self, distance, cm = False):
@@ -359,9 +382,15 @@ class rover:
 
 			print("Motors not online ... Check connection")
 
+			self.__motorError = True
+
+		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded = magAndAccel}:{self.__maError},S:{self.__servoNeeded = servo}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+
 	def redoCamera (self):
 
 		try:
+
+			self.__cameraNeeded = True
 
 			self.__camera = PiCamera()
 
@@ -369,9 +398,16 @@ class rover:
 
 			print("Camera not online ... Check connection")
 
+			self.__cameraError = True
+
+		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded = magAndAccel}:{self.__maError},S:{self.__servoNeeded = servo}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+
+
 	def redoMagAndAccel (self):
 
 		try:
+
+			self.__maNeeded = True
 
 			self.__i2c = board.I2C()
 			self.__mag = adafruit_lsm303dlh_mag.LSM303DLH_Mag(self.__i2c)
@@ -381,9 +417,16 @@ class rover:
 
 			print("Magnetometer and accelerometer not online ... Check connection")
 
+			self.__maError = True
+
+		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded = magAndAccel}:{self.__maError},S:{self.__servoNeeded = servo}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+
+
 	def redoServo (self):
 
 		try:
+
+			self.__servoNeeded = True
 
 			self.__servo = Servo(self.__servoPin, min_pulse_width = self.__minPW, max_pulse_width = self.__maxPW)
 
@@ -391,12 +434,23 @@ class rover:
 
 			print("Servo not online ... Check connection")
 
+			self.__servoError = True
+
+		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded = magAndAccel}:{self.__maError},S:{self.__servoNeeded = servo}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+
+
 	def redoUltraSonic (self):
 
 		try:
+
+			self.__usNeeded = True
 
 			self.__ultra_sonic = DistanceSensor(self.__echoPin, self.__triggerPin)
 
 		except:
 
 			print("Ultrasonic not online ... Check connection")
+
+			self.__usError = True
+
+		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded = magAndAccel}:{self.__maError},S:{self.__servoNeeded = servo}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
