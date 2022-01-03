@@ -175,5 +175,3 @@ while True:
 		elif (cmd[0] == "F"):
 
 			parseCmdSet()
-
-print("stopped")
