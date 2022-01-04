@@ -320,23 +320,19 @@ class rover:
 
 	def measureDistance (self):
 
-		GPIO.output(self.__triggerPin, True)
+		GPIO.output(self.__triggerPin, GPIO.HIGH)
 
 		sleep(0.00001)
 
-		GPIO.output(self.__triggerPin, False)
+		GPIO.output(self.__triggerPin, GPIO.LOW)
 
 		while (GPIO.input(self.__echoPin) == 0):
 
   			pulse_start = time()
 
-		print(pulse_start)
-
 		while (GPIO.input(self.__echoPin) == 1):
 
   			pulse_end = time()
-
-		print(pulse_end)
 
 		pulse_duration = pulse_end - pulse_start
 
