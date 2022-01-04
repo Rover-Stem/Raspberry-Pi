@@ -4,7 +4,7 @@ import storage
 
 import RPi.GPIO as GPIO
 
-from time import sleep, time
+from time import sleep, time, strftime
 from PCA9685 import PCA9685
 
 class motors:
@@ -330,15 +330,21 @@ class rover:
 
   			pulse_start = time()
 
+		print(pulse_start)
+
 		while (GPIO.input(self.__echoPin) == 1):
 
   			pulse_end = time()
+
+		print(pulse_end)
 
 		pulse_duration = pulse_end - pulse_start
 
 		distance = pulse_duration * 17150
 
 		distance = round(distance, 2)
+
+		print(distance)
 
 		return distance
 
@@ -387,6 +393,8 @@ class rover:
 
 	def getDistance (self):
 
+		print("Measuring")
+
 		return self.measureDistance()
 
 	def getMag (self):
@@ -398,7 +406,7 @@ class rover:
 		self.__camera.start_preview()
 		sleep(2)
 
-		date_string = time.strftime("%Y-%m-%d-%H:%M")
+		date_string = strftime("%Y-%m-%d-%H:%M")
 
 		self.__camera.capture(f"/home/pi/Images/{date_string}.png")
 		self.__camera.stop_preview()
