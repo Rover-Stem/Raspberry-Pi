@@ -2,6 +2,8 @@ import board
 import queue
 import storage
 
+import RPi.GPIO as GPIO
+
 from time import sleep, time
 from PCA9685 import PCA9685
 
@@ -294,8 +296,6 @@ class rover:
 				self.__servoError = True
 
 		if (self.__usNeeded):
-
-			import RPi.GPIO as GPIO
 
 			try:
 
