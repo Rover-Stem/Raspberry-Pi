@@ -2,7 +2,7 @@ import board
 import queue
 import storage
 
-from time import sleep
+from time import sleep, time
 from PCA9685 import PCA9685
 
 class motors:
@@ -203,7 +203,7 @@ class motors:
 
 class rover:
 
-	def __init__ (self, camera = True, magAndAccel = True, servo = True, ultraSonic = True, defaultThrottle = 100, servoPin = 22):
+	def __init__ (self, camera = True, magAndAccel = True, servo = True, ultraSonic = True, defaultThrottle = 100, servoPin = 22, echoPin = 23, triggerPin = 24):
 
 		self.__i2c = None
 		self.__mag = None
@@ -218,7 +218,9 @@ class rover:
 		self.__minPW = (1.0 - self.__correction) / 1000
 		self.__maxPW = (2.0 + self.__correction + self.__servo_correction) / 1000
 
+		self.__echoPin = echoPin
 		self.__servoPin = servoPin
+		self.__triggerPin = triggerPin
 
 		self.__defaultThrottle = defaultThrottle
 
@@ -293,12 +295,17 @@ class rover:
 
 		if (self.__usNeeded):
 
-			import adafruit_hcsr04
+			import RPi.GPIO as GPIO
 
 			try:
 
-				self.__ultra_sonic = adafruit_hcsr04.HCSR04(trigger_pin = board.D5, echo_pin = board.D6)
-				self.__ultra_sonic.distance
+				GPIO.setmode(GPIO.BCM)
+				GPIO.setup(self.__echoPin, GPIO.IN)
+				GPIO.setup(self.__triggerPin, GPIO.OUT)
+
+				GPIO.output(self.__triggerPin, False)
+
+				sleep(2)
 
 			except Exception as e:
 
@@ -310,6 +317,30 @@ class rover:
 		print("Sending Update")
 
 		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+
+	def measureDistance (self):
+
+		GPIO.output(self.__triggerPin, True)
+
+		time.sleep(0.00001)
+
+		GPIO.output(self.__triggerPin, False)
+
+		while (GPIO.input(self.__echoPin) == 0):
+
+  			pulse_start = time()
+
+		while (GPIO.input(self.__echoPin) == 1):
+
+  			pulse_end = time()
+
+		pulse_duration = pulse_end - pulse_start
+
+		distance = pulse_duration * 17150
+
+		distance = round(distance, 2)
+
+		return distance
 
 	# TODO: Needs implimentation
 	def moveDistance (self, distance, cm = False):
@@ -348,7 +379,7 @@ class rover:
 
 		for i in range(numPulses):
 
-			totalDistance += (self.__ultra_sonic.distance)
+			totalDistance += self.measureDistance()
 
 			sleep(pulse_wait)
 
@@ -356,7 +387,7 @@ class rover:
 
 	def getDistance (self):
 
-		return (self.__ultra_sonic.distance)
+		return self.measureDistance()
 
 	def getMag (self):
 
