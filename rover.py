@@ -322,7 +322,7 @@ class rover:
 
 		GPIO.output(self.__triggerPin, True)
 
-		time.sleep(0.00001)
+		sleep(0.00001)
 
 		GPIO.output(self.__triggerPin, False)
 
@@ -396,7 +396,7 @@ class rover:
 	def takePic (self):
 
 		self.__camera.start_preview()
-		time.sleep(2)
+		sleep(2)
 
 		date_string = time.strftime("%Y-%m-%d-%H:%M")
 
