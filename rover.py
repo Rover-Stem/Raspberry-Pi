@@ -141,14 +141,14 @@ class motors:
 
 		elif (movementOption == "r"):
 
-			speed = 0.5 * speed
+			speed = speed
 
 			self.forwards(["B", "C"], speed)
 			self.backwards(["A", "D"], speed)
 
 		elif (movementOption == "l"):
 
-			speed = 0.5 * speed
+			speed = speed
 
 			self.forwards(["A", "D"], speed)
 			self.backwards(["B", "C"], speed)
@@ -198,26 +198,6 @@ class motors:
 
 			self.forwards(["A", "C"], speed)
 			self.backwards(["B", "D"], speed)
-
-		elif (movementOption == "a"):
-
-			self.forwards(["A"], speed)
-			print("A")
-
-		elif (movementOption == "b"):
-
-			self.forwards(["B"], speed)
-			print("B")
-
-		elif (movementOption == "c"):
-
-			self.forwards(["C"], speed)
-			print("C")
-
-		elif (movementOption == "d"):
-
-			self.forwards(["D"], speed)
-			print("D")
 
 		elif (movementOption == "s"):
 
