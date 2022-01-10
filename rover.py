@@ -199,19 +199,19 @@ class motors:
 			self.forwards(["A", "C"], speed)
 			self.backwards(["B", "D"], speed)
 
-		elif (movementOption == "A"):
+		elif (movementOption == "a"):
 
 			self.forwards(["A"], speed)
 
-		elif (movementOption == "B"):
+		elif (movementOption == "b"):
 
 			self.forwards(["B"], speed)
 
-		elif (movementOption == "C"):
+		elif (movementOption == "c"):
 
 			self.forwards(["C"], speed)
 
-		elif (movementOption == "D"):
+		elif (movementOption == "d"):
 
 			self.forwards(["D"], speed)
 
