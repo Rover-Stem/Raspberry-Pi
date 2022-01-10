@@ -202,18 +202,22 @@ class motors:
 		elif (movementOption == "a"):
 
 			self.forwards(["A"], speed)
+			print("A")
 
 		elif (movementOption == "b"):
 
 			self.forwards(["B"], speed)
+			print("B")
 
 		elif (movementOption == "c"):
 
 			self.forwards(["C"], speed)
+			print("C")
 
 		elif (movementOption == "d"):
 
 			self.forwards(["D"], speed)
+			print("D")
 
 		elif (movementOption == "s"):
 
