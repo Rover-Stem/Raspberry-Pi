@@ -199,6 +199,22 @@ class motors:
 			self.forwards(["A", "C"], speed)
 			self.backwards(["B", "D"], speed)
 
+		elif (movementOption == "A"):
+
+			self.forwards(["A"], speed)
+
+		elif (movementOption == "B"):
+
+			self.forwards(["B"], speed)
+
+		elif (movementOption == "C"):
+
+			self.forwards(["C"], speed)
+
+		elif (movementOption == "D"):
+
+			self.forwards(["D"], speed)
+
 		elif (movementOption == "s"):
 
 			self.stopAll()
