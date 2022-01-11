@@ -2,6 +2,7 @@ import queue
 import storage
 import threading
 import commandSet
+import subprocess
 
 from time import sleep
 from rover import rover
@@ -141,6 +142,23 @@ def parseCmdSet ():
 						switch(cmd)
 
 				storage.messagesOut.put("F")
+
+wifi = ""
+
+while True:
+
+	try:
+
+		output = subprocess.check_output(["sudo", "iwgetid"])
+		wifi = output.split('"')[1]
+
+		if not((wifi == "") or (wifi == " ")):
+
+			break
+
+	except:
+
+		continue
 
 server = server()
 

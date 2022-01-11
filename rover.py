@@ -243,8 +243,8 @@ class rover:
 
 		except Exception as e:
 
-			print("Motors not online ... Check connection")
-			print(e)
+			storage.messagesOut.put("Motors not online ... Check connection")
+
 
 			self.__motorError = True
 
@@ -257,8 +257,8 @@ class rover:
 
 			except Exception as e:
 
-				print("Camera not online ... Check connection")
-				print(e)
+				storage.messagesOut.put("Camera not online ... Check connection")
+
 
 				self.__cameraError = True
 
@@ -275,8 +275,8 @@ class rover:
 
 			except Exception as e:
 
-				print("Magnetometer and accelerometer not online ... Check connection")
-				print(e)
+				storage.messagesOut.put("Magnetometer and accelerometer not online ... Check connection")
+
 
 				self.__maError = True
 
@@ -290,8 +290,8 @@ class rover:
 
 			except Exception as e:
 
-				print("Servo not online ... Check connection")
-				print(e)
+				storage.messagesOut.put("Servo not online ... Check connection")
+
 
 				self.__servoError = True
 
@@ -309,12 +309,10 @@ class rover:
 
 			except Exception as e:
 
-				print("Ultrasonic not online ... Check connection")
-				print(e)
+				storage.messagesOut.put("Ultrasonic not online ... Check connection")
+
 
 				self.__usError = True
-
-		print("Sending Update")
 
 		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
 
@@ -338,9 +336,7 @@ class rover:
 
 		distance = pulse_duration * 17150
 
-		distance = round(distance, 2)
-
-		print(distance)
+		distance = round(distance, 2
 
 		return distance
 
@@ -389,8 +385,6 @@ class rover:
 
 	def getDistance (self):
 
-		print("Measuring")
-
 		return self.measureDistance()
 
 	def getMag (self):
@@ -404,7 +398,7 @@ class rover:
 
 		date_string = strftime("%Y-%m-%d-%H:%M")
 
-		self.__camera.capture(f"/home/pi/Images/{date_string}.png")
+		self.__camera.capture(f"/home/pi/Raspberry-Pi/images/{date_string}.png")
 		self.__camera.stop_preview()
 
 	def redoMotors (self):
@@ -415,7 +409,7 @@ class rover:
 
 		except:
 
-			print("Motors not online ... Check connection")
+			storage.messagesOut.put("Motors not online ... Check connection")
 
 			self.__motorError = True
 
@@ -431,7 +425,7 @@ class rover:
 
 		except:
 
-			print("Camera not online ... Check connection")
+			storage.messagesOut.put("Camera not online ... Check connection")
 
 			self.__cameraError = True
 
@@ -449,7 +443,7 @@ class rover:
 
 		except:
 
-			print("Magnetometer and accelerometer not online ... Check connection")
+			storage.messagesOut.put("Magnetometer and accelerometer not online ... Check connection")
 
 			self.__maError = True
 
@@ -465,7 +459,7 @@ class rover:
 
 		except:
 
-			print("Servo not online ... Check connection")
+			storage.messagesOut.put("Servo not online ... Check connection")
 
 			self.__servoError = True
 
@@ -481,8 +475,8 @@ class rover:
 
 		except Exception as e:
 
-			print("Ultrasonic not online ... Check connection")
-			print(e)
+			storage.messagesOut.put("Ultrasonic not online ... Check connection")
+
 
 			self.__usError = True
 
