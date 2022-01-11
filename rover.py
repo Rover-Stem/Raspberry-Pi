@@ -401,6 +401,9 @@ class rover:
 		self.__camera.capture(f"/home/pi/Raspberry-Pi/images/{date_string}.png")
 		self.__camera.stop_preview()
 
+		storage.messagesOut.put("file")
+		storage.messagesOut.put(f"/home/pi/Raspberry-Pi/images/{date_string}.png")
+
 	def redoMotors (self):
 
 		try:
