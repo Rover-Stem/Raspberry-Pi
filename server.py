@@ -118,8 +118,8 @@ class server ():
 
 							bytes_read = f.read(__packetSize)
 
-					        if not bytes_read:
+							if not bytes_read:
 
-					            break
+								break
 
-					        conn.sendall(bytes_read)
+							conn.sendall(bytes_read)
