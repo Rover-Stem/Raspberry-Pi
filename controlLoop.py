@@ -70,7 +70,7 @@ def switch (cmd):
 
 	else:
 
-		storage.messagesOut.put("E,Not Valid Option or System Not Online")
+		storage.messagesOut.put("E,Not Valid Option or System Not Online or System Not Active")
 
 def parseCmd (cmd):
 
