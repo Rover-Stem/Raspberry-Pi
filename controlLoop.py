@@ -12,35 +12,35 @@ def switch (cmd):
 
 	if (cmd[1] in presets):
 
-		if (cmd[1] == presets[0]):
+		if ((cmd[1] == presets[0]) and not(storage.status[0][2])):
 
 			commandSet.move(cmd, rover)
 
-		elif (cmd[1] == presets[1]):
+		elif ((cmd[1] == presets[1]) and not(storage.status[0][2])):
 
 			commandSet.moveDistance(cmd, rover)
 
-		elif (cmd[1] == presets[2]):
+		elif ((cmd[1] == presets[2]) and not(storage.status[3][2])):
 
 			commandSet.moveServo(cmd, rover)
 
-		elif (cmd[1] == presets[3]):
+		elif ((cmd[1] == presets[3]) and not(storage.status[4][2])):
 
 			commandSet.getDistance(cmd, rover)
 
-		elif (cmd[1] == presets[4]):
+		elif ((cmd[1] == presets[4]) and not(storage.status[4][2])):
 
 			commandSet.getAverageDistance(cmd, rover)
 
-		elif (cmd[1] == presets[5]):
+		elif ((cmd[1] == presets[5]) and not(storage.status[2][2])):
 
 			commandSet.getMag(cmd, rover)
 
-		elif (cmd[1] == presets[6]):
+		elif ((cmd[1] == presets[6]) and not(storage.status[2][2])):
 
 			commandSet.getAccel(cmd, rover)
 
-		elif (cmd[1] == presets[7]):
+		elif ((cmd[1] == presets[7]) and not(storage.status[1][2])):
 
 			commandSet.takePic(cmd, rover)
 
@@ -70,7 +70,7 @@ def switch (cmd):
 
 	else:
 
-		storage.messagesOut.put("E,Not Valid Option")
+		storage.messagesOut.put("E,Not Valid Option or System Not Online")
 
 def parseCmd (cmd):
 
