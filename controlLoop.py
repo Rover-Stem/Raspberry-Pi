@@ -68,6 +68,10 @@ def switch (cmd):
 
 			commandSet.redoUltraSonic(cmd, rover)
 
+		elif (cmd[1] == presets[14]):
+
+			commandSet.statusUpdate(cmd, rover)
+
 	else:
 
 		storage.messagesOut.put("E,Not Valid Option or System Not Online or System Not Active")
@@ -167,8 +171,8 @@ tServer.start()
 
 rover = rover()
 
-# Options: Move, Move Distance, Move Servo, Get Distance, Get Average Distance, Get Mag, Get Accel, Take Picture, Redo All Systems, Redo Motors, Redo Camera, Redo Magnetometer and Accelerometer, Redo Servo, Redo Ultra Sonic Sensor
-presets = ["m", "md", "ms", "gd", "gad", "gm", "ga", "tp", "ra", "rm", "rc", "rma", "rs", "ru"]
+# Options: Move, Move Distance, Move Servo, Get Distance, Get Average Distance, Get Mag, Get Accel, Take Picture, Redo All Systems, Redo Motors, Redo Camera, Redo Magnetometer and Accelerometer, Redo Servo, Redo Ultra Sonic Sensor, Status Update
+presets = ["m", "md", "ms", "gd", "gad", "gm", "ga", "tp", "ra", "rm", "rc", "rma", "rs", "ru", "su"]
 
 while True:
 

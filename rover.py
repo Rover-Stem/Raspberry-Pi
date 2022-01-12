@@ -313,6 +313,14 @@ class rover:
 
 		storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["U", self.__usNeeded, self.__usError]]
 
+	def statusUpdate (self):
+
+		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+
+		storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["U", self.__usNeeded, self.__usError]]
+
+		return
+
 	def measureDistance (self):
 
 		GPIO.output(self.__triggerPin, GPIO.HIGH)

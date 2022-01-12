@@ -223,3 +223,9 @@ def redoAll (cmd, rover):
 	storage.messagesOut.put(f"S,All Reset")
 
 	return
+
+def statusUpdate (cmd, rover):
+
+	rover.statusUpdate()
+
+	return
