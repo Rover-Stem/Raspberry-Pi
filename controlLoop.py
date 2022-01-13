@@ -76,76 +76,338 @@ def switch (cmd):
 
 		storage.messagesOut.put("E,Not Valid Option or System Not Online or System Not Active")
 
-def parseCmd (cmd):
+def scrub (arr):
 
-	if ("-" in cmd):
+	arr = list(filter(None, arr))
 
-		if ("," in cmd):
+	return arr
 
-			cmd = cmd.split("-")
-			cmd = cmd.split(",")
+def parseLanguage (cmd):
 
-			args = ""
+	if (cmd[0] == "run"):
 
-			for i in cmd[1]:
+		cmd = "R"
 
-				args += "," + i
+		for i in range(0, len(cmd)):
 
-			cmd = f"R,{cmd[0]}" + args
+			if (i == 0):
 
-		else:
+				continue
 
-			cmd = cmd.replace("-", ",")
+			cmd += "," + cmd[i]
 
-			cmd = f"R,{cmd}"
+		return cmd
 
-	return cmd
+	elif (cmd[0] == "rep"):
 
-def parseCmdSet ():
+		return f"C,{cmd[1]}"
+
+	elif (cmd[0] == "in"):
+
+		return "I"
+
+	elif (cmd[0] == "str"):
+
+		return "S"
+
+	elif (cmd[0] == "wt"):
+
+		return f"W,{cmd[1]}"
+
+	elif (cmd[0] == "for"):
+
+		return "F"
+
+	elif (cmd[0] == "if"):
+
+		return f"L,{cmd[1]}"
+
+	elif (cmd[0] == "br"):
+
+		return "B"
+
+	elif (cmd[0] == "pl"):
+
+		return "P,logic"
+
+	elif (cmd[0] == "pr"):
+
+		return "P,loop"
+
+	elif (cmd[0] == "e"):
+
+		return "E"
+
+	else:
+
+		return f"A,{cmd[0]}"
+
+def interpret (cmdSet):
+
+	repeats = []
+	loopPointers = []
+	logicPointers = []
+
+	loopEnds = []
+	logicEnds = []
+
+	currentPointer = 0
+
+	input = ""
+	store = ""
+
+	while True:
+
+		if (cmdSet[currentPointer][0] == "R"):
+
+			switch(cmdSet[currentPointer])
+
+		elif (cmdSet[currentPointer][0] == "C"):
+
+			if not(currentPointer in loopPointers):
+
+				loopPointers.append(currentPointer)
+				repeats.append(int(cmdSet[currentPointer][1]) - 1)
+				loopEnds.append(-1)
+
+			else:
+
+				if (repeats[loopPointers.index(currentPointer)] == 0):
+
+					index = loopPointers.index(currentPointer)
+
+					loopPointers.pop(index)
+					repeats.pop(index)
+
+					currentPointer = loopEnds[index] + 1
+
+					loopEnds.pop(index)
+
+				else:
+
+					repeats[loopPointers.index(currentPointer)] -= 1
+
+		elif (cmdSet[currentPointer][0] == "I"):
+
+			storage.messagesOut.put("I")
+
+			while True:
+
+				if not(storage.messagesIn.empty()):
+
+					input = storage.messagesIn.get()
+
+					break
+
+		elif (cmdSet[currentPointer][0] == "S"):
+
+			if (cmdSet[currentPointer][1] == "in"):
+
+				store = input
+
+			else:
+
+				store = cmdSet[currentPointer][1]
+
+		elif (cmdSet[currentPointer][0] == "W"):
+
+			sleep(int(cmdSet[currentPointer][1]))
+
+		elif (cmdSet[currentPointer][0] == "F"):
+
+			if not(currentPointer in loopPointers):
+
+				loopPointers.append(currentPointer)
+				repeats.append(-1)
+				loopEnds.append(-1)
+
+		elif (cmdSet[currentPointer][0] == "L"):
+
+			if not(currentPointer in logicPointers):
+
+				logicPointers.append(currentPointer)
+
+				for i in range(currentPointer, len(cmdSet)):
+
+					if ((cmdSet[i][0] == "P") and (cmdSet[i][1] == "logic")):
+
+						logicEnds.append(i)
+
+						break
+
+			if (cmdSet[currentPointer][1] == "in"):
+
+				if (store == input):
+
+					continue
+
+				else:
+
+					index = logicPointers.index(currentPointer)
+
+					currentPointer = logicEnds[index] + 1
+
+					logicEnds.pop(index)
+					logicPointers.pop(index)
+
+			else:
+
+				try:
+
+					if (store == int(cmdSet[currentPointer][1])):
+
+						continue
+
+					else:
+
+						index = logicPointers.index(currentPointer)
+
+						currentPointer = logicEnds[index] + 1
+
+						logicEnds.pop(index)
+						logicPointers.pop(index)
+
+				except:
+
+					if (store == cmdSet[currentPointer][1]):
+
+						continue
+
+					else:
+
+						index = logicPointers.index(currentPointer)
+
+						currentPointer = logicEnds[index] + 1
+
+						logicEnds.pop(index)
+						logicPointers.pop(index)
+
+		elif (cmdSet[currentPointer][0] == "B"):
+
+			for i in loopPointers:
+
+				if (i > currentPointer):
+
+					currentPointer = loopEnds[loopPointers.index(i)]
+
+					break
+
+		elif (cmdSet[currentPointer][0] == "P"):
+
+			if (cmdSet[currentPointer][1] == "loop"):
+
+				if not(currentPointer in loopEnds):
+
+					for i in range(len(loopEnds) - 1, -1, -1):
+
+						if (loopEnds[i] == -1):
+
+							loopEnds[i] = currentPointer
+
+				currentPointer = loopPointers[loopEnds.index(currentPointer)]
+
+		elif (cmdSet[currentPointer][0] == "E"):
+
+			break
+
+		elif (cmdSet[currentPointer][0] == "A"):
+
+			storage.messagesOut.put(f"E,Invalid Option For Code: {cmdSet[currentPointer][1]}")
+			break
+
+def liveRun ():
+
+	storage.messagesOut.put("I")
+
+	input = ""
 
 	while True:
 
 		if not(storage.messagesIn.empty()):
 
-			cmd = storage.messagesIn.get()
+			input = storage.messagesIn.get()
 
-			if (cmd[0] == "e"):
+			if (input == "\x1b[A"):
 
-				break
+				switch("R,m,f,-1")
 
-			elif not(cmd[0] == "r"):
+			elif (input == "\x1b[B"):
 
-				switch(parseCmd(cmd))
+				switch("R,m,b,-1")
 
-				storage.messagesOut.put("F")
+			elif (input == "\x1b[C"):
+
+				switch("R,m,r,-1")
+
+			elif (input == "\x1b[D"):
+
+				switch("R,m,l,-1")
 
 			else:
 
-				# TODO: Need to add for loop functionality
+				switch("R,m,s")
 
-				repeats = cmd.split(" ")[1]
+def runCmdSetStaged ():
 
-				cmdList = []
+	cmdSet = []
 
-				while True:
+	while True:
 
-					if not(storage.messagesIn.empty()):
+		if not(storage.messagesIn.empty()):
 
-						cmd = storage.messagesIn.get()
+			msg = storage.messagesIn.get()
 
-						if (cmd == "fe"):
+			cmdSet.append(parseLanguage(msg))
 
-							break
+			if (cmdSet[-1][0] == "E"):
 
-						cmdList.append(parseCmd(cmd))
+				break
 
-				for i in range(repeats):
+	interpret(cmdSet)
 
-					for cmd in cmdList:
+def runFile (filePath):
 
-						switch(cmd)
+	cmdSet = []
 
-				storage.messagesOut.put("F")
+	with open(filePath, 'r') as f:
+
+		cmdSet = f.read().split("\n")
+
+	for i in range(0, len(cmdSet)):
+
+		cmdSet[i] = cmdSet[i].split(" ")
+
+	cmdSet = scrub(cmdSet)
+
+	print(cmdSet)
+
+	for i in range(0, len(cmdSet)):
+
+		cmdSet[i] = parseLanguage(cmdSet[i])
+
+	interpret(cmdSet)
+
+def multiCmd (cmd):
+
+	try:
+
+		if not((cmd[1] == "l") or (cmd[1] == "s")):
+
+			filePath = cmd[1]
+
+			runFile(filePath)
+
+		elif (cmd[1] == "l"):
+
+			liveRun()
+
+		else:
+
+			runCmdSetStaged()
+
+	except:
+
+		runCmdSetLive()
 
 wifi = ""
 
@@ -196,4 +458,28 @@ while True:
 
 		elif (cmd[0] == "F"):
 
-			parseCmdSet()
+			multiCmd(cmd)
+
+			storage.messagesOut.put("F")
+
+		elif (cmd[0] == "L"):
+
+			try:
+
+				programsList = []
+
+				for i in os.listdir(f"./{command[1]}"):
+
+					programsList.append(i + "")
+
+				programsList.sort()
+
+				storage.messagesOut.put("S,L,Files in this directory:")
+
+				for i in programsList:
+
+					storage.messagesOut.put("S,L," + i)
+
+			except:
+
+				storage.messagesOut.put("E,File Path Error")

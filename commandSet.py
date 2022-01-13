@@ -35,9 +35,11 @@ def move (cmd, rover):
 
 			rover.moveRover(cmd[2], ratio, throttle)
 
-			sleep(time)
+			if not(time == -1):
 
-			rover.moveRover("s")
+				sleep(time)
+
+				rover.moveRover("s")
 
 			return
 
@@ -45,9 +47,11 @@ def move (cmd, rover):
 
 			rover.moveRover(cmd[2], ratio)
 
-			sleep(time)
+			if not(time == -1):
 
-			rover.moveRover("s")
+				sleep(time)
+
+				rover.moveRover("s")
 
 			return
 
@@ -55,9 +59,11 @@ def move (cmd, rover):
 
 		rover.moveRover(cmd[2])
 
-		sleep(time)
+		if not(time == -1):
 
-		rover.moveRover("s")
+			sleep(time)
+
+			rover.moveRover("s")
 
 		return
 
