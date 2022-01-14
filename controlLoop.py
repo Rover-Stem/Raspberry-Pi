@@ -407,7 +407,7 @@ def multiCmd (cmd):
 
 	except:
 
-		runCmdSetLive()
+		runCmdSetStaged()
 
 wifi = ""
 
