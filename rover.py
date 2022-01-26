@@ -1,45 +1,53 @@
-import board
 import queue
 import storage
 
-import RPi.GPIO as GPIO
+import numpy as np
 
 from time import sleep, time, strftime
-from PCA9685 import PCA9685
 
 class motors:
 
 	def __init__ (self, defaultThrottle = 100):
 
-		# Motor Layout
-		# B ----- A
-		#     |
-		#     |
-		# D ----- C
+		self.__testing = False
 
-		# Variables for Motors A and B (Front two wheels)
-		self.PWMA = 0
-		self.ANeg = 1
-		self.APos = 2
-		self.BNeg = 3
-		self.BPos = 4
-		self.PWMB = 5
+		if (storage.testing):
 
-		# Variables for Motors C and D (Back two wheels)
-		self.PWMC = 0
-		self.CNeg = 1
-		self.CPos = 2
-		self.DNeg = 3
-		self.DPos = 4
-		self.PWMD = 5
+			self.__testing = True
 
-		# Creates Wheel Pair Variables
+		else:
 
-		self.__frontWheels = PCA9685(0x40, debug = False)
-		self.__backWheels = PCA9685(0x44, debug = False)
+			from PCA9685 import PCA9685
 
-		self.__frontWheels.setPWMFreq(50)
-		self.__backWheels.setPWMFreq(50)
+			# Motor Layout
+			# B ----- A
+			#     |
+			#     |
+			# D ----- C
+
+			# Variables for Motors A and B (Front two wheels)
+			self.PWMA = 0
+			self.ANeg = 1
+			self.APos = 2
+			self.BNeg = 3
+			self.BPos = 4
+			self.PWMB = 5
+
+			# Variables for Motors C and D (Back two wheels)
+			self.PWMC = 0
+			self.CNeg = 1
+			self.CPos = 2
+			self.DNeg = 3
+			self.DPos = 4
+			self.PWMD = 5
+
+			# Creates Wheel Pair Variables
+
+			self.__frontWheels = PCA9685(0x40, debug = False)
+			self.__backWheels = PCA9685(0x44, debug = False)
+
+			self.__frontWheels.setPWMFreq(50)
+			self.__backWheels.setPWMFreq(50)
 
 	def forwards (self, wheel, speed):
 
@@ -131,77 +139,83 @@ class motors:
 
 	def move (self, movementOption, ratio, speed):
 
-		if (movementOption == "f"):
+		if (self.__testing):
 
-			self.forwards(["A", "B", "C", "D"], speed)
+			print(f"Move: {movementOption}, Ratio: {ratio}, Speed: {speed}")
 
-		elif (movementOption == "b"):
+		else:
 
-			self.backwards(["A", "B", "C", "D"], speed)
+			if (movementOption == "f"):
 
-		elif (movementOption == "r"):
+				self.forwards(["A", "B", "C", "D"], speed)
 
-			speed = speed
+			elif (movementOption == "b"):
 
-			self.forwards(["B", "C"], speed)
-			self.backwards(["A", "D"], speed)
+				self.backwards(["A", "B", "C", "D"], speed)
 
-		elif (movementOption == "l"):
+			elif (movementOption == "r"):
 
-			speed = speed
+				speed = speed
 
-			self.forwards(["A", "D"], speed)
-			self.backwards(["B", "C"], speed)
+				self.forwards(["B", "C"], speed)
+				self.backwards(["A", "D"], speed)
 
-		elif (movementOption == "dfr"):
+			elif (movementOption == "l"):
 
-			self.forwards(["B", "C"], speed)
+				speed = speed
 
-		elif (movementOption == "dfl"):
+				self.forwards(["A", "D"], speed)
+				self.backwards(["B", "C"], speed)
 
-			self.forwards(["A", "D"], speed)
+			elif (movementOption == "dfr"):
 
-		elif (movementOption == "dbr"):
+				self.forwards(["B", "C"], speed)
 
-			self.backwards(["A", "D"], speed)
+			elif (movementOption == "dfl"):
 
-		elif (movementOption == "dbl"):
+				self.forwards(["A", "D"], speed)
 
-			self.backwards(["B", "C"], speed)
+			elif (movementOption == "dbr"):
 
-		elif (movementOption == "cfr"):
+				self.backwards(["A", "D"], speed)
 
-			self.forwards(["B", "D"], speed)
-			self.forwards(["A", "C"], (speed * ratio))
+			elif (movementOption == "dbl"):
 
-		elif (movementOption == "cfl"):
+				self.backwards(["B", "C"], speed)
 
-			self.forwards(["A", "C"], speed)
-			self.forwards(["B", "D"], (speed * ratio))
+			elif (movementOption == "cfr"):
 
-		elif (movementOption == "cbr"):
+				self.forwards(["B", "D"], speed)
+				self.forwards(["A", "C"], (speed * ratio))
 
-			self.backwards(["B", "D"], speed)
-			self.backwards(["A", "C"], (speed * ratio))
+			elif (movementOption == "cfl"):
 
-		elif (movementOption == "cbl"):
+				self.forwards(["A", "C"], speed)
+				self.forwards(["B", "D"], (speed * ratio))
 
-			self.backwards(["A", "C"], speed)
-			self.backwards(["B", "D"], (speed * ratio))
+			elif (movementOption == "cbr"):
 
-		elif (movementOption == "rr"):
+				self.backwards(["B", "D"], speed)
+				self.backwards(["A", "C"], (speed * ratio))
 
-			self.forwards(["B", "D"], speed)
-			self.backwards(["A", "C"], speed)
+			elif (movementOption == "cbl"):
 
-		elif (movementOption == "rl"):
+				self.backwards(["A", "C"], speed)
+				self.backwards(["B", "D"], (speed * ratio))
 
-			self.forwards(["A", "C"], speed)
-			self.backwards(["B", "D"], speed)
+			elif (movementOption == "rr"):
 
-		elif (movementOption == "s"):
+				self.forwards(["B", "D"], speed)
+				self.backwards(["A", "C"], speed)
 
-			self.stopAll()
+			elif (movementOption == "rl"):
+
+				self.forwards(["A", "C"], speed)
+				self.backwards(["B", "D"], speed)
+
+			elif (movementOption == "s"):
+
+				self.stopAll()
 
 class rover:
 
@@ -217,6 +231,7 @@ class rover:
 
 		self.__correction = -0.15
 		self.__servo_correction = -0.23
+
 		self.__minPW = (1.0 - self.__correction) / 1000
 		self.__maxPW = (2.0 + self.__correction + self.__servo_correction) / 1000
 
@@ -237,118 +252,139 @@ class rover:
 		self.__servoError = False
 		self.__usError = False
 
+		self.__testing = False
+
 		try:
 
 			self.__motors = motors()
 
 		except Exception as e:
 
-			storage.messagesOut.put("S,Motors not online ... Check connection")
+			print(e)
 
 			self.__motorError = True
 
-		if (self.__cameraNeeded):
+		if (storage.testing):
 
-			try:
+			self.__testing = True
 
-				import picamera
-				self.__camera = picamera.PiCamera()
+		else:
 
-			except Exception as e:
+			import board
+			import RPi.GPIO as GPIO
 
-				storage.messagesOut.put("S,Camera not online ... Check connection")
+			if (self.__cameraNeeded):
 
-				self.__cameraError = True
+				try:
 
-		if (self.__maNeeded):
+					import picamera
+					self.__camera = picamera.PiCamera()
 
-			try:
+				except Exception as e:
 
-				import adafruit_lsm303_accel
-				import adafruit_lsm303dlh_mag
+					self.__cameraError = True
 
-				self.__i2c = board.I2C()
-				self.__mag = adafruit_lsm303dlh_mag.LSM303DLH_Mag(self.__i2c)
-				self.__accel = adafruit_lsm303_accel.LSM303_Accel(self.__i2c)
+			if (self.__maNeeded):
 
-			except Exception as e:
+				try:
 
-				storage.messagesOut.put("S,Magnetometer and accelerometer not online ... Check connection")
+					import adafruit_lsm303_accel
+					import adafruit_lsm303dlh_mag
 
-				self.__maError = True
+					self.__i2c = board.I2C()
+					self.__mag = adafruit_lsm303dlh_mag.LSM303DLH_Mag(self.__i2c)
+					self.__accel = adafruit_lsm303_accel.LSM303_Accel(self.__i2c)
 
-		if (self.__servoNeeded):
+				except Exception as e:
 
-			from gpiozero import Servo
+					self.__maError = True
 
-			try:
+			if (self.__servoNeeded):
 
-				self.__servo = Servo(self.__servoPin, min_pulse_width = self.__minPW, max_pulse_width = self.__maxPW)
+				from gpiozero import Servo
 
-			except Exception as e:
+				try:
 
-				storage.messagesOut.put("S,Servo not online ... Check connection")
+					self.__servo = Servo(self.__servoPin, min_pulse_width = self.__minPW, max_pulse_width = self.__maxPW)
 
-				self.__servoError = True
+				except Exception as e:
 
-		if (self.__usNeeded):
+					self.__servoError = True
 
-			try:
+			if (self.__usNeeded):
 
-				GPIO.setmode(GPIO.BCM)
-				GPIO.setup(self.__echoPin, GPIO.IN)
-				GPIO.setup(self.__triggerPin, GPIO.OUT)
+				try:
 
-				GPIO.output(self.__triggerPin, False)
+					GPIO.setmode(GPIO.BCM)
+					GPIO.setup(self.__echoPin, GPIO.IN)
+					GPIO.setup(self.__triggerPin, GPIO.OUT)
 
-				sleep(2)
+					GPIO.output(self.__triggerPin, False)
 
-			except Exception as e:
+					sleep(2)
 
-				storage.messagesOut.put("S,Ultrasonic not online ... Check connection")
+				except Exception as e:
 
-				self.__usError = True
+					self.__usError = True
 
-		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
 
-		storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["U", self.__usNeeded, self.__usError]]
+			storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["U", self.__usNeeded, self.__usError]]
 
 	def statusUpdate (self):
 
-		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+		if (self.__testing):
 
-		storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["U", self.__usNeeded, self.__usError]]
+			print("Status Update")
 
-		return
+		else:
+
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+
+			storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["U", self.__usNeeded, self.__usError]]
+
+			return
 
 	def measureDistance (self):
 
-		GPIO.output(self.__triggerPin, GPIO.HIGH)
+		if (self.__testing):
 
-		sleep(0.00001)
+			print("Measure Distance")
 
-		GPIO.output(self.__triggerPin, GPIO.LOW)
+		else:
 
-		while (GPIO.input(self.__echoPin) == 0):
+			GPIO.output(self.__triggerPin, GPIO.HIGH)
 
-  			pulse_start = time()
+			sleep(0.00001)
 
-		while (GPIO.input(self.__echoPin) == 1):
+			GPIO.output(self.__triggerPin, GPIO.LOW)
 
-  			pulse_end = time()
+			while (GPIO.input(self.__echoPin) == 0):
 
-		pulse_duration = pulse_end - pulse_start
+	  			pulse_start = time()
 
-		distance = pulse_duration * 17150
+			while (GPIO.input(self.__echoPin) == 1):
 
-		distance = round(distance, 2)
+	  			pulse_end = time()
 
-		return distance
+			pulse_duration = pulse_end - pulse_start
+
+			distance = pulse_duration * 17150
+
+			distance = round(distance, 2)
+
+			return distance
 
 	# TODO: Needs implimentation
 	def moveDistance (self, distance, cm = False):
 
-		pass
+		if (self.__testing):
+
+			print("Move Distance")
+
+		else:
+
+			pass
 
 	def moveRover (self, movementOption, percent = 0.5, throttle = None):
 
@@ -360,132 +396,210 @@ class rover:
 
 	def moveServo (self, servoAngle):
 
-		if (servoAngle < 0):
+		if (self.__testing):
 
-			self.__servo.value = (servoAngle - (self.__servo_correction / 2))
-
-		elif (servoAngle > 0):
-
-			self.__servo.value = (servoAngle + (self.__servo_correction / 2))
+			print("Move Servo")
 
 		else:
 
-			self.__servo.value = (0 + self.__servo_correction)
+			if (servoAngle < 0):
+
+				self.__servo.value = (servoAngle - (self.__servo_correction / 2))
+
+			elif (servoAngle > 0):
+
+				self.__servo.value = (servoAngle + (self.__servo_correction / 2))
+
+			else:
+
+				self.__servo.value = (0 + self.__servo_correction)
 
 	def getAccel (self):
 
-		return self.__accel.acceleration
+		if (self.__testing):
+
+			print("Get Accel")
+
+		else:
+
+			return self.__accel.acceleration
 
 	def getAvrDistance (self, pulse_wait = 0.0001, numPulses = 5):
 
-		totalDistance = 0
+		if (self.__testing):
 
-		for i in range(numPulses):
+			print("Get Average Distance")
 
-			totalDistance += self.measureDistance()
+		else:
 
-			sleep(pulse_wait)
+			totalDistance = 0
 
-		return (totalDistance / numPulses)
+			for i in range(numPulses):
+
+				totalDistance += self.measureDistance()
+
+				sleep(pulse_wait)
+
+			return (totalDistance / numPulses)
 
 	def getDistance (self):
 
-		return self.measureDistance()
+		if (self.__testing):
+
+			print("Get Distance")
+
+		else:
+
+			return self.measureDistance()
 
 	def getMag (self):
 
-		return self.__mag.magnetic
+		if (self.__testing):
+
+			print("Get Mag")
+
+		else:
+
+			return self.__mag.magnetic
+
+	def getDirection (self):
+
+		if (self.__testing):
+
+			print("Get Direction")
+
+		else:
+
+			mag = getMag()
+
+			return np.degrees(np.arctan2(mag.x, mag.y))
 
 	def takePic (self):
 
-		self.__camera.start_preview()
-		sleep(2)
+		if (self.__testing):
 
-		date_string = strftime("%Y-%m-%d-%H:%M")
+			print("Take Picture")
 
-		self.__camera.capture(f"/home/pi/Raspberry-Pi/images/{date_string}.png")
-		self.__camera.stop_preview()
+		else:
 
-		storage.messagesOut.put("file")
-		storage.messagesOut.put(f"/home/pi/Raspberry-Pi/images/{date_string}.png")
+			self.__camera.start_preview()
+			sleep(2)
+
+			date_string = strftime("%Y-%m-%d-%H:%M")
+
+			self.__camera.capture(f"/home/pi/Raspberry-Pi/images/{date_string}.png")
+			self.__camera.stop_preview()
+
+			storage.messagesOut.put("file")
+			storage.messagesOut.put(f"/home/pi/Raspberry-Pi/images/{date_string}.png")
 
 	def redoMotors (self):
 
-		try:
+		if (self.__testing):
 
-			self.__motors = motors()
+			print("Redo Motors")
 
-		except:
+		else:
 
-			storage.messagesOut.put("S,Motors not online ... Check connection")
+			try:
 
-			self.__motorError = True
+				self.__motors = motors()
 
-		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+			except:
+
+				storage.messagesOut.put("S,Motors not online ... Check connection")
+
+				self.__motorError = True
+
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
 
 	def redoCamera (self):
 
-		try:
+		if (self.__testing):
 
-			self.__cameraNeeded = True
+			print("Redo Cam")
 
-			self.__camera = PiCamera()
+		else:
 
-		except:
+			try:
 
-			storage.messagesOut.put("S,Camera not online ... Check connection")
+				self.__cameraNeeded = True
 
-			self.__cameraError = True
+				self.__camera = PiCamera()
 
-		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+			except:
+
+				storage.messagesOut.put("S,Camera not online ... Check connection")
+
+				self.__cameraError = True
+
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
 
 	def redoMagAndAccel (self):
 
-		try:
+		if (self.__testing):
 
-			self.__maNeeded = True
+			print("Redo MA")
 
-			self.__i2c = board.I2C()
-			self.__mag = adafruit_lsm303dlh_mag.LSM303DLH_Mag(self.__i2c)
-			self.__accel = adafruit_lsm303_accel.LSM303_Accel(self.__i2c)
+		else:
 
-		except:
+			try:
 
-			storage.messagesOut.put("S,Magnetometer and accelerometer not online ... Check connection")
+				self.__maNeeded = True
 
-			self.__maError = True
+				self.__i2c = board.I2C()
+				self.__mag = adafruit_lsm303dlh_mag.LSM303DLH_Mag(self.__i2c)
+				self.__accel = adafruit_lsm303_accel.LSM303_Accel(self.__i2c)
 
-		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+			except:
+
+				storage.messagesOut.put("S,Magnetometer and accelerometer not online ... Check connection")
+
+				self.__maError = True
+
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
 
 	def redoServo (self):
 
-		try:
+		if (self.__testing):
 
-			self.__servoNeeded = True
+			print("Redo Servo")
 
-			self.__servo = Servo(self.__servoPin, min_pulse_width = self.__minPW, max_pulse_width = self.__maxPW)
+		else:
 
-		except:
+			try:
 
-			storage.messagesOut.put("S,Servo not online ... Check connection")
+				self.__servoNeeded = True
 
-			self.__servoError = True
+				self.__servo = Servo(self.__servoPin, min_pulse_width = self.__minPW, max_pulse_width = self.__maxPW)
 
-		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+			except:
+
+				storage.messagesOut.put("S,Servo not online ... Check connection")
+
+				self.__servoError = True
+
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
 
 
 	def redoUltraSonic (self):
 
-		try:
+		if (self.__testing):
 
-			self.__ultra_sonic = adafruit_hcsr04.HCSR04(trigger_pin = board.D5, echo_pin = board.D6)
-			self.__ultra_sonic.distance
+			print("Redo US")
 
-		except Exception as e:
+		else:
 
-			storage.messagesOut.put("S,Ultrasonic not online ... Check connection")
+			try:
+
+				self.__ultra_sonic = adafruit_hcsr04.HCSR04(trigger_pin = board.D5, echo_pin = board.D6)
+				self.__ultra_sonic.distance
+
+			except Exception as e:
+
+				storage.messagesOut.put("S,Ultrasonic not online ... Check connection")
 
 
-			self.__usError = True
+				self.__usError = True
 
-		storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")

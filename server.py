@@ -27,7 +27,7 @@ class server ():
 		t_send = None
 		conn = None
 
-		self.__sockt.listen(1)
+		self.__sockt.listen()
 
 		while (True):
 
@@ -57,17 +57,43 @@ class server ():
 
 		data = None
 
+		firstMessageProccesed = False
+
 		while (True):
 
 			data = conn.recv(self.__packetSize)
 
 			if data:
 
+				if not(firstMessageProccesed):
+
+					if (str(data, 'utf-8') == "T"):
+
+						storage.testing = True
+						storage.status = [["M", True, False], ["C", True, False], ["A", True, False], ["S", True, False], ["U", True, False]]
+
+						firstMessageProccesed = True
+
+						continue
+
+					else:
+
+						storage.testing = False
+						firstMessageProccesed = True
+
+						continue
+
 				storage.messagesIn.put(str(data, 'utf-8'))
 
-				with open(self.__log_file, 'a') as f:
+				if not(storage.testing):
 
-					f.write(f"{self.__current_time} - Recieved: {str(data, 'utf-8')}\n")
+					with open(self.__logFile, 'a') as f:
+
+						f.write(f"{datetime.datetime.utcnow().timestamp()} - Recieved: {str(data, 'utf-8')}\n")
+
+				else:
+
+					print(f"Recieved: {str(data, 'utf-8')}")
 
 				if (str(data, 'utf-8') == "stop"):
 
@@ -87,13 +113,19 @@ class server ():
 
 					conn.send(msg)
 
-					with open(self.__log_file, 'a') as f:
+					if not(storage.testing):
 
-						f.write(f"{self.__current_time} - Sent: {str(msg, 'utf-8')}\n")
+						with open(self.__logFile, 'a') as f:
+
+							f.write(f"{datetime.datetime.utcnow().timestamp()} - Sent: {str(msg, 'utf-8')}\n")
+
+					else:
+
+						print(f"Sent: {str(msg, 'utf-8')}")
 
 					if (str(msg, 'utf-8') == "stop"):
 
-						#conn.shutdown(conn.SHUT_RDWR)
+						conn.shutdown(SHUT_RDWR)
 
 						conn.close()
 
@@ -103,12 +135,28 @@ class server ():
 
 					conn.send(msg)
 
-					with open(self.__log_file, 'a') as f:
+					if not(storage.testing):
 
-						f.write(f"{self.__current_time} - Starting File Send\n")
+						with open(self.__logFile, 'a') as f:
+
+							f.write(f"{datetime.datetime.utcnow().timestamp()} - Starting File Send\n")
+
+					else:
+
+						print(f"Starting File Send")
 
 					filepath = storage.messagesOut.get()
 					filename = filepath.split("/")[-1]
+
+					if not(storage.testing):
+
+						with open(self.__logFile, 'a') as f:
+
+							f.write(f"{datetime.datetime.utcnow().timestamp()} - Sending {filename}\n")
+
+					else:
+
+						print(f"Sending {filename}")
 
 					conn.send(bytes(filename, 'utf-8'))
 

@@ -1,4 +1,6 @@
+import os
 import queue
+import socket
 import storage
 import threading
 import commandSet
@@ -411,25 +413,37 @@ def multiCmd (cmd):
 
 wifi = ""
 
-while True:
+if ("raspberry" in socket.gethostname().lower()):
 
-	try:
+	while True:
 
-		output = subprocess.check_output(["sudo", "iwgetid"])
-		wifi = output.split('"')[1]
+		try:
 
-		if not((wifi == "") or (wifi == " ")):
+			output = subprocess.check_output(["sudo", "iwgetid"])
+			wifi = output.split('"')[1]
 
-			break
+			if not((wifi == "") or (wifi == " ")):
 
-	except:
+				break
 
-		continue
+		except:
+
+			continue
 
 server = server()
 
 tServer = threading.Thread(target = server.run, args = [], daemon = True)
 tServer.start()
+
+while True:
+
+	if not(storage.testing == None):
+
+		break
+
+if (storage.testing):
+
+	print("Started")
 
 rover = rover()
 
@@ -468,7 +482,7 @@ while True:
 
 				programsList = []
 
-				for i in os.listdir(f"./{command[1]}"):
+				for i in os.listdir(f"./{cmd[1]}"):
 
 					programsList.append(i + "")
 
@@ -479,7 +493,15 @@ while True:
 				for i in programsList:
 
 					storage.messagesOut.put("S,L," + i)
+					sleep(0.01)
 
-			except:
+				storage.messagesOut.put("F")
+
+			except Exception as e:
+
+				if (storage.testing):
+
+					print(e)
 
 				storage.messagesOut.put("E,File Path Error")
+				storage.messagesOut.put("F")
