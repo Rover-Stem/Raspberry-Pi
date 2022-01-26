@@ -74,6 +74,10 @@ def switch (cmd):
 
 			commandSet.statusUpdate(cmd, rover)
 
+		elif (cmd[1] == presets[15]):
+
+			commandSet.getDirection(cmd, rover)
+
 	else:
 
 		storage.messagesOut.put("E,Not Valid Option or System Not Online or System Not Active")
@@ -448,7 +452,7 @@ if (storage.testing):
 rover = rover()
 
 # Options: Move, Move Distance, Move Servo, Get Distance, Get Average Distance, Get Mag, Get Accel, Take Picture, Redo All Systems, Redo Motors, Redo Camera, Redo Magnetometer and Accelerometer, Redo Servo, Redo Ultra Sonic Sensor, Status Update
-presets = ["m", "md", "ms", "gd", "gad", "gm", "ga", "tp", "ra", "rm", "rc", "rma", "rs", "ru", "su"]
+presets = ["m", "md", "ms", "gd", "gad", "gm", "ga", "tp", "ra", "rm", "rc", "rma", "rs", "ru", "su", "gdir"]
 
 while True:
 

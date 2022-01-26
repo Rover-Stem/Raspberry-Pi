@@ -235,3 +235,11 @@ def statusUpdate (cmd, rover):
 	rover.statusUpdate()
 
 	return
+
+def getDirection (cmd, rover):
+
+	dir = rover.getDirection()
+
+	storage.messagesOut.put(f"S,Direction: {dir}")
+
+	return
