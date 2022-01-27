@@ -240,6 +240,6 @@ def getDirection (cmd, rover):
 
 	dir = rover.getDirection()
 
-	storage.messagesOut.put(f"S,Direction: {dir}")
+	storage.messagesOut.put(f"S,DIR,{dir}")
 
 	return
