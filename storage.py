@@ -6,4 +6,5 @@ messagesOut = queue.Queue(maxsize = 10)
 
 status = ""
 
+exiting = False
 testing = None

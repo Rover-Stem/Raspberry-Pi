@@ -462,6 +462,8 @@ while True:
 
 		if (cmd == "stop"):
 
+			storage.exiting = True
+
 			break
 
 		else:
