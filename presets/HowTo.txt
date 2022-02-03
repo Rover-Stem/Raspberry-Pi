@@ -1,0 +1,13 @@
+Commands:
+
+run <- Runs command as if it is in the terminal
+rep <- Repeat for given number (int)
+in <- Recieve Input
+str <- store value
+wt <- wait (sec)
+for <- repeat forever
+br <- break
+pl <- denotes end of a logic statement
+pr <- denotes end of a loop statement
+e <- denotes end of code
+if <- if statement (Only equals currently. Working on adding more logic. Or is ||, and is &&, greater than is >, less than is <)

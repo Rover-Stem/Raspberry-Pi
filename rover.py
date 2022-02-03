@@ -229,11 +229,12 @@ class rover:
 		self.__camera = None
 		self.__ultra_sonic = None
 
-		self.__correction = -0.15
-		self.__servo_correction = -0.23
+		self.__limit = 0.5
+		#self.__correction = -0.15
+		#self.__servo_correction = -0.23
 
-		self.__minPW = (1.0 - self.__correction) / 1000
-		self.__maxPW = (2.0 + self.__correction + self.__servo_correction) / 1000
+		#self.__minPW = (1.0 - self.__correction) / 1000
+		#self.__maxPW = (2.0 + self.__correction + self.__servo_correction) / 1000
 
 		self.__echoPin = echoPin
 		self.__servoPin = servoPin
@@ -402,17 +403,19 @@ class rover:
 
 		else:
 
-			if (servoAngle < 0):
+			#if (servoAngle < 0):
 
-				self.__servo.value = (servoAngle - (self.__servo_correction / 2))
+				#self.__servo.value = (servoAngle - (self.__servo_correction / 2))
 
-			elif (servoAngle > 0):
+			#elif (servoAngle > 0):
 
-				self.__servo.value = (servoAngle + (self.__servo_correction / 2))
+				#self.__servo.value = (servoAngle + (self.__servo_correction / 2))
 
-			else:
+			#else:
 
-				self.__servo.value = (0 + self.__servo_correction)
+				#self.__servo.value = (0 + self.__servo_correction)
+
+			self.__servo.value = self.__limit * servoAngle
 
 	def getAccel (self):
 

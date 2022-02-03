@@ -10,6 +10,7 @@ from time import sleep
 from rover import rover
 from server import server
 
+# Sends Commands to Command Set
 def switch (cmd):
 
 	if (cmd[1] in presets):
@@ -82,12 +83,20 @@ def switch (cmd):
 
 		storage.messagesOut.put("E,Not Valid Option or System Not Online or System Not Active")
 
+# Helper method to remove empty entries from given array - [[""], ["a"], ["run"]] -> [["a"], ["run"]]
 def scrub (arr):
 
-	arr = list(filter(None, arr))
+	temp_array = arr
+
+	for i in range(len(arr) - 1, -1, -1):
+
+		if (temp_array[i][0] == ""):
+
+			temp_array.pop(i)
 
 	return arr
 
+# Goes from psuedo language to comms commands
 def parseLanguage (cmd):
 
 	if (cmd[0] == "run"):
@@ -106,7 +115,7 @@ def parseLanguage (cmd):
 
 	elif (cmd[0] == "rep"):
 
-		return f"C,{cmd[1]}"
+		return ["C", int(cmd[1])]
 
 	elif (cmd[0] == "in"):
 
@@ -114,11 +123,11 @@ def parseLanguage (cmd):
 
 	elif (cmd[0] == "str"):
 
-		return "S"
+		return ["S", int(cmd[1])]
 
 	elif (cmd[0] == "wt"):
 
-		return f"W,{cmd[1]}"
+		return ["W", int(cmd[1])]
 
 	elif (cmd[0] == "for"):
 
@@ -126,7 +135,7 @@ def parseLanguage (cmd):
 
 	elif (cmd[0] == "if"):
 
-		return f"L,{cmd[1]}"
+		return ["L", cmd[1], cmd[2]]
 
 	elif (cmd[0] == "br"):
 
@@ -134,20 +143,25 @@ def parseLanguage (cmd):
 
 	elif (cmd[0] == "pl"):
 
-		return "P,logic"
+		return ["P", "logic"]
 
 	elif (cmd[0] == "pr"):
 
-		return "P,loop"
+		return ["P", "loop"]
 
 	elif (cmd[0] == "e"):
 
 		return "E"
 
+	elif (cmd[0] == "add"):
+
+		return ["A", int(cmd[1])]
+
 	else:
 
-		return f"A,{cmd[0]}"
+		return ["K", cmd[0]]
 
+# Running logic for parsed commands
 def interpret (cmdSet):
 
 	repeats = []
@@ -160,14 +174,21 @@ def interpret (cmdSet):
 	currentPointer = 0
 
 	input = ""
-	store = ""
+	store = 0
 
 	while True:
 
+		# Runs Command
 		if (cmdSet[currentPointer][0] == "R"):
 
 			switch(cmdSet[currentPointer])
 
+		# Adds to store
+		elif (cmdSet[currentPointer][0] == "A"):
+
+			store += cmdSet[currentPointer][1]
+
+		# Assigns rep loop pointers and counts down
 		elif (cmdSet[currentPointer][0] == "C"):
 
 			if not(currentPointer in loopPointers):
@@ -193,6 +214,7 @@ def interpret (cmdSet):
 
 					repeats[loopPointers.index(currentPointer)] -= 1
 
+		# Gets input
 		elif (cmdSet[currentPointer][0] == "I"):
 
 			storage.messagesOut.put("I")
@@ -205,6 +227,7 @@ def interpret (cmdSet):
 
 					break
 
+		# Stores input val or val after statement
 		elif (cmdSet[currentPointer][0] == "S"):
 
 			if (cmdSet[currentPointer][1] == "in"):
@@ -215,10 +238,12 @@ def interpret (cmdSet):
 
 				store = cmdSet[currentPointer][1]
 
+		# Waits
 		elif (cmdSet[currentPointer][0] == "W"):
 
 			sleep(int(cmdSet[currentPointer][1]))
 
+		# Sets up loop pointers for forever loops
 		elif (cmdSet[currentPointer][0] == "F"):
 
 			if not(currentPointer in loopPointers):
@@ -227,12 +252,14 @@ def interpret (cmdSet):
 				repeats.append(-1)
 				loopEnds.append(-1)
 
+		# Sets up if statement pointer
 		elif (cmdSet[currentPointer][0] == "L"):
 
 			if not(currentPointer in logicPointers):
 
 				logicPointers.append(currentPointer)
 
+				# # TODO: Make go backwards and be better
 				for i in range(currentPointer, len(cmdSet)):
 
 					if ((cmdSet[i][0] == "P") and (cmdSet[i][1] == "logic")):
@@ -288,16 +315,19 @@ def interpret (cmdSet):
 						logicEnds.pop(index)
 						logicPointers.pop(index)
 
+		# BReaks
 		elif (cmdSet[currentPointer][0] == "B"):
 
 			for i in loopPointers:
 
+				# TODO: Wrong logic. Must find closest loop
 				if (i > currentPointer):
 
-					currentPointer = loopEnds[loopPointers.index(i)]
+					currentPointer = loopEnds[loopPointers.index(i)] + 1
 
 					break
 
+		# Sets up endings and looping
 		elif (cmdSet[currentPointer][0] == "P"):
 
 			if (cmdSet[currentPointer][1] == "loop"):
@@ -312,15 +342,18 @@ def interpret (cmdSet):
 
 				currentPointer = loopPointers[loopEnds.index(currentPointer)]
 
+		# Ends Program
 		elif (cmdSet[currentPointer][0] == "E"):
 
 			break
 
-		elif (cmdSet[currentPointer][0] == "A"):
+		# Adjusts for unknown commands
+		elif (cmdSet[currentPointer][0] == "K"):
 
 			storage.messagesOut.put(f"E,Invalid Option For Code: {cmdSet[currentPointer][1]}")
 			break
 
+# Remote control
 def liveRun ():
 
 	storage.messagesOut.put("I")
@@ -353,6 +386,7 @@ def liveRun ():
 
 				switch("R,m,s")
 
+# Gets remote file sent and then runs it
 def runCmdSetStaged ():
 
 	cmdSet = []
@@ -371,13 +405,21 @@ def runCmdSetStaged ():
 
 	interpret(cmdSet)
 
+# Runs local file
 def runFile (filePath):
 
 	cmdSet = []
 
-	with open(filePath, 'r') as f:
+	try:
 
-		cmdSet = f.read().split("\n")
+		with open(filePath, 'r') as f:
+
+			cmdSet = f.read().split("\n")
+
+	except:
+
+		storage.messagesOut.put("E,File Path Non-Existent")
+		storage.messagesOut.put("F")
 
 	for i in range(0, len(cmdSet)):
 
@@ -391,8 +433,11 @@ def runFile (filePath):
 
 		cmdSet[i] = parseLanguage(cmdSet[i])
 
+	print(cmdSet)
+
 	interpret(cmdSet)
 
+# Logic for file control
 def multiCmd (cmd):
 
 	try:
@@ -449,9 +494,15 @@ if (storage.testing):
 
 	print("Started")
 
+else:
+
+	import constantLogger
+
+	constantLogger.main()
+
 rover = rover()
 
-# Options: Move, Move Distance, Move Servo, Get Distance, Get Average Distance, Get Mag, Get Accel, Take Picture, Redo All Systems, Redo Motors, Redo Camera, Redo Magnetometer and Accelerometer, Redo Servo, Redo Ultra Sonic Sensor, Status Update
+# Options: Move, Move Distance, Move Servo, Get Distance, Get Average Distance, Get Mag, Get Accel, Take Picture, Redo All Systems, Redo Motors, Redo Camera, Redo Magnetometer and Accelerometer, Redo Servo, Redo Ultra Sonic Sensor, Status Update, Get Direction
 presets = ["m", "md", "ms", "gd", "gad", "gm", "ga", "tp", "ra", "rm", "rc", "rma", "rs", "ru", "su", "gdir"]
 
 while True:
