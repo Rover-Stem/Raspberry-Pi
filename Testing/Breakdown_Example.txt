@@ -1,0 +1,46 @@
+Self made commands -> send (print but for computer), analyze (Returns an array of lines to follow based on contours), follow (requires the initial line to follow and continuously uses that analyze base code to find the closest line to the one it was following to stay on track. Needs to have an offset feature)
+
+var = "Hello"
+
+forever:
+
+	print (var)
+
+	if (var == "Hello"):
+
+		break
+
+↓ Parser
+
+[['var = "Hello"', 0], ['forever', 0], ['print (var)', 1], ['if (var == "Hello")', 1], ['break', 2]]
+
+↓ Lexer
+
+[['var', 0], ['=', 0], ['"', 0], ['Hello', 0], ['"', 0], ['forever', 0], ['print', 1], ['(', 1], ['var', 1], [')', 1], ['if', 1], ['(', 1], ['var', 1], ['==', 1], ['"', 1], ['Hello', 1], ['"', 1], [')', 1], ['break', 2]]
+
+↓ Delimiter Match
+
+Passed
+
+↓ Interpreter
+
+Variables Dictionary
+{"var":"Hello"}
+
+Loop Pointers Dictionary
+{1:5}
+
+Logic Pointers Dictionary
+{3:5}
+
+Note: Format for pointers is key = End line, value = Start line
+
+Function Pointers Dictionary
+{}
+
+Note: Format for function is key = Name, value = [Start Line, Line called from]
+
+Repeats
+{}
+
+Note: Format for repeats is key = Start line, value = Number of repeats <- adjustable so then you can count down repeats left

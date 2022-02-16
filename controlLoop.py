@@ -90,268 +90,16 @@ def scrub (arr):
 
 	for i in range(len(arr) - 1, -1, -1):
 
+		for j in range(len(arr[i])):
+
+			temp_array[i][j] = temp_array[i][j].replace(" ", "")
+			temp_array[i][j] = temp_array[i][j].replace("\t", "")
+
 		if (temp_array[i][0] == ""):
 
 			temp_array.pop(i)
 
 	return arr
-
-# Goes from psuedo language to comms commands
-def parseLanguage (cmd):
-
-	if (cmd[0] == "run"):
-
-		cmd = "R"
-
-		for i in range(0, len(cmd)):
-
-			if (i == 0):
-
-				continue
-
-			cmd += "," + cmd[i]
-
-		return cmd
-
-	elif (cmd[0] == "rep"):
-
-		return ["C", int(cmd[1])]
-
-	elif (cmd[0] == "in"):
-
-		return "I"
-
-	elif (cmd[0] == "str"):
-
-		return ["S", int(cmd[1])]
-
-	elif (cmd[0] == "wt"):
-
-		return ["W", int(cmd[1])]
-
-	elif (cmd[0] == "for"):
-
-		return "F"
-
-	elif (cmd[0] == "if"):
-
-		return ["L", cmd[1], cmd[2]]
-
-	elif (cmd[0] == "br"):
-
-		return "B"
-
-	elif (cmd[0] == "pl"):
-
-		return ["P", "logic"]
-
-	elif (cmd[0] == "pr"):
-
-		return ["P", "loop"]
-
-	elif (cmd[0] == "e"):
-
-		return "E"
-
-	elif (cmd[0] == "add"):
-
-		return ["A", int(cmd[1])]
-
-	else:
-
-		return ["K", cmd[0]]
-
-# Running logic for parsed commands
-def interpret (cmdSet):
-
-	repeats = []
-	loopPointers = []
-	logicPointers = []
-
-	loopEnds = []
-	logicEnds = []
-
-	currentPointer = 0
-
-	input = ""
-	store = 0
-
-	while True:
-
-		# Runs Command
-		if (cmdSet[currentPointer][0] == "R"):
-
-			switch(cmdSet[currentPointer])
-
-		# Adds to store
-		elif (cmdSet[currentPointer][0] == "A"):
-
-			store += cmdSet[currentPointer][1]
-
-		# Assigns rep loop pointers and counts down
-		elif (cmdSet[currentPointer][0] == "C"):
-
-			if not(currentPointer in loopPointers):
-
-				loopPointers.append(currentPointer)
-				repeats.append(int(cmdSet[currentPointer][1]) - 1)
-				loopEnds.append(-1)
-
-			else:
-
-				if (repeats[loopPointers.index(currentPointer)] == 0):
-
-					index = loopPointers.index(currentPointer)
-
-					loopPointers.pop(index)
-					repeats.pop(index)
-
-					currentPointer = loopEnds[index] + 1
-
-					loopEnds.pop(index)
-
-				else:
-
-					repeats[loopPointers.index(currentPointer)] -= 1
-
-		# Gets input
-		elif (cmdSet[currentPointer][0] == "I"):
-
-			storage.messagesOut.put("I")
-
-			while True:
-
-				if not(storage.messagesIn.empty()):
-
-					input = storage.messagesIn.get()
-
-					break
-
-		# Stores input val or val after statement
-		elif (cmdSet[currentPointer][0] == "S"):
-
-			if (cmdSet[currentPointer][1] == "in"):
-
-				store = input
-
-			else:
-
-				store = cmdSet[currentPointer][1]
-
-		# Waits
-		elif (cmdSet[currentPointer][0] == "W"):
-
-			sleep(int(cmdSet[currentPointer][1]))
-
-		# Sets up loop pointers for forever loops
-		elif (cmdSet[currentPointer][0] == "F"):
-
-			if not(currentPointer in loopPointers):
-
-				loopPointers.append(currentPointer)
-				repeats.append(-1)
-				loopEnds.append(-1)
-
-		# Sets up if statement pointer
-		elif (cmdSet[currentPointer][0] == "L"):
-
-			if not(currentPointer in logicPointers):
-
-				logicPointers.append(currentPointer)
-
-				# # TODO: Make go backwards and be better
-				for i in range(currentPointer, len(cmdSet)):
-
-					if ((cmdSet[i][0] == "P") and (cmdSet[i][1] == "logic")):
-
-						logicEnds.append(i)
-
-						break
-
-			if (cmdSet[currentPointer][1] == "in"):
-
-				if (store == input):
-
-					continue
-
-				else:
-
-					index = logicPointers.index(currentPointer)
-
-					currentPointer = logicEnds[index] + 1
-
-					logicEnds.pop(index)
-					logicPointers.pop(index)
-
-			else:
-
-				try:
-
-					if (store == int(cmdSet[currentPointer][1])):
-
-						continue
-
-					else:
-
-						index = logicPointers.index(currentPointer)
-
-						currentPointer = logicEnds[index] + 1
-
-						logicEnds.pop(index)
-						logicPointers.pop(index)
-
-				except:
-
-					if (store == cmdSet[currentPointer][1]):
-
-						continue
-
-					else:
-
-						index = logicPointers.index(currentPointer)
-
-						currentPointer = logicEnds[index] + 1
-
-						logicEnds.pop(index)
-						logicPointers.pop(index)
-
-		# BReaks
-		elif (cmdSet[currentPointer][0] == "B"):
-
-			for i in loopPointers:
-
-				# TODO: Wrong logic. Must find closest loop
-				if (i > currentPointer):
-
-					currentPointer = loopEnds[loopPointers.index(i)] + 1
-
-					break
-
-		# Sets up endings and looping
-		elif (cmdSet[currentPointer][0] == "P"):
-
-			if (cmdSet[currentPointer][1] == "loop"):
-
-				if not(currentPointer in loopEnds):
-
-					for i in range(len(loopEnds) - 1, -1, -1):
-
-						if (loopEnds[i] == -1):
-
-							loopEnds[i] = currentPointer
-
-				currentPointer = loopPointers[loopEnds.index(currentPointer)]
-
-		# Ends Program
-		elif (cmdSet[currentPointer][0] == "E"):
-
-			break
-
-		# Adjusts for unknown commands
-		elif (cmdSet[currentPointer][0] == "K"):
-
-			storage.messagesOut.put(f"E,Invalid Option For Code: {cmdSet[currentPointer][1]}")
-			break
 
 # Remote control
 def liveRun ():
@@ -366,7 +114,11 @@ def liveRun ():
 
 			input = storage.messagesIn.get()
 
-			if (input == "\x1b[A"):
+			if (input == "e"):
+
+				break
+
+			elif (input == "\x1b[A"):
 
 				switch("R,m,f,-1")
 
@@ -386,56 +138,7 @@ def liveRun ():
 
 				switch("R,m,s")
 
-# Gets remote file sent and then runs it
-def runCmdSetStaged ():
-
-	cmdSet = []
-
-	while True:
-
-		if not(storage.messagesIn.empty()):
-
-			msg = storage.messagesIn.get()
-
-			cmdSet.append(parseLanguage(msg))
-
-			if (cmdSet[-1][0] == "E"):
-
-				break
-
-	interpret(cmdSet)
-
-# Runs local file
-def runFile (filePath):
-
-	cmdSet = []
-
-	try:
-
-		with open(filePath, 'r') as f:
-
-			cmdSet = f.read().split("\n")
-
-	except:
-
-		storage.messagesOut.put("E,File Path Non-Existent")
-		storage.messagesOut.put("F")
-
-	for i in range(0, len(cmdSet)):
-
-		cmdSet[i] = cmdSet[i].split(" ")
-
-	cmdSet = scrub(cmdSet)
-
-	print(cmdSet)
-
-	for i in range(0, len(cmdSet)):
-
-		cmdSet[i] = parseLanguage(cmdSet[i])
-
-	print(cmdSet)
-
-	interpret(cmdSet)
+	storage.messagesOut.put("F")
 
 # Logic for file control
 def multiCmd (cmd):

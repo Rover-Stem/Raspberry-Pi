@@ -1,0 +1,28 @@
+def printer (ins, *ins2):
+
+	pr (ins)
+	return ins + " HI"
+
+var = "Hello"
+var2 = "Hellos Thar"
+var3 = None
+
+rep 4:
+
+	pr (var)
+	printer(ins2 = [var, var2], ins = var)
+	var3 = printer(var, var2)
+
+	if (var == "Hola"):
+
+		var = "Hmmm"
+
+	elif (var == "Guten Tag"):
+
+		var = "Hola"
+
+	else:
+
+		var = "Guten Tag"
+
+pr (var3)
