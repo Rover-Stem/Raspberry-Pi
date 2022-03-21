@@ -2,6 +2,7 @@ import os
 import queue
 import socket
 import storage
+import interpret
 import threading
 import commandSet
 import subprocess
@@ -83,6 +84,60 @@ def switch (cmd):
 
 		storage.messagesOut.put("E,Not Valid Option or System Not Online or System Not Active")
 
+# Sorts list by file type
+def sortByFileType (arr):
+
+	temp = [[[], "a"]]
+	temp2 = []
+
+	for i in arr:
+
+		if (i.split(".")[-1] in [x[1] for x in temp]):
+
+			for j in temp:
+
+				if ((i.split(".")[-1] == j[1]) and not(i.split(".")[0] == j[1])):
+
+					j[0].append(i)
+
+		else:
+
+			if (i.split(".")[0] == i.split(".")[-1]):
+
+				for j in temp:
+
+					if (j[1] == "a"):
+
+						j[0].append(i)
+
+			else:
+
+				temp.append([[i], i.split(".")[-1]])
+
+	for j in temp:
+
+		j[0].sort()
+
+	fileTypes = [x[1] for x in temp]
+
+	fileTypes.sort()
+
+	for i in fileTypes:
+
+		for j in temp:
+
+			if j[1] == i:
+
+				for l in j[0]:
+
+					temp2.append(l)
+
+				break
+
+		continue
+
+	return temp2
+
 # Helper method to remove empty entries from given array - [[""], ["a"], ["run"]] -> [["a"], ["run"]]
 def scrub (arr):
 
@@ -120,23 +175,23 @@ def liveRun ():
 
 			elif (input == "\x1b[A"):
 
-				switch("R,m,f,-1")
+				switch(["R", "m", "f", -1])
 
 			elif (input == "\x1b[B"):
 
-				switch("R,m,b,-1")
+				switch(["R", "m", "b", -1])
 
 			elif (input == "\x1b[C"):
 
-				switch("R,m,r,-1")
+				switch(["R", "m", "r", -1])
 
 			elif (input == "\x1b[D"):
 
-				switch("R,m,l,-1")
+				switch(["R", "m", "l", -1])
 
 			else:
 
-				switch("R,m,s")
+				switch(["R", "m", "s"])
 
 	storage.messagesOut.put("F")
 
@@ -149,7 +204,11 @@ def multiCmd (cmd):
 
 			filePath = cmd[1]
 
-			runFile(filePath)
+			if not("squish" in filePath):
+
+				return
+
+			interpret.runFile(filePath, rover)
 
 		elif (cmd[1] == "l"):
 
@@ -157,11 +216,11 @@ def multiCmd (cmd):
 
 		else:
 
-			runCmdSetStaged()
+			interpret.runCmdSetStaged(rover)
 
 	except:
 
-		runCmdSetStaged()
+		interpret.runCmdSetStaged(rover)
 
 wifi = ""
 
@@ -246,14 +305,21 @@ while True:
 
 					programsList.append(i + "")
 
-				programsList.sort()
+				programsList = sortByFileType(programsList)
 
 				storage.messagesOut.put("S,L,Files in this directory:")
 
 				for i in programsList:
 
 					storage.messagesOut.put("S,L," + i)
-					sleep(0.01)
+
+					if (storage.testing):
+
+						sleep(0.07)
+
+					else:
+
+						sleep(0.01)
 
 				storage.messagesOut.put("F")
 
