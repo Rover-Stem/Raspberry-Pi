@@ -7,7 +7,7 @@ import threading
 
 class server ():
 
-	def __init__ (self, host = "", port = 29500, packetSize = 1024):
+	def __init__ (self, host = "", port = 1234, packetSize = 1024):
 
 		self.__logFile = f"logs/{datetime.datetime.utcnow().timestamp()}.log"
 
