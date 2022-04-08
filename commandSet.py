@@ -71,11 +71,11 @@ def moveDistance (cmd, rover):
 
 	try:
 
-		distance = float(cmd[3])
+		distance = float(cmd[2])
 
 		try:
 
-			cm = bool(cmd[4])
+			cm = bool(cmd[3])
 
 			rover.moveDistance(distance, cm)
 

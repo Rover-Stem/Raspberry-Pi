@@ -1,5 +1,0 @@
-rep 4:
-
-  run(m, f)
-  run(m, rr)
-  wait(1)

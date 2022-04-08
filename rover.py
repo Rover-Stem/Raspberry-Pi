@@ -387,6 +387,17 @@ class rover:
 
 			pass
 
+	# TODO: Needs implimentation
+	def moveAngle (self, angle, rad = False):
+
+		if (self.__testing):
+
+			print("Move Angle")
+
+		else:
+
+			pass
+
 	def moveRover (self, movementOption, percent = 0.5, throttle = None):
 
 		if (throttle == None):
@@ -465,7 +476,7 @@ class rover:
 
 			return self.__mag.magnetic
 
-	def getDirection (self):
+	def getDirection (self, rad = False):
 
 		if (self.__testing):
 

@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-git pull /home/usr/pi/Raspberry\ Pi/
+git pull /home/usr/pi/Raspberry\ Pi/ -q && python3 /home/usr/pi/Raspberry\ Pi/controlLoop.py
