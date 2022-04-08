@@ -117,7 +117,7 @@ def stayInYourLane (rover):
 
 			rover.moveRover("cfl")
 
-# needs fixing
+
 def navNeighborhood (rover):
 
 	map = [["n", "n", "end"],
