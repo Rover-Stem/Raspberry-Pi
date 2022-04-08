@@ -346,7 +346,7 @@ class rover:
 
 			return
 
-	def measureDistance (self):
+	def measureDistance (self, cm = False):
 
 		if (self.__testing):
 
