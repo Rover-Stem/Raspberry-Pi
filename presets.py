@@ -43,7 +43,6 @@ def directionChallenge (rover, start, target):
 			rover.moveRover("f")
 		direction = rover.getDirection()
 
-
 def obstacleAvoidance2 (rover, numObstacles):
 
 	count = 0
