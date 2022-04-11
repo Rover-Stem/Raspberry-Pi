@@ -28,15 +28,16 @@ def obstacleAvoidance1 (rover):
 def distanceChallenge (rover, distance):
 
 	rover.moveDistance(distance)
-	
-# assumes that getDirection returns is oriented with the Unit Circle
+
+# assumes that 0 degrees is north
+# possibly add if elif else statments to accodmetate for angles over 180 degrees
 def directionChallenge (rover, start, target):
 	direction = start
 	targetDirection = target
 	while True:
-		if direction > targetDirection:
+		if direction < targetDirection:
 			rover.moveRover("cfr")
-		elif direction < targetDirection:
+		elif direction > targetDirection:
 			rover.moveRover("cfl")
 		else:
 			rover.moveRover("f")
