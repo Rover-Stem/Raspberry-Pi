@@ -388,7 +388,7 @@ class rover:
 			pass
 
 	# TODO: Needs implimentation
-	def moveAngle (self, angle, rad = False):
+	def moveToAngle (self, angle, rad = False):
 
 		if (self.__testing):
 
@@ -476,7 +476,7 @@ class rover:
 
 			return self.__mag.magnetic
 
-	def getDirection (self, rad = False):
+	def getDirection (self, negatives = False, rad = False):
 
 		if (self.__testing):
 
@@ -486,7 +486,27 @@ class rover:
 
 			mag = getMag()
 
-			return np.degrees(np.arctan2(mag.x, mag.y))
+			if (rad):
+
+				direction = np.arctan2(mag.x, mag.y)
+
+			else:
+
+				direction = np.degrees(np.arctan2(mag.x, mag.y))
+
+			if (negatives):
+
+				return direction
+
+			else:
+
+				if (rad):
+
+					return (((2 * np.pi) + direction) % (2 * np.pi))
+
+				else:
+
+					return ((360 + direction) % 360)
 
 	def takePic (self):
 

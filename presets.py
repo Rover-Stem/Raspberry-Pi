@@ -29,7 +29,6 @@ def distanceChallenge (rover, distance):
 
 	rover.moveDistance(distance)
 
-
 def obstacleAvoidance2 (rover, numObstacles):
 
 	count = 0
