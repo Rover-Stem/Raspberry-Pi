@@ -28,6 +28,19 @@ def obstacleAvoidance1 (rover):
 def distanceChallenge (rover, distance):
 
 	rover.moveDistance(distance)
+	
+# assumes that getDirection returns is oriented with the Unit Circle
+def directionChallenge (rover, start, target):
+	direction = start
+	targetDirection = target
+	while True:
+		if direction > targetDirection:
+			rover.moveRover("cfr")
+		elif direction < targetDirection:
+			rover.moveRover("cfl")
+		else:
+			rover.moveRover("f")
+		direction = rover.getDirection()
 
 
 def obstacleAvoidance2 (rover, numObstacles):
@@ -117,7 +130,11 @@ def stayInYourLane (rover):
 
 			rover.moveRover("cfl")
 
-
+# Intersections are binary
+# stop = [0,0]
+# go forward = [0,1]
+# right turn = [1,0]
+# left turn = [1,1]
 def navNeighborhood (rover):
 
 	map = [["n", "n", "end"],
