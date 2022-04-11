@@ -157,7 +157,7 @@ def obstacleAvoidance2_Strafe (rover, numObstacles):
 		rover.moveRover("dfr")
 		time.sleep(timeEnd - timeStart)
 		direction2 = rover.getDirection()
-# implimentation needed for code below:
+# code below should still work and be useful
 		while True:
 
 			cross = np.cross(direction2, direction)
