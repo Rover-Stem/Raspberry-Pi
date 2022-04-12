@@ -155,14 +155,10 @@ class motors:
 
 			elif (movementOption == "r"):
 
-				speed = speed
-
 				self.forwards(["B", "C"], speed)
 				self.backwards(["A", "D"], speed)
 
 			elif (movementOption == "l"):
-
-				speed = speed
 
 				self.forwards(["A", "D"], speed)
 				self.backwards(["B", "C"], speed)
@@ -170,18 +166,22 @@ class motors:
 			elif (movementOption == "dfr"):
 
 				self.forwards(["B", "C"], speed)
+				self.stop(["A", "D"], speed)
 
 			elif (movementOption == "dfl"):
 
 				self.forwards(["A", "D"], speed)
+				self.stop(["B", "C"], speed)
 
 			elif (movementOption == "dbr"):
 
 				self.backwards(["A", "D"], speed)
+				self.stop(["B", "C"], speed)
 
 			elif (movementOption == "dbl"):
 
 				self.backwards(["B", "C"], speed)
+				self.stop(["A", "D"], speed)
 
 			elif (movementOption == "cfr"):
 
@@ -259,6 +259,8 @@ class rover:
 
 			self.__motors = motors()
 
+			self.__motorError = False
+
 		except Exception as e:
 
 			print(e)
@@ -281,6 +283,8 @@ class rover:
 					import picamera
 					self.__camera = picamera.PiCamera()
 
+					self.__cameraError = False
+
 				except Exception as e:
 
 					self.__cameraError = True
@@ -296,6 +300,8 @@ class rover:
 					self.__mag = adafruit_lsm303dlh_mag.LSM303DLH_Mag(self.__i2c)
 					self.__accel = adafruit_lsm303_accel.LSM303_Accel(self.__i2c)
 
+					self.__maError = False
+
 				except Exception as e:
 
 					self.__maError = True
@@ -307,6 +313,8 @@ class rover:
 				try:
 
 					self.__servo = Servo(self.__servoPin, min_pulse_width = self.__minPW, max_pulse_width = self.__maxPW)
+
+					self.__servoError = False
 
 				except Exception as e:
 
@@ -323,6 +331,8 @@ class rover:
 					GPIO.output(self.__triggerPin, False)
 
 					sleep(2)
+
+					self.__usError = False
 
 				except Exception as e:
 

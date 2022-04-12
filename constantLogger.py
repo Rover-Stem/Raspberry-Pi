@@ -6,7 +6,7 @@ import adafruit_lsm303dlh_mag
 
 def main ():
 
-	simFile = f"sim/{datetime.datetime.utcnow().timestamp()}.sim"
+	simFile = f"sim/{storage.now}.sim"
 
 	with open(simFile, 'a') as f:
 
