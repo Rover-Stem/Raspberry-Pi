@@ -5,11 +5,11 @@ import adafruit_lsm303dlh_mag
 
 def main ():
 
+	simFile = f"sim/{datetime.datetime.utcnow().timestamp()}.sim"
+
 	with open(simFile, 'a') as f:
 
 		f.write(f"Time,MagX,MagY,MagZ,AccX,AccY,AccZ\n")
-
-	simFile = f"sim/{datetime.datetime.utcnow().timestamp()}.sim"
 
 	i2c = board.I2C()
 	mag = adafruit_lsm303dlh_mag.LSM303DLH_Mag(i2c)
