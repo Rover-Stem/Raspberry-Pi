@@ -151,6 +151,10 @@ def switch (cmd):
 
 			commandSet.getDirection(cmd, rover)
 
+		elif (cmd[1] == presets[16]):
+
+			commandSet.moveToAngle(cmd, rover)
+
 	else:
 
 		storage.messagesOut.put("E,Not Valid Option or System Not Online or System Not Active")
@@ -195,52 +199,19 @@ def liveRun ():
 	storage.messagesOut.put("F")
 
 # Logic for file control
-def multiCmd (cmd):
+def runPreset (cmd):
 
-	try:
+	if (cmd[1] == "square"):
 
-		if not((cmd[1] == "l") or (cmd[1] == "s")):
+		presets.square()
 
-			filePath = cmd[1]
+		storage.messagesOut.put("F")
 
-			if not("squish" in filePath):
+	else:
 
-				return
-
-			interpret.runFile(filePath, rover)
-
-		elif (cmd[1] == "l"):
-
-			liveRun()
-
-		else:
-
-			interpret.runCmdSetStaged(rover)
-
-	except:
-
-		interpret.runCmdSetStaged(rover)
+		storage.messagesOut.put("E,Not in presets")
 
 print("Hello")
-
-#wifi = ""
-
-#if ("raspberry" in socket.gethostname().lower()):
-
-#	while True:
-
-#		try:
-
-#			output = subprocess.check_output(["sudo", "iwgetid"])
-#			wifi = output.split('"')[1]
-
-#			if not((wifi == "") or (wifi == " ")):
-
-#				break
-
-#		except:
-
-#			continue
 
 print("Starting Server")
 
@@ -268,7 +239,7 @@ print("Starting Rover")
 rover = rover()
 
 # Options: Move, Move Distance, Move Servo, Get Distance, Get Average Distance, Get Mag, Get Accel, Take Picture, Redo All Systems, Redo Motors, Redo Camera, Redo Magnetometer and Accelerometer, Redo Servo, Redo Ultra Sonic Sensor, Status Update, Get Direction
-presets = ["m", "md", "ms", "gd", "gad", "gm", "ga", "tp", "ra", "rm", "rc", "rma", "rs", "ru", "su", "gdir"]
+presets = ["m", "md", "ms", "gd", "gad", "gm", "ga", "tp", "ra", "rm", "rc", "rma", "rs", "ru", "su", "gdir", "ma"]
 
 print("Starting Main Loop")
 
@@ -294,9 +265,9 @@ while True:
 
 			storage.messagesOut.put("F")
 
-		elif (cmd[0] == "F"):
+		elif (cmd[0] == "P"):
 
-			multiCmd(cmd)
+			runPreset(cmd)
 
 			storage.messagesOut.put("F")
 

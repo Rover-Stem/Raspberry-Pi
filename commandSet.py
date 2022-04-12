@@ -243,3 +243,29 @@ def getDirection (cmd, rover):
 	storage.messagesOut.put(f"S,DIR,{dir}")
 
 	return
+
+def moveAngle (cmd, rover):
+
+	try:
+
+		angle = float(cmd[2])
+
+		try:
+
+			rad = bool(cmd[3])
+
+			rover.moveToAngle(angle, rad)
+
+			return
+
+		except:
+
+			rover.moveDistance(angle)
+
+			return
+
+	except:
+
+		storage.messagesOut.put("E,Angle Must Be Provided")
+
+		return
