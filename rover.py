@@ -409,6 +409,8 @@ class rover:
 			while (True):
 
 				angleFound = np.round(self.getDirection(), 0)
+				
+				print(f"At angle: {angleFound}, looking for: {np.round(angle, 0)}")
 
 				if (angleFound == np.round(angle, 0)):
 
