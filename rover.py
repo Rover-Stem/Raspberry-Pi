@@ -219,7 +219,7 @@ class motors:
 
 class rover:
 
-	def __init__ (self, camera = True, magAndAccel = True, servo = True, ultraSonic = True, defaultThrottle = 100, servoPin = 22, echoPin = 24, triggerPin = 23):
+	def __init__ (self, camera = True, magAndAccel = True, servo = True, ultraSonic = True, defaultThrottle = 100, servoPin = 17, echoPin = 24, triggerPin = 23):
 
 		self.__i2c = None
 		self.__mag = None
