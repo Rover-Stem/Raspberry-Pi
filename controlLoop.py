@@ -221,7 +221,11 @@ def multiCmd (cmd):
 
 		interpret.runCmdSetStaged(rover)
 
+print("Hello")
+
 wifi = ""
+
+print("Detecting Wifi")
 
 if ("raspberry" in socket.gethostname().lower()):
 
