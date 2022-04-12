@@ -1,5 +1,6 @@
 import board
 import storage
+import datetime
 import adafruit_lsm303_accel
 import adafruit_lsm303dlh_mag
 
