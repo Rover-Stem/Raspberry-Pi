@@ -205,7 +205,7 @@ def runPreset (cmd):
 
 	if (cmd[1] == "square"):
 
-		pr.square()
+		pr.square(rover)
 
 		storage.messagesOut.put("F")
 
