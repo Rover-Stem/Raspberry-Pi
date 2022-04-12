@@ -35,6 +35,8 @@ class server ():
 
 				conn, addr = self.__sockt.accept()
 
+				print("Connected")
+
 				conn.setblocking(True)
 
 				if not(conn in connections):
