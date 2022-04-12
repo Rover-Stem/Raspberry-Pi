@@ -7,6 +7,8 @@ import commandSet
 import subprocess
 import constantLogger
 
+import presets as pr
+
 from time import sleep
 from rover import rover
 from server import server
@@ -203,7 +205,7 @@ def runPreset (cmd):
 
 	if (cmd[1] == "square"):
 
-		presets.square()
+		pr.square()
 
 		storage.messagesOut.put("F")
 
