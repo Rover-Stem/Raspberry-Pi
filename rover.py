@@ -219,7 +219,7 @@ class motors:
 
 class rover:
 
-	def __init__ (self, camera = True, magAndAccel = True, servo = True, ultraSonic = True, defaultThrottle = 100, servoPin = 17, echoPin = 24, triggerPin = 23):
+	def __init__ (self, camera = True, magAndAccel = True, servo = True, ultraSonic = True, defaultThrottle = 100, servoPin = 17):
 
 		self.__i2c = None
 		self.__mag = None
@@ -227,7 +227,7 @@ class rover:
 		self.__servo = None
 		self.__motors = None
 		self.__camera = None
-		self.__ultra_sonic = None
+		self.__timeOfFlight = None
 
 		self.__limit = 0.5
 		#self.__correction = -0.15
@@ -236,22 +236,20 @@ class rover:
 		#self.__minPW = (1.0 - self.__correction) / 1000
 		#self.__maxPW = (2.0 + self.__correction + self.__servo_correction) / 1000
 
-		self.__echoPin = echoPin
 		self.__servoPin = servoPin
-		self.__triggerPin = triggerPin
 
 		self.__defaultThrottle = defaultThrottle
 
 		self.__cameraNeeded = camera
 		self.__maNeeded = magAndAccel
 		self.__servoNeeded = servo
-		self.__usNeeded = ultraSonic
+		self._tofNeeded = ultraSonic
 
 		self.__motorError = False
 		self.__cameraError = False
 		self.__maError = False
 		self.__servoError = False
-		self.__usError = False
+		self.__tofError = False
 
 		self.__testing = False
 
@@ -274,7 +272,6 @@ class rover:
 		else:
 
 			import board
-			import RPi.GPIO as GPIO
 
 			if (self.__cameraNeeded):
 
@@ -286,6 +283,8 @@ class rover:
 					self.__cameraError = False
 
 				except Exception as e:
+
+					print(e)
 
 					self.__cameraError = True
 
@@ -320,27 +319,30 @@ class rover:
 
 					self.__servoError = True
 
-			if (self.__usNeeded):
+			if (self.__tofNeeded):
 
 				try:
 
-					GPIO.setmode(GPIO.BCM)
-					GPIO.setup(self.__echoPin, GPIO.IN)
-					GPIO.setup(self.__triggerPin, GPIO.OUT)
+					import adafruit_vl53l1x
 
-					GPIO.output(self.__triggerPin, False)
+					i2c = board.I2C()
 
-					sleep(2)
+					self.__timeOfFlight = adafruit_vl53l1x.VL53L1X(i2c)
 
-					self.__usError = False
+					self.__timeOfFlight.distance_mode = 1
+					self.__timeOfFlight.timing_budget = 100
+
+					self.__timeOfFlight.start_ranging()
+
+					self._tofError = False
 
 				except Exception as e:
 
-					self.__usError = True
+					self._tofError = True
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
 
-			storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["U", self.__usNeeded, self.__usError]]
+			storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["T", self._tofNeeded, self._tofError]]
 
 	def statusUpdate (self):
 
@@ -350,9 +352,9 @@ class rover:
 
 		else:
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
 
-			storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["U", self.__usNeeded, self.__usError]]
+			storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["T", self._tofNeeded, self.__tofError]]
 
 			return
 
@@ -364,27 +366,23 @@ class rover:
 
 		else:
 
-			GPIO.output(self.__triggerPin, GPIO.HIGH)
+			while True:
 
-			sleep(0.00001)
+				if (self.__timeOfFlight.data_ready):
 
-			GPIO.output(self.__triggerPin, GPIO.LOW)
+					distance = self.__timeOfFlight.distance
 
-			while (GPIO.input(self.__echoPin) == 0):
+			        vl53.clear_interrupt()
 
-	  			pulse_start = time()
+					break
 
-			while (GPIO.input(self.__echoPin) == 1):
+			if (cm):
 
-	  			pulse_end = time()
+				return distance
 
-			pulse_duration = pulse_end - pulse_start
+			else:
 
-			distance = pulse_duration * 17150
-
-			distance = round(distance, 2)
-
-			return distance
+				return (distance / (2.54))
 
 	# TODO: Needs implimentation
 	def moveDistance (self, distance, cm = False):
@@ -498,11 +496,11 @@ class rover:
 
 			if (rad):
 
-				direction = np.arctan2(mag.x, mag.y)
+				direction = np.arctan2(mag[0], mag[1])
 
 			else:
 
-				direction = np.degrees(np.arctan2(mag.x, mag.y))
+				direction = np.degrees(np.arctan2(mag[0], mag[1]))
 
 			if (negatives):
 
@@ -555,7 +553,7 @@ class rover:
 
 				self.__motorError = True
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
 
 	def redoCamera (self):
 
@@ -577,7 +575,7 @@ class rover:
 
 				self.__cameraError = True
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
 
 	def redoMagAndAccel (self):
 
@@ -601,7 +599,7 @@ class rover:
 
 				self.__maError = True
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
 
 	def redoServo (self):
 
@@ -623,7 +621,7 @@ class rover:
 
 				self.__servoError = True
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
 
 
 	def redoUltraSonic (self):
@@ -646,4 +644,4 @@ class rover:
 
 				self.__usError = True
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},U:{self.__usNeeded}:{self.__usError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
