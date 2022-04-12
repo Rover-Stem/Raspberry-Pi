@@ -243,7 +243,7 @@ class rover:
 		self.__cameraNeeded = camera
 		self.__maNeeded = magAndAccel
 		self.__servoNeeded = servo
-		self._tofNeeded = ultraSonic
+		self.__tofNeeded = ultraSonic
 
 		self.__motorError = False
 		self.__cameraError = False
