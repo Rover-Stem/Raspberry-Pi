@@ -5,6 +5,7 @@ import storage
 import threading
 import commandSet
 import subprocess
+import constantLogger
 
 from time import sleep
 from rover import rover
@@ -292,6 +293,11 @@ while True:
 			multiCmd(cmd)
 
 			storage.messagesOut.put("F")
+
+		elif (cmd[0] == "S"):
+
+			tLog = threading.Thread(target = constantLogger.main, args = [], daemon = True)
+			tLog.start()
 
 		elif (cmd[0] == "L"):
 
