@@ -372,7 +372,7 @@ class rover:
 
 					distance = self.__timeOfFlight.distance
 
-			        vl53.clear_interrupt()
+					self.__timeOfFlight.clear_interrupt()
 
 					break
 
