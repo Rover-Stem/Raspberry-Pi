@@ -408,9 +408,9 @@ class rover:
 
 			while (True):
 
-				angleFound = np.round(self.getDirection(), 1)
+				angleFound = np.round(self.getDirection(), 0)
 
-				if (angleFound == np.round(angle)):
+				if (angleFound == np.round(angle, 0)):
 
 					self.moveRover("s")
 
