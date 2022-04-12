@@ -415,7 +415,7 @@ class rover:
 					self.moveRover("s")
 
 					break
-					
+
 	def moveRover (self, movementOption, percent = 0.5, throttle = None):
 
 		if (throttle == None):
@@ -502,7 +502,7 @@ class rover:
 
 		else:
 
-			mag = getMag()
+			mag = self.getMag()
 
 			if (rad):
 
