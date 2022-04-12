@@ -404,7 +404,7 @@ class rover:
 
 		else:
 
-			self.moveRover("rr", throttle = 0.5)
+			self.moveRover("rr", throttle = 0.25)
 
 			while (True):
 
