@@ -160,7 +160,7 @@ def getMag (cmd, rover):
 
 	mag = rover.getMag()
 
-	storage.messagesOut.put(f"S,M,{mag.x},{mag.y},{mag.z}")
+	storage.messagesOut.put(f"S,M,{mag[0]},{mag[1]},{mag[2]}")
 
 	return
 
@@ -168,7 +168,7 @@ def getAccel (cmd, rover):
 
 	accel = rover.getAccel()
 
-	storage.messagesOut.put(f"S,A,{accel.x},{accel.y},{accel.z}")
+	storage.messagesOut.put(f"S,A,{accel[0]},{accel[1]},{accel[2]}")
 
 	return
 
