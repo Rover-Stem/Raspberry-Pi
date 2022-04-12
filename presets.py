@@ -2,7 +2,7 @@ import time
 
 import numpy as np
 
-from imageProcessor import getPath
+#from imageProcessor import getPath
 
 def square (rover):
 
@@ -47,7 +47,7 @@ def directionChallenge (rover, start, target):
 			rover.moveRover("cfl")
 
 		else:
-			
+
 			rover.moveRover("f")
 
 		direction = rover.getDirection()
