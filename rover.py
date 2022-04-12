@@ -404,7 +404,7 @@ class rover:
 
 		else:
 
-			self.moveRover("rr")
+			self.moveRover("rr", throttle = 0.5)
 
 			while (True):
 
@@ -421,6 +421,10 @@ class rover:
 		if (throttle == None):
 
 			throttle = self.__defaultThrottle
+
+		else:
+
+			throttle = self.__defaultThrottle * throttle
 
 		self.__motors.move(movementOption, ratio = percent, speed = throttle)
 
