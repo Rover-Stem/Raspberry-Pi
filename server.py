@@ -91,7 +91,7 @@ class server ():
 
 				if not(storage.testing):
 
-					with open(self.__logFile, 'a') as f:
+					with open(self.__logFile, 'a+') as f:
 
 						f.write(f"{datetime.datetime.utcnow().timestamp()} - Recieved: {str(data, 'utf-8')}\n")
 
@@ -119,7 +119,7 @@ class server ():
 
 					if not(storage.testing):
 
-						with open(self.__logFile, 'a') as f:
+						with open(self.__logFile, 'a+') as f:
 
 							f.write(f"{datetime.datetime.utcnow().timestamp()} - Sent: {str(msg, 'utf-8')}\n")
 
@@ -141,7 +141,7 @@ class server ():
 
 					if not(storage.testing):
 
-						with open(self.__logFile, 'a') as f:
+						with open(self.__logFile, 'a+') as f:
 
 							f.write(f"{datetime.datetime.utcnow().timestamp()} - Starting File Send\n")
 
@@ -154,7 +154,7 @@ class server ():
 
 					if not(storage.testing):
 
-						with open(self.__logFile, 'a') as f:
+						with open(self.__logFile, 'a+') as f:
 
 							f.write(f"{datetime.datetime.utcnow().timestamp()} - Sending {filename}\n")
 
