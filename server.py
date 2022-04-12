@@ -51,7 +51,7 @@ class server ():
 
 				if (conn == None):
 
-					time.sleep(1)
+					time.sleep(.1)
 
 	def receiveMessages (self, conn):
 
