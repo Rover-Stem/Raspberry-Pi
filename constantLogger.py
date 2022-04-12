@@ -20,13 +20,13 @@ def main ():
 		magRead = mag.magnetic
 		accelRead = accel.acceleration
 
-		magX = magRead.x
-		magY = magRead.y
-		magZ = magRead.z
+		magX = magRead[0]
+		magY = magRead[1]
+		magZ = magRead[2]
 
-		accX = accelRead.x
-		accY = accelRead.y
-		accZ = accelRead.z
+		accX = accelRead[0]
+		accY = accelRead[1]
+		accZ = accelRead[2]
 
 		with open(simFile, 'a') as f:
 
