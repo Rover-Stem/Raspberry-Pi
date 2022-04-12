@@ -240,6 +240,8 @@ if ("raspberry" in socket.gethostname().lower()):
 
 			continue
 
+print("Starting Server")
+
 server = server()
 
 tServer = threading.Thread(target = server.run, args = [], daemon = True)
