@@ -223,26 +223,24 @@ def multiCmd (cmd):
 
 print("Hello")
 
-wifi = ""
+#wifi = ""
 
-print("Detecting Wifi")
+#if ("raspberry" in socket.gethostname().lower()):
 
-if ("raspberry" in socket.gethostname().lower()):
+#	while True:
 
-	while True:
+#		try:
 
-		try:
+#			output = subprocess.check_output(["sudo", "iwgetid"])
+#			wifi = output.split('"')[1]
 
-			output = subprocess.check_output(["sudo", "iwgetid"])
-			wifi = output.split('"')[1]
+#			if not((wifi == "") or (wifi == " ")):
 
-			if not((wifi == "") or (wifi == " ")):
+#				break
 
-				break
+#		except:
 
-		except:
-
-			continue
+#			continue
 
 print("Starting Server")
 
