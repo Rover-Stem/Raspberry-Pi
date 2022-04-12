@@ -246,8 +246,12 @@ print("Starting Server")
 
 server = server()
 
+print("Server Started")
+
 tServer = threading.Thread(target = server.run, args = [], daemon = True)
 tServer.start()
+
+print("Server Thread Started")
 
 while True:
 
