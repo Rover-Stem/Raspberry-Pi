@@ -12,7 +12,7 @@ def square (rover):
 		time.sleep(1)
 		rover.moveRover("s")
 
-		rover.moveRover("rr")
+		rover.moveToAngle((rover.getDirection() + 90) % 360)
 		time.sleep(1)
 		rover.moveRover("s")
 

@@ -404,8 +404,18 @@ class rover:
 
 		else:
 
-			pass
+			self.moveRover("rr", throttle = .5)
 
+			while (True):
+
+				angleFound = np.round(self.getDirection(), 1)
+
+				if (angleFound == angle):
+
+					self.moveRover("s")
+
+					break
+					
 	def moveRover (self, movementOption, percent = 0.5, throttle = None):
 
 		if (throttle == None):
