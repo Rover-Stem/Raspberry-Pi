@@ -340,9 +340,9 @@ class rover:
 
 					self._tofError = True
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self.__tofNeeded}:{self.__tofError}")
 
-			storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["T", self._tofNeeded, self._tofError]]
+			storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["T", self.__tofNeeded, self._tofError]]
 
 	def statusUpdate (self):
 
@@ -352,9 +352,9 @@ class rover:
 
 		else:
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self.__tofNeeded}:{self.__tofError}")
 
-			storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["T", self._tofNeeded, self.__tofError]]
+			storage.status = [["M", True, self.__motorError], ["C", self.__cameraNeeded, self.__cameraError], ["A", self.__maNeeded, self.__maError], ["S", self.__servoNeeded, self.__servoError], ["T", self.__tofNeeded, self.__tofError]]
 
 			return
 
@@ -553,7 +553,7 @@ class rover:
 
 				self.__motorError = True
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self.__tofNeeded}:{self.__tofError}")
 
 	def redoCamera (self):
 
@@ -575,7 +575,7 @@ class rover:
 
 				self.__cameraError = True
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self.__tofNeeded}:{self.__tofError}")
 
 	def redoMagAndAccel (self):
 
@@ -599,7 +599,7 @@ class rover:
 
 				self.__maError = True
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self.__tofNeeded}:{self.__tofError}")
 
 	def redoServo (self):
 
@@ -621,7 +621,7 @@ class rover:
 
 				self.__servoError = True
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self.__tofNeeded}:{self.__tofError}")
 
 
 	def redoUltraSonic (self):
@@ -644,4 +644,4 @@ class rover:
 
 				self.__usError = True
 
-			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self._tofNeeded}:{self.__tofError}")
+			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self.__tofNeeded}:{self.__tofError}")
