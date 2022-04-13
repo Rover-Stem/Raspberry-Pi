@@ -404,7 +404,9 @@ class rover:
 
 		else:
 
-			if (np.cross(self.getDirection(), angle) < 0):
+			direction = self.getDirection()
+
+			if (np.cross(np.array([np.cos(direction), np.sin(direction)]), np.array([np.cos(angle), np.sin(angle)])) < 0):
 
 				self.moveRover("rl", throttle = 0.5)
 
@@ -414,7 +416,7 @@ class rover:
 
 			while (True):
 
-				angleFound = np.round(self.getDirection(), 0)
+				angleFound = self.getDirection()
 
 				diff = np.round(angle, 0) - angleFound
 
@@ -426,13 +428,13 @@ class rover:
 
 				print(f"At angle: {angleFound}, looking for: {np.round(angle, 0)}")
 
-				if (angleFound == np.round(angle, 0)):
+				if (np.round(angleFound, 0) == np.round(angle, 0)):
 
 					self.moveRover("s")
 
 					break
 
-				elif (np.cross(angleFound, angle) < 0):
+				elif (np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angle), np.sin(angle)])) < 0):
 
 					self.moveRover("rl", throttle = speed)
 

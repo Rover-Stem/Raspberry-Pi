@@ -14,7 +14,7 @@ def square (rover):
 
 		print("Forwards")
 
-		print(f"Direction: {rover.getDirection()}, Direction - 90: {rover.getDirection() - 90}, Next Step: {(rover.getDirection() + 90) % 360}")
+		print(f"Direction: {rover.getDirection()}, Direction - 90: {rover.getDirection() - 90}, Next Step: {(rover.getDirection() - 90) % 360}")
 
 		rover.moveToAngle((rover.getDirection() - 90) % 360)
 
