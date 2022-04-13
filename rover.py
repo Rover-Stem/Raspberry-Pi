@@ -410,6 +410,14 @@ class rover:
 
 				angleFound = np.round(self.getDirection(), 0)
 
+				diff = np.round(angle, 0) - angleFound
+
+				speed = (diff / 360)
+
+				if (speed < 0.25):
+
+					speed = 0.25
+
 				print(f"At angle: {angleFound}, looking for: {np.round(angle, 0)}")
 
 				if (angleFound == np.round(angle, 0)):
@@ -420,11 +428,11 @@ class rover:
 
 				elif (angleFound >= np.round(angle, 0)):
 
-					self.moveRover("rl", throttle = 0.25)
+					self.moveRover("rl", throttle = speed)
 
 				else:
 
-					self.moveRover("rl", throttle = 0.25)
+					self.moveRover("rl", throttle = speed)
 
 	def moveRover (self, movementOption, percent = 0.5, throttle = None):
 
