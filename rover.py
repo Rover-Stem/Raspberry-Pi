@@ -404,7 +404,13 @@ class rover:
 
 		else:
 
-			self.moveRover("rr", throttle = 0.25)
+			if (np.cross(self.getDirection(), angle) > 0):
+
+				self.moveRover("rl", throttle = 0.5)
+
+			else:
+
+				self.moveRover("rl", throttle = 0.5)
 
 			while (True):
 
@@ -426,7 +432,7 @@ class rover:
 
 					break
 
-				elif (angleFound >= np.round(angle, 0)):
+				elif (angleFound <= np.round(angle, 0)):
 
 					self.moveRover("rl", throttle = speed)
 
