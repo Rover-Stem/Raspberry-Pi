@@ -438,7 +438,7 @@ class rover:
 
 				else:
 
-					self.moveRover("rl", throttle = speed)
+					self.moveRover("rr", throttle = speed)
 
 	def moveRover (self, movementOption, percent = 0.5, throttle = None):
 
