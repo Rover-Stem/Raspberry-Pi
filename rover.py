@@ -404,13 +404,13 @@ class rover:
 
 		else:
 
-			if (np.cross(self.getDirection(), angle) > 0):
+			if (np.cross(self.getDirection(), angle) < 0):
 
 				self.moveRover("rl", throttle = 0.5)
 
 			else:
 
-				self.moveRover("rl", throttle = 0.5)
+				self.moveRover("rr", throttle = 0.5)
 
 			while (True):
 
