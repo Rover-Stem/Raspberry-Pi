@@ -404,7 +404,7 @@ class rover:
 
 		else:
 
-			self.moveRover("rr", throttle = 0.2)
+			self.moveRover("rr", throttle = 0.25)
 
 			while (True):
 
@@ -417,6 +417,14 @@ class rover:
 					self.moveRover("s")
 
 					break
+
+				elif (angleFound >= np.round(angle, 0)):
+
+					self.moveRover("rl", throttle = 0.25)
+
+				else:
+
+					self.moveRover("rl", throttle = 0.25)
 
 	def moveRover (self, movementOption, percent = 0.5, throttle = None):
 
