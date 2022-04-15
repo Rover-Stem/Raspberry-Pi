@@ -6,17 +6,15 @@ import numpy as np
 
 def square (rover, sideTime = 1):
 
+	start = rover.getDirection()
+
 	for i in range(4):
 
 		rover.moveRover("f")
-		time.sleep(1)
+		time.sleep(sideTime)
 		rover.moveRover("s")
 
-		print("Forwards")
-
-		print(f"Direction: {rover.getDirection()}, Direction - 90: {rover.getDirection() - 90}, Next Step: {(rover.getDirection() - 90) % 360}")
-
-		rover.moveToAngle((rover.getDirection() - 90) % 360)
+		rover.moveToAngle((start - 90) % 360)
 
 def obstacleAvoidance1 (rover):
 
