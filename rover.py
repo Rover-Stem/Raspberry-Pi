@@ -424,9 +424,9 @@ class rover:
 
 				angleFound = self.getDirection() * (np.pi / 180)
 
-				diff = np.round(angleDesired, 0) - np.round(angleFound, 0)
+				diff = np.abs(np.round((angleDesired * (180 / np.pi)), 0) - np.round((angleFound * (180 / np.pi)), 0))
 
-				print(diff)
+				print(f"Diff: {diff}")
 
 				speed = (diff / 20)
 
