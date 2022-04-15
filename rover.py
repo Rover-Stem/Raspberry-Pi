@@ -434,15 +434,15 @@ class rover:
 
 				print(f"At angle: {np.round((angleFound * (180 / np.pi)), 0)}, looking for: {np.round((angleDesired * (180 / np.pi)), 0)}")
 
-				print(np.cross(np.array([np.cos(np.round(angleFound, 0)), np.sin(np.round(angleFound, 0))]), np.array([np.cos(np.round(angleDesired, 0)), np.sin(np.round(angleDesired, 0))])))
+				print(np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])))
 
-				if (np.round(angleFound, 0) == np.round(angleDesired, 0)):
+				if (np.round((angleFound * (180 / np.pi)), 0) == np.round((angleDesired * (180 / np.pi)), 0)):
 
 					self.moveRover("s")
 
 					break
 
-				elif (np.cross(np.array([np.cos(np.round(angleFound, 0)), np.sin(np.round(angleFound, 0))]), np.array([np.cos(np.round(angleDesired, 0)), np.sin(np.round(angleDesired, 0))])) > 0):
+				elif (np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])) > 0):
 
 					self.moveRover("rl", throttle = speed)
 
