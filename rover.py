@@ -404,9 +404,11 @@ class rover:
 
 		else:
 
-			direction = (self.getDirection() * (np.pi / 180))
+			direction = np.round((self.getDirection() * (np.pi / 180)))
+			lowerLimit = 0.15
+			angleDesired = np.round(angleDesired, 0)
 
-			if (np.cross(np.array([np.cos(direction), np.sin(direction)]), np.array([np.cos((angle * (np.pi / 180))), np.sin((angle * (np.pi / 180)))])) < 0):
+			if (np.cross(np.array([np.cos(direction), np.sin(direction)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])) > 0):
 
 				self.moveRover("rl", throttle = 0.5)
 
@@ -418,17 +420,17 @@ class rover:
 
 				angleFound = (self.getDirection() * (np.pi / 180))
 
-				diff = np.round((angle * (np.pi / 180)), 0) - angleFound
+				diff = np.round(angleDesired, 0) - angleFound
 
 				speed = (diff / 360)
 
-				if (speed < 0.25):
+				if (speed < lowerLimit):
 
-					speed = 0.25
+					speed = lowerLimit
 
-				print(f"At angle: {angleFound * (180 / np.pi)}, looking for: {np.round(angle, 0)}")
+				print(f"At angle: {angleFound * (180 / np.pi)}, looking for: {(angle * (180 / np.pi))}")
 
-				print(np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos((angle * (np.pi / 180))), np.sin((angle * (np.pi / 180)))])))
+				print(np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])))
 
 				if (np.round((angleFound * (180 / np.pi)), 0) == np.round(angle, 0)):
 
@@ -436,7 +438,7 @@ class rover:
 
 					break
 
-				elif (np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos((angle * (np.pi / 180))), np.sin((angle * (np.pi / 180)))])) < 0):
+				elif (np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])) > 0):
 
 					self.moveRover("rl", throttle = speed)
 
