@@ -207,7 +207,7 @@ def runPreset (cmd):
 
 		try:
 
-			pr.square(rover, int(cmd[2]))
+			pr.square(rover, float(cmd[2]))
 
 		except:
 
