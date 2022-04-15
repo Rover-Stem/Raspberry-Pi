@@ -436,7 +436,7 @@ class rover:
 
 				print(np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])))
 
-				if (np.round((angleFound * (180 / np.pi)), 0) == np.round(angle, 0)):
+				if (angleFound == angleDesired):
 
 					self.moveRover("s")
 
