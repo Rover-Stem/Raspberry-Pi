@@ -205,7 +205,13 @@ def runPreset (cmd):
 
 	if (cmd[1] == "square"):
 
-		pr.square(rover)
+		try:
+
+			pr.square(rover, int(cmd[2]))
+
+		except:
+
+			pr.square(rover)
 
 		storage.messagesOut.put("F")
 

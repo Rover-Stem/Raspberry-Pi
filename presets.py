@@ -4,7 +4,7 @@ import numpy as np
 
 #from imageProcessor import getPath
 
-def square (rover):
+def square (rover, sideTime = 1):
 
 	for i in range(4):
 
