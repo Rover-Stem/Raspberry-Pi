@@ -33,9 +33,9 @@ def distanceChallenge (rover, distance):
 
 # assumes that 0 degrees is north
 # possibly add if elif else statments to accodmetate for angles over 180 degrees
-def directionChallenge (rover, start, target):
+def directionChallenge (rover, target):
 
-	direction = start
+	direction = rover.getDirection()
 	targetDirection = target
 
 	while True:

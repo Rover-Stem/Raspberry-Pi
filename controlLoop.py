@@ -209,11 +209,51 @@ def runPreset (cmd):
 
 		storage.messagesOut.put("F")
 
+	elif (cmd[1] == "obstacleAvoidance1"):
+
+		pr.obstacleAvoidance1(rover)
+
+		storage.messagesOut.put("F")
+
+	elif (cmd[1] == "distanceChallange"):
+
+		pr.distanceChallange(rover, cmd[2])
+
+		storage.messagesOut.put("F")
+
+	elif (cmd[1] == "directionChallange"):
+
+		pr.directionChallange(rover, float(cmd[2]))
+
+		storage.messagesOut.put("F")
+
+	elif (cmd[1] == "obstacleAvoidance2"):
+
+		pr.obstacleAvoidance2(rover, float(cmd[2]))
+
+		storage.messagesOut.put("F")
+
+	elif (cmd[1] == "parallelParking"):
+
+		pr.parallelParking(rover, bool(cmd[2]))
+
+		storage.messagesOut.put("F")
+
+	elif (cmd[1] == "stayInYourLane"):
+
+		pr.stayInYourLane(rover)
+
+		storage.messagesOut.put("F")
+
+	elif (cmd[1] == "navNeighborhood"):
+
+		pr.navNeighborhood(rover)
+
+		storage.messagesOut.put("F")
+
 	else:
 
-		storage.messagesOut.put("E,Not in presets")
-
-print("Hello")
+		storage.messagesOut.put(f"E,{cmd[1]} not in presets")
 
 print("Starting Server")
 

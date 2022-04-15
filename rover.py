@@ -404,9 +404,9 @@ class rover:
 
 		else:
 
-			direction = self.getDirection()
+			direction = (self.getDirection() * (np.pi / 180))
 
-			if (np.cross(np.array([np.cos(direction), np.sin(direction)]), np.array([np.cos(angle), np.sin(angle)])) < 0):
+			if (np.cross(np.array([np.cos(direction), np.sin(direction)]), np.array([np.cos((angle * (np.pi / 180))), np.sin((angle * (np.pi / 180)))])) < 0):
 
 				self.moveRover("rl", throttle = 0.5)
 
@@ -416,9 +416,9 @@ class rover:
 
 			while (True):
 
-				angleFound = self.getDirection()
+				angleFound = (self.getDirection() * (np.pi / 180))
 
-				diff = np.round(angle, 0) - angleFound
+				diff = np.round((angle * (np.pi / 180)), 0) - angleFound
 
 				speed = (diff / 360)
 
@@ -426,17 +426,17 @@ class rover:
 
 					speed = 0.25
 
-				print(f"At angle: {angleFound}, looking for: {np.round(angle, 0)}")
+				print(f"At angle: {angleFound * (180 / np.pi)}, looking for: {np.round(angle, 0)}")
 
-				print(np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angle), np.sin(angle)])))
+				print(np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos((angle * (np.pi / 180))), np.sin((angle * (np.pi / 180)))])))
 
-				if (np.round(angleFound, 0) == np.round(angle, 0)):
+				if (np.round((angleFound * (180 / np.pi)), 0) == np.round(angle, 0)):
 
 					self.moveRover("s")
 
 					break
 
-				elif (np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angle), np.sin(angle)])) < 0):
+				elif (np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos((angle * (np.pi / 180))), np.sin((angle * (np.pi / 180)))])) < 0):
 
 					self.moveRover("rl", throttle = speed)
 
@@ -488,7 +488,7 @@ class rover:
 
 			return self.__accel.acceleration
 
-	def getAvrDistance (self, pulse_wait = 0.0001, numPulses = 5):
+	def getAvrDistance (self, numPulses = 5):
 
 		if (self.__testing):
 
@@ -501,8 +501,6 @@ class rover:
 			for i in range(numPulses):
 
 				totalDistance += self.measureDistance()
-
-				sleep(pulse_wait)
 
 			return (totalDistance / numPulses)
 
@@ -666,24 +664,36 @@ class rover:
 			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self.__tofNeeded}:{self.__tofError}")
 
 
-	def redoUltraSonic (self):
+	def redoTimeOfFlight (self):
 
 		if (self.__testing):
 
-			print("Redo US")
+			print("Redo ToF")
 
 		else:
 
 			try:
 
-				self.__ultra_sonic = adafruit_hcsr04.HCSR04(trigger_pin = board.D5, echo_pin = board.D6)
-				self.__ultra_sonic.distance
+				import adafruit_vl53l1x
+
+				self.__tofNeeded = True
+
+				i2c = board.I2C()
+
+				self.__timeOfFlight = adafruit_vl53l1x.VL53L1X(i2c)
+
+				self.__timeOfFlight.distance_mode = 1
+				self.__timeOfFlight.timing_budget = 100
+
+				self.__timeOfFlight.start_ranging()
+
+				self._tofError = False
 
 			except Exception as e:
 
-				storage.messagesOut.put("S,Ultrasonic not online ... Check connection")
+				storage.messagesOut.put("S,Time of Flight Sensor not online ... Check connection")
 
 
-				self.__usError = True
+				self.__tofError = True
 
 			storage.messagesOut.put(f"S,SU,M:True:{self.__motorError},C:{self.__cameraNeeded}:{self.__cameraError},A:{self.__maNeeded}:{self.__maError},S:{self.__servoNeeded}:{self.__servoError},T:{self.__tofNeeded}:{self.__tofError}")

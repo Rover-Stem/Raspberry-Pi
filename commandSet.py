@@ -244,7 +244,7 @@ def getDirection (cmd, rover):
 
 	return
 
-def moveAngle (cmd, rover):
+def moveToAngle (cmd, rover):
 
 	try:
 
