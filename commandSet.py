@@ -250,6 +250,10 @@ def moveToAngle (cmd, rover):
 
 		angle = float(cmd[2])
 
+		print("Angle:")
+		print(angle)
+		print()
+
 		try:
 
 			rad = bool(cmd[3])
