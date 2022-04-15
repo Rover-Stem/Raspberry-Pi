@@ -428,7 +428,7 @@ class rover:
 
 				print(f"Diff: {diff}")
 
-				speed = (diff / 90)
+				speed = (diff / 60)
 
 				if (speed > 1):
 
