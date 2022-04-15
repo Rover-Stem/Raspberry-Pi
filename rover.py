@@ -405,7 +405,7 @@ class rover:
 		else:
 
 			direction = np.round((self.getDirection() * (np.pi / 180)))
-			lowerLimit = 0.2
+			lowerLimit = 0.23
 			angleDesired = np.round((angle * (np.pi / 180)), 0)
 
 			print("Starting Vals:")
