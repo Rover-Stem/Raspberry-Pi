@@ -405,7 +405,7 @@ class rover:
 		else:
 
 			direction = np.round((self.getDirection() * (np.pi / 180)))
-			lowerLimit = 0.15
+			lowerLimit = 0.2
 			angleDesired = np.round((angle * (np.pi / 180)), 0)
 
 			print("Starting Vals:")
@@ -432,7 +432,7 @@ class rover:
 
 					speed = lowerLimit
 
-				print(f"At angle: {angleFound * (180 / np.pi)}, looking for: {(angle * (180 / np.pi))}")
+				print(f"At angle: {angleFound * (180 / np.pi)}, looking for: {(angleDesired * (180 / np.pi))}")
 
 				print(np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])))
 
