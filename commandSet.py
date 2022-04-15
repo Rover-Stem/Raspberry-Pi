@@ -260,7 +260,7 @@ def moveToAngle (cmd, rover):
 
 		except:
 
-			rover.moveDistance(angle)
+			rover.moveToAngle(angle)
 
 			return
 
