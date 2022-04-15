@@ -414,11 +414,11 @@ class rover:
 
 			if (np.cross(np.array([np.cos(np.round(direction, 0)), np.sin(np.round(direction, 0))]), np.array([np.cos(np.round(angleDesired, 0)), np.sin(np.round(angleDesired, 0))])) > 0):
 
-				self.moveRover("rl", throttle = 0.5)
+				self.moveRover("rl", throttle = 1)
 
 			else:
 
-				self.moveRover("rr", throttle = 0.5)
+				self.moveRover("rr", throttle = 1)
 
 			while (True):
 
@@ -426,7 +426,11 @@ class rover:
 
 				diff = np.round(angleDesired, 0) - np.round(angleFound, 0)
 
-				speed = (diff / 360)
+				speed = (diff / 90)
+
+				if (speed > 1):
+
+					speed = 1
 
 				if (speed < lowerLimit):
 
