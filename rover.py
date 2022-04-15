@@ -546,13 +546,27 @@ class rover:
 
 			mag = self.getMag()
 
-			if (rad):
+			if (mag[1] > 0):
 
-				direction = np.arctan2(mag[0], mag[1])
+				direction = 90 - np.degrees(np.arctan2(mag[0], mag[1]))
+
+			elif (mag[1] < 0):
+
+				direction = 270 - np.degrees(np.arctan2(mag[0], mag[1]))
 
 			else:
 
-				direction = np.degrees(np.arctan2(mag[0], mag[1]))
+				if (mag[0] > 0):
+
+					direction = 0
+
+				else:
+
+					direction = 180
+
+			if (rad):
+
+				direction = np.radians(direction)
 
 			if (negatives):
 
