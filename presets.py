@@ -7,6 +7,9 @@ import numpy as np
 def square (rover, sideTime = 1):
 
 	start = rover.getDirection()
+
+	print(start)
+
 	rover.moveToAngle(start)
 
 	for i in range(4):
