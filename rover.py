@@ -426,6 +426,8 @@ class rover:
 
 				diff = np.round(angleDesired, 0) - np.round(angleFound, 0)
 
+				print(diff)
+
 				speed = (diff / 20)
 
 				if (speed > 1):
