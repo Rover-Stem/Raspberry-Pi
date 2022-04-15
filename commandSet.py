@@ -268,8 +268,9 @@ def moveToAngle (cmd, rover):
 
 			return
 
-	except:
+	except Exception as e:
 
+		print(e)
 		storage.messagesOut.put("E,Angle Must Be Provided")
 
 		return
