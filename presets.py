@@ -9,6 +9,7 @@ def square (rover, sideTime = 1):
 	start = rover.getDirection()
 
 	print(start)
+	print(f"Side Time: {sideTime}")
 
 	rover.moveToAngle(start)
 
