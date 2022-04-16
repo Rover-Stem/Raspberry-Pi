@@ -564,7 +564,7 @@ class rover:
 
 					if (direction < 0):
 
-						direction += 2(np.pi)
+						direction += 2 * (np.pi)
 
 				else:
 
