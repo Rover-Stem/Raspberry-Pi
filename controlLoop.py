@@ -207,10 +207,13 @@ def runPreset (cmd):
 
 		try:
 
+			print(cmd[2])
+
 			pr.square(rover, float(cmd[2]))
 
 		except:
 
+			print("-----")
 			pr.square(rover)
 
 		storage.messagesOut.put("F")
