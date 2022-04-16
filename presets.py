@@ -14,8 +14,6 @@ def square (rover, sideTime = 1):
 
 		rover.moveToAngle((rover.getDirection() - 90) % 360)
 
-		start -= 90
-
 def obstacleAvoidance1 (rover):
 
 	rover.moveRover("f")
