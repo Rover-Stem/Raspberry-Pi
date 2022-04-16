@@ -564,6 +564,8 @@ class rover:
 
 					direction = 180
 
+			print(f"Giving Direction: {direction}")
+
 			if (rad):
 
 				direction = np.radians(direction)
