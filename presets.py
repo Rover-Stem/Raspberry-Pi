@@ -6,11 +6,6 @@ import numpy as np
 
 def square (rover, sideTime = 1):
 
-	start = rover.getDirection()
-
-	print(start)
-	print(f"Side Time: {sideTime}")
-
 	rover.moveToAngle(start)
 
 	for i in range(4):
@@ -19,7 +14,7 @@ def square (rover, sideTime = 1):
 		time.sleep(sideTime)
 		rover.moveRover("s")
 
-		rover.moveToAngle((start - 90) % 360)
+		rover.moveToAngle((rover.getDirection() - 90) % 360)
 
 		start -= 90
 
