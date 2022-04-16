@@ -546,29 +546,13 @@ class rover:
 
 			mag = self.getMag()
 
-			if (mag[1] > 0):
+			if (rad):
 
-				direction = 90 - np.degrees(np.arctan2(mag[0], mag[1]))
-
-			elif (mag[1] < 0):
-
-				direction = 270 - np.degrees(np.arctan2(mag[0], mag[1]))
+				direction = np.arctan2(mag[0], mag[1])
 
 			else:
 
-				if (mag[0] > 0):
-
-					direction = 0
-
-				else:
-
-					direction = 180
-
-			print(f"Giving Direction: {direction}")
-
-			if (rad):
-
-				direction = np.radians(direction)
+				direction = np.arctan2(mag[0], mag[1]) * (180 / np.pi)
 
 			if (negatives):
 
@@ -578,11 +562,17 @@ class rover:
 
 				if (rad):
 
-					return (((2 * np.pi) + direction) % (2 * np.pi))
+					if (direction < 0):
+
+						direction += 2(np.pi)
 
 				else:
 
-					return ((360 + direction) % 360)
+					if (direction < 0):
+
+						direction += 360
+
+				return direction
 
 	def takePic (self):
 
