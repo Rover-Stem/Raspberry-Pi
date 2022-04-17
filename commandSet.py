@@ -1,6 +1,8 @@
 import queue
 import storage
 
+import numpy as np
+
 from time import sleep
 
 def move (cmd, rover):
@@ -100,7 +102,7 @@ def moveServo (cmd, rover):
 		print(cmd)
 		angle = float(cmd[2])
 
-		if ((angle > 1) or (angle < -1)):
+		if (np.abs(angle > 1)):
 
 			storage.messagesOut.put("E,Angle Must Be Between 1 and -1 (inclusive)")
 
