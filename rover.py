@@ -307,11 +307,11 @@ class rover:
 
 			if (self.__servoNeeded):
 
-				from gpiozero import Servo
+				from gpiozero import AngularServo
 
 				try:
 
-					self.__servo = Servo(self.__servoPin, min_pulse_width = self.__minPW, max_pulse_width = self.__maxPW)
+					self.__servo = AngularServo(self.__servoPin, min_angle = -90, max_angle = 90)
 
 					self.__servoError = False
 
