@@ -260,6 +260,12 @@ def runPreset (cmd):
 
 		storage.messagesOut.put("F")
 
+	elif (cmd[1] == "getDirectionLoop"):
+
+		pr.getDirectionLoop(rover)
+
+		storage.messagesOut.put("F")
+
 	else:
 
 		storage.messagesOut.put(f"E,{cmd[1]} not in presets")

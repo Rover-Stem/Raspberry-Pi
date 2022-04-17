@@ -548,11 +548,11 @@ class rover:
 
 			if (rad):
 
-				direction = np.arctan2(mag[0], mag[1])
+				direction = np.arctan2(mag[1], mag[0])
 
 			else:
 
-				direction = np.arctan2(mag[0], mag[1]) * (180 / np.pi)
+				direction = np.arctan2(mag[1], mag[0]) * (180 / np.pi)
 
 			if (negatives):
 

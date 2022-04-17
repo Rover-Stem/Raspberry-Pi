@@ -1,6 +1,6 @@
+import time
 import board
 import storage
-import datetime
 import adafruit_lsm303_accel
 import adafruit_lsm303dlh_mag
 
@@ -15,6 +15,8 @@ def main ():
 	i2c = board.I2C()
 	mag = adafruit_lsm303dlh_mag.LSM303DLH_Mag(i2c)
 	accel = adafruit_lsm303_accel.LSM303_Accel(i2c)
+
+	start = time.time()
 
 	while True:
 
@@ -31,7 +33,7 @@ def main ():
 
 		with open(simFile, 'a') as f:
 
-			f.write(f"{datetime.datetime.utcnow().timestamp()},{magX},{magY},{magZ},{accX},{accY},{accZ}\n")
+			f.write(f"{time.time() - start},{magX},{magY},{magZ},{accX},{accY},{accZ}\n")
 
 		if (storage.exiting):
 

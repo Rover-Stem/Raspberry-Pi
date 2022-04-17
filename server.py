@@ -9,7 +9,7 @@ class server ():
 
 	def __init__ (self, host = "", port = 1234, packetSize = 1024):
 
-		storage.now = datetime.datetime.utcnow().strftime("%m-%d-%Y--%H:%M:%S")
+		storage.now = datetime.datetime.now().strftime("%m-%d-%Y--%H:%M:%S")
 
 		self.__logFile = f"logs/{storage.now}.log"
 

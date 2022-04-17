@@ -14,6 +14,14 @@ def square (rover, sideTime = 1):
 
 		rover.moveToAngle((rover.getDirection() - 90) % 360)
 
+def getDirectionLoop (rover):
+
+	for i in range(20):
+
+		print(rover.getDirection())
+
+		time.sleep(1)
+
 def obstacleAvoidance1 (rover):
 
 	rover.moveRover("f")
