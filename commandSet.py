@@ -97,6 +97,7 @@ def moveServo (cmd, rover):
 
 	try:
 
+		print(cmd)
 		angle = float(cmd[2])
 
 		if ((angle > 1) or (angle < -1)):
