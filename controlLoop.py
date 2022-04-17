@@ -218,49 +218,49 @@ def runPreset (cmd):
 
 		storage.messagesOut.put("F")
 
-	elif (cmd[1] == "obstacleAvoidance1"):
+	elif (cmd[1] == "obstacleavoidance1"):
 
 		pr.obstacleAvoidance1(rover)
 
 		storage.messagesOut.put("F")
 
-	elif (cmd[1] == "distanceChallange"):
+	elif (cmd[1] == "distancechallange"):
 
 		pr.distanceChallange(rover, cmd[2])
 
 		storage.messagesOut.put("F")
 
-	elif (cmd[1] == "directionChallange"):
+	elif (cmd[1] == "directionchallange"):
 
 		pr.directionChallange(rover, float(cmd[2]))
 
 		storage.messagesOut.put("F")
 
-	elif (cmd[1] == "obstacleAvoidance2"):
+	elif (cmd[1] == "obstacleavoidance2"):
 
 		pr.obstacleAvoidance2(rover, float(cmd[2]))
 
 		storage.messagesOut.put("F")
 
-	elif (cmd[1] == "parallelParking"):
+	elif (cmd[1] == "parallelparking"):
 
 		pr.parallelParking(rover, bool(cmd[2]))
 
 		storage.messagesOut.put("F")
 
-	elif (cmd[1] == "stayInYourLane"):
+	elif (cmd[1] == "stayinyourlane"):
 
 		pr.stayInYourLane(rover)
 
 		storage.messagesOut.put("F")
 
-	elif (cmd[1] == "navNeighborhood"):
+	elif (cmd[1] == "navneighborhood"):
 
 		pr.navNeighborhood(rover)
 
 		storage.messagesOut.put("F")
 
-	elif (cmd[1] == "getDirectionLoop"):
+	elif (cmd[1] == "getdirectionloop"):
 
 		pr.getDirectionLoop(rover)
 
