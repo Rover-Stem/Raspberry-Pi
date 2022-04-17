@@ -93,7 +93,7 @@ class server ():
 
 					with open(self.__logFile, 'a+') as f:
 
-						f.write(f"{datetime.datetime.utcnow().timestamp()} - Recieved: {str(data, 'utf-8')}\n")
+						f.write(f"{time.time()} - Recieved: {str(data, 'utf-8')}\n")
 
 				else:
 
@@ -121,7 +121,7 @@ class server ():
 
 						with open(self.__logFile, 'a+') as f:
 
-							f.write(f"{datetime.datetime.utcnow().timestamp()} - Sent: {str(msg, 'utf-8')}\n")
+							f.write(f"{time.time()} - Sent: {str(msg, 'utf-8')}\n")
 
 					else:
 
@@ -143,7 +143,7 @@ class server ():
 
 						with open(self.__logFile, 'a+') as f:
 
-							f.write(f"{datetime.datetime.utcnow().timestamp()} - Starting File Send\n")
+							f.write(f"{time.time()} - Starting File Send\n")
 
 					else:
 
@@ -156,7 +156,7 @@ class server ():
 
 						with open(self.__logFile, 'a+') as f:
 
-							f.write(f"{datetime.datetime.utcnow().timestamp()} - Sending {filename}\n")
+							f.write(f"{time.time()} - Sending {filename}\n")
 
 					else:
 
