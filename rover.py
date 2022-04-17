@@ -317,6 +317,8 @@ class rover:
 
 				except Exception as e:
 
+					print(e)
+
 					self.__servoError = True
 
 			if (self.__tofNeeded):
