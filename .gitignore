@@ -1,4 +1,6 @@
 Testing/
+sim/
+logs/
 __pycache__/
 
 *.png
