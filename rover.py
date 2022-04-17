@@ -229,7 +229,7 @@ class rover:
 		self.__camera = None
 		self.__timeOfFlight = None
 
-		self.__limit = 0.5
+		self.__limit = 45
 		#self.__correction = -0.15
 		#self.__servo_correction = -0.23
 
@@ -311,7 +311,7 @@ class rover:
 
 				try:
 
-					self.__servo = AngularServo(self.__servoPin, min_angle = -90, max_angle = 90)
+					self.__servo = AngularServo(self.__servoPin, min_angle = (-1 * self.__limit), max_angle = self.__limit)
 
 					self.__servoError = False
 
