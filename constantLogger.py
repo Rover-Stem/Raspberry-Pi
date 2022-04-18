@@ -4,13 +4,17 @@ import storage
 import adafruit_lsm303_accel
 import adafruit_lsm303dlh_mag
 
+import pandas as pd
+
 def main ():
 
 	simFile = f"sim/{storage.now}.sim"
 
+	data = pd.DataFrame(columns = ["Time", "Time Since Start", "MagX", "MagY", "MagZ", "AccX", "AccY", "AccZ"])
+
 	with open(simFile, 'a') as f:
 
-		f.write(f"Time,MagX,MagY,MagZ,AccX,AccY,AccZ\n")
+		f.write(f"Time,Time Since Start,MagX,MagY,MagZ,AccX,AccY,AccZ\n")
 
 	i2c = board.I2C()
 	mag = adafruit_lsm303dlh_mag.LSM303DLH_Mag(i2c)
@@ -23,18 +27,14 @@ def main ():
 		magRead = mag.magnetic
 		accelRead = accel.acceleration
 
-		magX = magRead[0]
-		magY = magRead[1]
-		magZ = magRead[2]
-
-		accX = accelRead[0]
-		accY = accelRead[1]
-		accZ = accelRead[2]
-
-		with open(simFile, 'a') as f:
-
-			f.write(f"{time.time() - start},{magX},{magY},{magZ},{accX},{accY},{accZ}\n")
+		data.loc[len(data)] = [time.time(), (time.time() - start), magRead[0], magRead[1], magRead[2], accelRead[0], accelRead[1], accelRead[2]]
 
 		if (storage.exiting):
+
+			with open(simFile, 'a') as f:
+
+				for index, i in data.iterrows():
+
+					f.write(f"{i["Time"]},{i["Time Since Start"]},{i["MagX"]},{i["MagY"]},{i["MagZ"]},{i["AccX"]},{i["AccY"]},{i["AccZ"]}\n")
 
 			break
