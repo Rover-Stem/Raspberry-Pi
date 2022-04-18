@@ -467,6 +467,9 @@ class rover:
 
 				self.moveRover("s")
 
+				print(f"New Angle Current: {self.getDirection()}")
+				print()
+
 			#if (rad):
 
 			#	direction = self.getDirection(True)
