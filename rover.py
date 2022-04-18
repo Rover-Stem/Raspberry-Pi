@@ -4,6 +4,7 @@ import storage
 import numpy as np
 
 from time import sleep, time, strftime
+from distanceFinder import findDistanceTraveled
 
 class motors:
 
@@ -46,8 +47,8 @@ class motors:
 			self.__frontWheels = PCA9685(0x40, debug = False)
 			self.__backWheels = PCA9685(0x44, debug = False)
 
-			self.__frontWheels.setPWMFreq(50)
-			self.__backWheels.setPWMFreq(50)
+			self.__frontWheels.setPWMFreq(1000)
+			self.__backWheels.setPWMFreq(1000)
 
 	def forwards (self, wheel, speed):
 
@@ -253,6 +254,9 @@ class rover:
 
 		self.__testing = False
 
+		self.__lastVelocity = np.asarray([[0], [0], [0]])
+		self.__lastPosition = np.asarray([[0], [0], [0]])
+
 		try:
 
 			self.__motors = motors()
@@ -387,7 +391,7 @@ class rover:
 				return (distance / (2.54))
 
 	# TODO: Needs implimentation
-	def moveDistance (self, distance, cm = False):
+	def moveDistance (self, distance, cm = False, report = False):
 
 		if (self.__testing):
 
@@ -395,7 +399,48 @@ class rover:
 
 		else:
 
-			pass
+			current = time()
+
+			self.moveRover("f")
+
+			while (True):
+
+				state = findDistanceTraveled((time() - current), mag, accel, self.__lastVelocity, self.__lastPosition)
+
+				self.__lastVelocity = state[1]
+				self.__lastPosition = state[2]
+
+				if (cm):
+
+					if (report):
+
+						storage.messagesOut.put(f"S,D,{state[0]}cm")
+
+					if (distance <= state[0]):
+
+						self.moveRover("s")
+
+						self.__lastVelocity = np.asarray([[0], [0], [0]])
+						self.__lastPosition = np.asarray([[0], [0], [0]])
+
+						break
+
+				else:
+
+					if (report):
+
+						storage.messagesOut.put(f"S,D,{state[0] / 2.54}in")
+
+					if (distance <= (state[0] / 2.54)):
+
+						self.moveRover("s")
+
+						self.__lastVelocity = np.asarray([[0], [0], [0]])
+						self.__lastPosition = np.asarray([[0], [0], [0]])
+
+						break
+
+				current = time()
 
 	# TODO: Needs implimentation
 	def moveToAngle (self, angle, rad = False):
@@ -406,57 +451,103 @@ class rover:
 
 		else:
 
-			direction = self.getDirection() * (np.pi / 180)
-			lowerLimit = 0.23
-			angleDesired = np.round(angle, 0) * (np.pi / 180)
+			if (rad):
 
-			print("Starting Vals:")
-			print(f"Direction: {(direction * (180 / np.pi))}, Desired: {(angleDesired * (180 / np.pi))}, Lower Limit: {lowerLimit}")
-			print()
+				direction = self.getDirection(True)
+				lowerLimit = 0.23
+				angleDesired = np.round(angle, 0)
 
-			if (np.cross(np.array([np.cos(np.round(direction, 0)), np.sin(np.round(direction, 0))]), np.array([np.cos(np.round(angleDesired, 0)), np.sin(np.round(angleDesired, 0))])) > 0):
+				if (np.cross(np.array([np.cos(np.round(direction, 0)), np.sin(np.round(direction, 0))]), np.array([np.cos(np.round(angleDesired, 0)), np.sin(np.round(angleDesired, 0))])) > 0):
 
-				self.moveRover("rl", throttle = 1)
-
-			else:
-
-				self.moveRover("rr", throttle = 1)
-
-			while (True):
-
-				angleFound = self.getDirection() * (np.pi / 180)
-
-				diff = np.abs(np.round((angleDesired * (180 / np.pi)), 0) - np.round((angleFound * (180 / np.pi)), 0))
-
-				print(f"Diff: {diff}")
-
-				speed = (diff / 60)
-
-				if (speed > 1):
-
-					speed = 1
-
-				if (speed < lowerLimit):
-
-					speed = lowerLimit
-
-				print(f"At angle: {np.round((angleFound * (180 / np.pi)), 0)}, looking for: {np.round((angleDesired * (180 / np.pi)), 0)}")
-
-				print(np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])))
-
-				if (np.round((angleFound * (180 / np.pi)), 0) == np.round((angleDesired * (180 / np.pi)), 0)):
-
-					self.moveRover("s")
-
-					break
-
-				elif (np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])) > 0):
-
-					self.moveRover("rl", throttle = speed)
+					self.moveRover("rl", throttle = 1)
 
 				else:
 
-					self.moveRover("rr", throttle = speed)
+					self.moveRover("rr", throttle = 1)
+
+				while (True):
+
+					angleFound = self.getDirection(True)
+
+					diff = np.abs(np.round((angleDesired * (180 / np.pi)), 0) - np.round((angleFound * (180 / np.pi)), 0))
+
+					speed = lowerLimit + (diff / 90)
+
+					if (speed > 1):
+
+						speed = 1
+
+					if (diff <= 10):
+
+						speed = lowerLimit
+
+					if (diff == 0):
+
+						self.moveRover("s")
+
+						break
+
+					elif (np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])) > 0):
+
+						self.moveRover("rl", throttle = speed)
+
+					else:
+
+						self.moveRover("rr", throttle = speed)
+
+			else:
+
+				direction = self.getDirection() * (np.pi / 180)
+				lowerLimit = 0.23
+				angleDesired = np.round(angle, 0) * (np.pi / 180)
+
+				print("Starting Vals:")
+				print(f"Direction: {(direction * (180 / np.pi))}, Desired: {(angleDesired * (180 / np.pi))}, Lower Limit: {lowerLimit}")
+				print()
+
+				if (np.cross(np.array([np.cos(np.round(direction, 0)), np.sin(np.round(direction, 0))]), np.array([np.cos(np.round(angleDesired, 0)), np.sin(np.round(angleDesired, 0))])) > 0):
+
+					self.moveRover("rl", throttle = 1)
+
+				else:
+
+					self.moveRover("rr", throttle = 1)
+
+				while (True):
+
+					angleFound = self.getDirection() * (np.pi / 180)
+
+					diff = np.abs(np.round((angleDesired * (180 / np.pi)), 0) - np.round((angleFound * (180 / np.pi)), 0))
+
+					print(f"Diff: {diff}")
+
+					speed = lowerLimit + (diff / 90)
+
+					if (speed > 1):
+
+						speed = 1
+
+					if (diff <= 10):
+
+						speed = lowerLimit
+
+					print(f"At angle: {np.round((angleFound * (180 / np.pi)), 0)}, looking for: {np.round((angleDesired * (180 / np.pi)), 0)}")
+
+					print(np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])))
+
+					if (diff == 0):
+
+						self.moveRover("s")
+
+						break
+
+					elif (np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])) > 0):
+
+						self.moveRover("rl", throttle = speed)
+
+					else:
+
+						self.moveRover("rr", throttle = speed)
 
 	def moveRover (self, movementOption, percent = 0.5, throttle = None):
 
@@ -538,7 +629,7 @@ class rover:
 
 			return self.__mag.magnetic
 
-	def getDirection (self, negatives = False, rad = False):
+	def getDirection (self, rad = False):
 
 		if (self.__testing):
 
@@ -548,33 +639,29 @@ class rover:
 
 			mag = self.getMag()
 
-			if (rad):
+			if (mag[1] > 0):
 
-				direction = np.arctan2(mag[1], mag[0])
+				direction = (np.pi / 2) - np.arctan(mag[0] / mag[1])
 
-			else:
+			elif (vector[1] < 0):
 
-				direction = np.arctan2(mag[1], mag[0]) * (180 / np.pi)
-
-			if (negatives):
-
-				return direction
+				direction = ((3 * np.pi) / 2) - np.arctan(mag[0] / mag[1])
 
 			else:
 
-				if (rad):
+				if (mag[0] < 0):
 
-					if (direction < 0):
-
-						direction += 2 * (np.pi)
+					direction = np.pi
 
 				else:
 
-					if (direction < 0):
+					direction = 0
 
-						direction += 360
+			if not(rad):
 
-				return direction
+				direction = np.degrees(direction)
+
+			return direction
 
 	def takePic (self):
 

@@ -79,9 +79,19 @@ def moveDistance (cmd, rover):
 
 			cm = bool(cmd[3])
 
-			rover.moveDistance(distance, cm)
+			try:
 
-			return
+				report = bool(cmd[4])
+
+				rover.moveDistance(distance, cm, report)
+
+				return
+
+			except:
+
+				rover.moveDistance(distance, cm)
+
+				return
 
 		except:
 
@@ -241,7 +251,15 @@ def statusUpdate (cmd, rover):
 
 def getDirection (cmd, rover):
 
-	dir = rover.getDirection()
+	try:
+
+		rads = bool(cmd[2])
+
+		dir = rover.getDirection(rads)
+
+	except:
+
+		dir = rover.getDirection()
 
 	storage.messagesOut.put(f"S,DIR,{dir}")
 
