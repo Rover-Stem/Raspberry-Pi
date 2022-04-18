@@ -35,6 +35,6 @@ def main ():
 
 				for index, i in data.iterrows():
 
-					f.write(f"{i["Time"]},{i["Time Since Start"]},{i["MagX"]},{i["MagY"]},{i["MagZ"]},{i["AccX"]},{i["AccY"]},{i["AccZ"]}\n")
+					f.write(f"{i['Time']},{i['Time Since Start']},{i['MagX']},{i['MagY']},{i['MagZ']},{i['AccX']},{i['AccY']},{i['AccZ']}\n")
 
 			break
