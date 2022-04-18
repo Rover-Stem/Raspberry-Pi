@@ -57,6 +57,13 @@ def findVelocity (vector, pitch, roll, yaw, dt):
 
 	return vectCorrZ * dt
 
+def correctMag (vector, pitch, roll):
+
+	vectCorrX = rotX(vector, (-1 * roll))
+	vectCorrY = rotY(vectCorrX, (-1 * pitch))
+
+	return vectCorrY
+
 def findDistanceTraveled (dt, mag, accel, prevVel, prevPos):
 
 	smoothedMagX = np.convolve(mag[0], np.ones((50, )) / 50, mode = 'same')
@@ -70,7 +77,7 @@ def findDistanceTraveled (dt, mag, accel, prevVel, prevPos):
 	magVec = np.asarray([[smoothedMagX], [smoothedMagY], [smoothedMagZ]])
 	accVec = np.asarray([[smoothedAccX], [smoothedAccY], [smoothedAccZ]])
 
-	velocity = prevVel + findVelocity(accVec, findPitch(accVec), findRoll(accVec), findHeading(magVec), dt)
+	velocity = prevVel + findVelocity(accVec, findPitch(accVec), findRoll(accVec), findHeading(correctMag(magVec, findPitch(accVec), findRoll(accVec))), dt)
 	position = prevPos + (velocity * dt)
 
 	return [(np.sqrt(position.dot(position)) * 100), velocity, position]
