@@ -8,6 +8,8 @@ import pandas as pd
 
 def main ():
 
+	print("Logging started")
+
 	simFile = f"sim/{storage.now}.sim"
 
 	data = pd.DataFrame(columns = ["Time", "Time Since Start", "MagX", "MagY", "MagZ", "AccX", "AccY", "AccZ"])
