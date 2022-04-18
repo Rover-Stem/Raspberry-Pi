@@ -330,7 +330,7 @@ while True:
 
 		elif (cmd[0] == "S"):
 
-			tLog = threading.Thread(target = constantLogger.main, args = [], daemon = True)
+			tLog = threading.Thread(target = constantLogger.main, args = [])
 			tLog.start()
 
 		elif (cmd[0] == "L"):
