@@ -455,6 +455,10 @@ class rover:
 
 				dir = self.getDirection()
 
+				print(f"Angle Desired: {angle}")
+				print(f"Direction Current: {dir}")
+				print()
+
 				angularVelocity = (2.38 / 360)
 
 				self.moveRover("rr")
