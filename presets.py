@@ -84,6 +84,7 @@ def obstacleAvoidance2 (rover, numObstacles):
 		time.sleep(timeEnd - timeStart)
 		direction2 = rover.getDirection()
 
+		# TODO: Work on fixing logic
 		while True:
 
 			cross = np.cross(direction2, direction)

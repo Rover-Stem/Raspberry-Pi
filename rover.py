@@ -459,7 +459,7 @@ class rover:
 
 				self.moveRover("rr")
 
-				sleep((2.38 / 360) * (dir - angle))
+				sleep((2.38 / 360) * np.abs(dir - angle))
 
 				self.moveRover("s")
 
