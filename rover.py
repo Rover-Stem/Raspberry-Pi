@@ -453,7 +453,7 @@ class rover:
 
 			if not(rad):
 
-				dir = getDirection()
+				dir = self.getDirection()
 
 				angularVelocity = (2.38 / 360)
 
