@@ -31,6 +31,8 @@ def main ():
 
 		if (storage.exiting):
 
+			print(data)
+
 			with open(simFile, 'a') as f:
 
 				for index, i in data.iterrows():
