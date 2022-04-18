@@ -643,7 +643,7 @@ class rover:
 
 				direction = (np.pi / 2) - np.arctan(mag[0] / mag[1])
 
-			elif (vector[1] < 0):
+			elif (mag[1] < 0):
 
 				direction = ((3 * np.pi) / 2) - np.arctan(mag[0] / mag[1])
 
