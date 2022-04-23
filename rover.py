@@ -402,7 +402,7 @@ class rover:
 
 			current = time()
 
-			self.moveRover("f")
+			self.moveRover("f", 0.23)
 
 			while (True):
 
