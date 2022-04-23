@@ -254,6 +254,7 @@ class rover:
 
 		self.__testing = False
 
+		self.__distance = 0
 		self.__lastVelocity = np.asarray([[0], [0], [0]])
 		self.__lastPosition = np.asarray([[0], [0], [0]])
 
@@ -407,6 +408,7 @@ class rover:
 
 				state = findDistanceTraveled((time() - current), mag, accel, self.__lastVelocity, self.__lastPosition)
 
+				self.__distance += state[0]
 				self.__lastVelocity = state[1]
 				self.__lastPosition = state[2]
 
@@ -416,10 +418,11 @@ class rover:
 
 						storage.messagesOut.put(f"S,D,{state[0]}cm")
 
-					if (distance <= state[0]):
+					if (distance <= self.__distance):
 
 						self.moveRover("s")
 
+						self.__distance = 0
 						self.__lastVelocity = np.asarray([[0], [0], [0]])
 						self.__lastPosition = np.asarray([[0], [0], [0]])
 
@@ -639,29 +642,21 @@ class rover:
 
 			mag = self.getMag()
 
-			if (mag[1] > 0):
 
-				direction = (np.pi / 2) - np.arctan(mag[0] / mag[1])
+			roll = np.arctan2(accRead[1], np.sqrt(np.power(accRead[0], 2) + np.power(accRead[2], 2)))
+			pitch = np.arctan2(accRead[0], np.sqrt(np.power(accRead[1], 2) + np.power(accRead[2], 2)))
 
-			elif (mag[1] < 0):
+			magX = (magRead[0] * np.cos(pitch)) + (magRead[1] * np.sin(roll) * np.sin(pitch)) + (magRead[2] * np.cos(roll) * np.sin(pitch))
+			magY = (magRead[1] * np.cos(roll)) - (magRead[2] * np.sin(roll))
+			yaw = np.arctan2((-1 * magY), magX)
 
-				direction = ((3 * np.pi) / 2) - np.arctan(mag[0] / mag[1])
+			yawCorrected = (np.pi + yaw) % np.pi
 
-			else:
+			if (rad):
 
-				if (mag[0] < 0):
+				return yawCorrected
 
-					direction = np.pi
-
-				else:
-
-					direction = 0
-
-			if not(rad):
-
-				direction = np.degrees(direction)
-
-			return direction
+			return np.degrees(yawCorrected)
 
 	def takePic (self):
 

@@ -16,25 +16,13 @@ def rotZ (vector, rads):
 	rot = np.asarray([[np.cos(rads), (-1 * np.sin(rads)), 0], [np.sin(rads), np.cos(rads), 0], [0, 0, 1]])
 	return rot.dot(vector)
 
-def findHeading (vector):
+def findHeading (vector, roll, pitch):
 
-	if (vector[1] > 0):
+	magX = (vector[0] * np.cos(pitch)) + (vector[1] * np.sin(roll) * np.sin(pitch)) + (vector[2] * np.cos(roll) * np.sin(pitch))
+	magY = (vector[1] * np.cos(roll)) - (vector[2] * np.sin(roll))
+	yaw = np.arctan2((-1 * magY), magX)
 
-		heading = (np.pi / 2) - np.arctan(vector[0] / vector[1])
-
-	elif (vector[1] < 0):
-
-		heading = ((3 * np.pi) / 2) - np.arctan(vector[0] / vector[1])
-
-	else:
-
-		if (vector[0] < 0):
-
-			heading = np.pi
-
-		else:
-
-			heading = 0
+	yawCorrected = (np.pi + yaw) % np.pi
 
 	return heading
 
@@ -57,7 +45,7 @@ def findVelocity (vector, pitch, roll, yaw, dt):
 
 	return vectCorrZ * dt
 
-def correctMag (vector, pitch, roll):
+def correctMag (vector, roll, pitch):
 
 	vectCorrX = rotX(vector, (-1 * roll))
 	vectCorrY = rotY(vectCorrX, (-1 * pitch))
@@ -77,7 +65,10 @@ def findDistanceTraveled (dt, mag, accel, prevVel, prevPos):
 	magVec = np.asarray([[smoothedMagX], [smoothedMagY], [smoothedMagZ]])
 	accVec = np.asarray([[smoothedAccX], [smoothedAccY], [smoothedAccZ]])
 
-	velocity = prevVel + findVelocity(accVec, findPitch(accVec), findRoll(accVec), findHeading(correctMag(magVec, findPitch(accVec), findRoll(accVec))), dt)
+	roll = findRoll(accVec)
+	pitch = findPitch(accVec)
+
+	velocity = prevVel + findVelocity(accVec, pitch, roll, findHeading(correctMag(magVec, roll, pitch), roll, pitch), dt)
 	position = prevPos + (velocity * dt)
 
 	return [(np.sqrt(position.dot(position)) * 100), velocity, position]
