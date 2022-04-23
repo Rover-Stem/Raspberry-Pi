@@ -383,6 +383,8 @@ class rover:
 
 					break
 
+			self.__timeOfFlight.stop_ranging()
+
 			if (cm):
 
 				return distance
