@@ -230,7 +230,7 @@ class rover:
 		self.__camera = None
 		self.__timeOfFlight = None
 
-		self.__limit = 45
+		self.__limit = 90
 		#self.__correction = -0.15
 		#self.__servo_correction = -0.23
 
@@ -551,7 +551,7 @@ class rover:
 
 				#self.__servo.value = (0 + self.__servo_correction)
 
-			self.__servo.value = self.__limit * servoAngle
+			self.__servo.value = servoAngle
 
 	def getAccel (self):
 
