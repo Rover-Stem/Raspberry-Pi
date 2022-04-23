@@ -102,6 +102,7 @@ def moveDistance (cmd, rover):
 	except Exception as e:
 
 		storage.messagesOut.put("E,Distance Must Be Provided")
+		print(e)
 
 		return
 
