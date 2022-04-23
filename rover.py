@@ -371,9 +371,9 @@ class rover:
 
 		else:
 
-			while True:
+			self.__timeOfFlight.start_ranging()
 
-				self.__timeOfFlight.start_ranging()
+			while True:
 
 				if (self.__timeOfFlight.data_ready):
 
