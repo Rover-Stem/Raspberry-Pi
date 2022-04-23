@@ -47,8 +47,8 @@ class motors:
 			self.__frontWheels = PCA9685(0x40, debug = False)
 			self.__backWheels = PCA9685(0x44, debug = False)
 
-			self.__frontWheels.setPWMFreq(40)
-			self.__backWheels.setPWMFreq(40)
+			self.__frontWheels.setPWMFreq(1000)
+			self.__backWheels.setPWMFreq(1000)
 
 	def forwards (self, wheel, speed):
 
