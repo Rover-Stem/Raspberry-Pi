@@ -406,7 +406,7 @@ class rover:
 
 			while (True):
 
-				state = findDistanceTraveled((time() - current), mag, accel, self.__lastVelocity, self.__lastPosition)
+				state = findDistanceTraveled((time() - current), self.getMag(), self.getAccel(), self.__lastVelocity, self.__lastPosition)
 
 				self.__distance += state[0]
 				self.__lastVelocity = state[1]
