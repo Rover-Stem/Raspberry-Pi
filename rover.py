@@ -332,14 +332,12 @@ class rover:
 
 					import adafruit_vl53l1x
 
-					i2c = board.I2C()
+					self.__i2c = board.I2C()
 
-					self.__timeOfFlight = adafruit_vl53l1x.VL53L1X(i2c)
+					self.__timeOfFlight = adafruit_vl53l1x.VL53L1X(self.__i2c)
 
 					self.__timeOfFlight.distance_mode = 1
 					self.__timeOfFlight.timing_budget = 100
-
-					self.__timeOfFlight.start_ranging()
 
 					self._tofError = False
 
@@ -374,6 +372,8 @@ class rover:
 		else:
 
 			while True:
+
+				self.__timeOfFlight.start_ranging()
 
 				if (self.__timeOfFlight.data_ready):
 
