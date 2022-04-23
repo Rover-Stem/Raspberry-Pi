@@ -617,7 +617,7 @@ class rover:
 			magY = (mag[1] * np.cos(roll)) - (mag[2] * np.sin(roll))
 			yaw = np.arctan2((-1 * magY), magX)
 
-			yawCorrected = (np.pi + yaw) % np.pi
+			yawCorrected = ((2 * np.pi) + yaw) % (2 * np.pi)
 
 			if (rad):
 
