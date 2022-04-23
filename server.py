@@ -87,23 +87,25 @@ class server ():
 
 						continue
 
-				storage.messagesIn.put(str(data, 'utf-8'))
+				for i in str(data, "utf-8").split(",:f\5~"):
 
-				if not(storage.testing):
+					storage.messagesIn.put(i)
 
-					with open(self.__logFile, 'a+') as f:
+					if not(storage.testing):
 
-						f.write(f"{time.time()} - Recieved: {str(data, 'utf-8')}\n")
+						with open(self.__logFile, 'a+') as f:
 
-				else:
+							f.write(f"{time.time()} - Recieved: {i}\n")
 
-					print(f"Recieved: {str(data, 'utf-8')}")
+					else:
 
-				if (str(data, 'utf-8') == "stop"):
+						print(f"Recieved: {i}")
 
-					storage.messagesOut.put("stop")
+					if (i == "stop"):
 
-					break
+						storage.messagesOut.put("stop")
+
+						break
 
 	def sendMessages (self, conn):
 
@@ -113,65 +115,22 @@ class server ():
 
 				msg = bytes(storage.messagesOut.get(), 'utf-8')
 
-				if not(str(msg, 'utf-8') == "file"):
+				conn.send(bytes(str(msg, 'utf-8') + ",:f\5~", 'utf-8'))
 
-					conn.send(msg)
+				if not(storage.testing):
 
-					if not(storage.testing):
+					with open(self.__logFile, 'a+') as f:
 
-						with open(self.__logFile, 'a+') as f:
-
-							f.write(f"{time.time()} - Sent: {str(msg, 'utf-8')}\n")
-
-					else:
-
-						print(f"Sent: {str(msg, 'utf-8')}")
-
-					if (str(msg, 'utf-8') == "stop"):
-
-						conn.shutdown(SHUT_RDWR)
-
-						conn.close()
-
-						break
+						f.write(f"{time.time()} - Sent: {str(msg, 'utf-8')}\n")
 
 				else:
 
-					conn.send(msg)
+					print(f"Sent: {str(msg, 'utf-8')}")
 
-					if not(storage.testing):
+				if (str(msg, 'utf-8') == "stop"):
 
-						with open(self.__logFile, 'a+') as f:
+					conn.shutdown(SHUT_RDWR)
 
-							f.write(f"{time.time()} - Starting File Send\n")
+					conn.close()
 
-					else:
-
-						print(f"Starting File Send")
-
-					filepath = storage.messagesOut.get()
-					filename = filepath.split("/")[-1]
-
-					if not(storage.testing):
-
-						with open(self.__logFile, 'a+') as f:
-
-							f.write(f"{time.time()} - Sending {filename}\n")
-
-					else:
-
-						print(f"Sending {filename}")
-
-					conn.send(bytes(filename, 'utf-8'))
-
-					with open(filepath, "rb") as f:
-
-						while True:
-
-							bytes_read = f.read(__packetSize)
-
-							if not bytes_read:
-
-								break
-
-							conn.sendall(bytes_read)
+					break

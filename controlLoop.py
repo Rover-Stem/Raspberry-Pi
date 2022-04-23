@@ -5,7 +5,6 @@ import storage
 import threading
 import commandSet
 import subprocess
-import constantLogger
 
 import presets as pr
 
@@ -290,6 +289,10 @@ while True:
 if (storage.testing):
 
 	print("Started")
+
+else:
+
+	import constantLogger
 
 print("Starting Rover")
 
