@@ -608,13 +608,13 @@ class rover:
 		else:
 
 			mag = self.getMag()
+			accel = self.getAccel()
 
+			roll = np.arctan2(accel[1], np.sqrt(np.power(accel[0], 2) + np.power(accel[2], 2)))
+			pitch = np.arctan2(accel[0], np.sqrt(np.power(accel[1], 2) + np.power(accel[2], 2)))
 
-			roll = np.arctan2(accRead[1], np.sqrt(np.power(accRead[0], 2) + np.power(accRead[2], 2)))
-			pitch = np.arctan2(accRead[0], np.sqrt(np.power(accRead[1], 2) + np.power(accRead[2], 2)))
-
-			magX = (magRead[0] * np.cos(pitch)) + (magRead[1] * np.sin(roll) * np.sin(pitch)) + (magRead[2] * np.cos(roll) * np.sin(pitch))
-			magY = (magRead[1] * np.cos(roll)) - (magRead[2] * np.sin(roll))
+			magX = (mag[0] * np.cos(pitch)) + (mag[1] * np.sin(roll) * np.sin(pitch)) + (mag[2] * np.cos(roll) * np.sin(pitch))
+			magY = (mag[1] * np.cos(roll)) - (mag[2] * np.sin(roll))
 			yaw = np.arctan2((-1 * magY), magX)
 
 			yawCorrected = (np.pi + yaw) % np.pi
