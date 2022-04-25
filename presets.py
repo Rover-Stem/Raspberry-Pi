@@ -58,7 +58,7 @@ def directionChallenge (rover, target):
 
 		direction = rover.getDirection()
 
-def obstacleAvoidance2 (rover, numObstacles):
+def obstacleAvoidance2 (rover, numObstacles = 1):
 
 	count = 0
 
