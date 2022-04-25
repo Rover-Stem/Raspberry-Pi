@@ -197,6 +197,10 @@ def liveRun ():
 
 				switch(["R", "m", "s"])
 
+			input = ""
+
+			storage.messagesOut.put("I")
+
 	storage.messagesOut.put("F")
 
 # Logic for file control
@@ -340,6 +344,12 @@ while True:
 		elif (cmd[0] == "P"):
 
 			runPreset(cmd)
+
+			storage.messagesOut.put("F")
+
+		elif (cmd[0] == "I"):
+
+			liveRun()
 
 			storage.messagesOut.put("F")
 
