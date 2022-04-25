@@ -339,7 +339,13 @@ class rover:
 					self.__timeOfFlight.distance_mode = 1
 					self.__timeOfFlight.timing_budget = 100
 
-					self._tofError = False
+					if (self.__timeOfFlight == None):
+
+						self._tofError = False
+
+					else:
+
+						self._tofError = False
 
 				except Exception as e:
 
