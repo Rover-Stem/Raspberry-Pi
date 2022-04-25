@@ -28,7 +28,7 @@ def obstacleAvoidance1 (rover):
 
 	rover.moveRover("f")
 
-	while (rover.measureDistance() > 25):
+	while (rover.measureDistance() > 5):
 		pass
 
 	rover.moveRover("s")
