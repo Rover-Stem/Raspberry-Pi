@@ -94,7 +94,7 @@ def obstacleAvoidance2 (rover, numObstacles = 1):
 		rover.moveServo(-1)
 		timeStart = time.time()
 
-		while (rover.measureDistance() > 10):
+		while (rover.measureDistance() <= 10):
 
 			pass
 
