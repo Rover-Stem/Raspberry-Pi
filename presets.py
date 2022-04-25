@@ -24,6 +24,8 @@ def getDirectionLoop (rover):
 
 def obstacleAvoidance1 (rover):
 
+	rover.moveServo(0)
+
 	rover.moveRover("f")
 
 	while (rover.measureDistance() > 25):
