@@ -473,12 +473,12 @@ class rover:
 
 				if (np.cross(np.array([np.cos(direction), np.sin(direction)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])) > 0):
 
-					self.moveRover("rl", throttle = 1)
+					self.moveRover("cfl", throttle = 1)
 					print("Move Left")
 
 				else:
 
-					self.moveRover("rr", throttle = 1)
+					self.moveRover("cfr", throttle = 1)
 					print("Move Right")
 
 				print()
@@ -513,12 +513,12 @@ class rover:
 
 					elif (np.cross(np.array([np.cos(angleFound), np.sin(angleFound)]), np.array([np.cos(angleDesired), np.sin(angleDesired)])) > 0):
 
-						self.moveRover("rl", throttle = speed)
+						self.moveRover("cfl", throttle = speed)
 						print("Move Left")
 
 					else:
 
-						self.moveRover("rr", throttle = speed)
+						self.moveRover("cfr", throttle = speed)
 						print("Move Right")
 
 					print()
