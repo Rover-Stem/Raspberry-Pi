@@ -252,4 +252,5 @@ def intersectionTest (rover, type):
 	elif type == 4:
 		rover.moveRover("cfl")
 	else:
-		# Insert Binary Protocol 
+		pass
+		# Insert Binary Protocol
