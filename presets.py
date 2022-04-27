@@ -34,7 +34,7 @@ def obstacleAvoidance1 (rover):
 
 	#print(f"Distance: {distance}")
 
-	while (distance > 20):
+	while (distance > 10):
 
 		#print(f"Angle is {angle}")
 
