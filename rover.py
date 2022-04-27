@@ -377,19 +377,29 @@ class rover:
 
 		else:
 
-			self.__timeOfFlight.start_ranging()
-
 			while True:
 
-				if (self.__timeOfFlight.data_ready):
+				try:
 
-					distance = self.__timeOfFlight.distance
+					self.__timeOfFlight.start_ranging()
 
-					self.__timeOfFlight.clear_interrupt()
+					while True:
+
+						if (self.__timeOfFlight.data_ready):
+
+							distance = self.__timeOfFlight.distance
+
+							self.__timeOfFlight.clear_interrupt()
+
+							break
+
+					self.__timeOfFlight.stop_ranging()
 
 					break
 
-			self.__timeOfFlight.stop_ranging()
+				except:
+
+					pass
 
 			if (cm):
 
