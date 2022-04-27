@@ -26,7 +26,7 @@ def obstacleAvoidance1 (rover):
 
 	rover.moveServo(0)
 
-	rover.moveRover("f", 0.1)
+	rover.moveRover("f", throttle = 0.24)
 
 	angle = 1
 
