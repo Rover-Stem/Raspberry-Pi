@@ -30,7 +30,11 @@ def obstacleAvoidance1 (rover):
 
 	angle = 1
 
-	while (rover.measureDistance() > 10):
+	distance = rover.measureDistance()
+
+	print(f"Distance: {distance}")
+
+	while (distance > 10):
 
 		print(f"Angle is {angle}")
 
@@ -39,6 +43,10 @@ def obstacleAvoidance1 (rover):
 
 		rover.moveServo(-1 + angle)
 		print(f"Angle should be {-1 + angle}")
+
+		distance = rover.measureDistance()
+
+		print(f"Distance: {distance}")
 
 		pass
 
