@@ -34,11 +34,11 @@ def obstacleAvoidance1 (rover):
 
 	print(f"Distance: {distance}")
 
-	while (distance > 10):
+	while (distance > 15):
 
 		print(f"Angle is {angle}")
 
-		angle += 0.5
+		angle += 0.05
 		angle = angle % 2
 
 		rover.moveServo(-1 + angle)
