@@ -399,6 +399,8 @@ class rover:
 
 				except:
 
+					print("Error")
+
 					pass
 
 			if (cm):
