@@ -336,8 +336,8 @@ class rover:
 
 					self.__timeOfFlight = adafruit_vl53l1x.VL53L1X(self.__i2c)
 
-					self.__timeOfFlight.distance_mode = 1
-					self.__timeOfFlight.timing_budget = 100
+					self.__timeOfFlight.distance_mode = 2
+					self.__timeOfFlight.timing_budget = 50
 
 					if (self.__timeOfFlight == None):
 
