@@ -80,8 +80,6 @@ class motors:
 			self.__backWheels.setLevel(self.DNeg, 0)
 			self.__backWheels.setLevel(self.DPos, 1)
 
-
-
 	def backwards (self, wheel, speed):
 
 		if ("A" in wheel):
@@ -118,15 +116,15 @@ class motors:
 
 			self.__frontWheels.setDutycycle(self.PWMA, 0)
 
-		elif ("B" in wheel):
+		if ("B" in wheel):
 
 			self.__frontWheels.setDutycycle(self.PWMB, 0)
 
-		elif ("C" in wheel):
+		if ("C" in wheel):
 
 			self.__backWheels.setDutycycle(self.PWMC, 0)
 
-		elif ("D" in wheel):
+		if ("D" in wheel):
 
 			self.__backWheels.setDutycycle(self.PWMD, 0)
 
