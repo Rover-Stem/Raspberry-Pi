@@ -54,7 +54,9 @@ def obstacleAvoidance1 (rover):
 
 def distanceChallenge (rover, distance):
 
-	rover.moveDistance(distance)
+	rover.moveRover("f", throttle = 1)
+	time.sleep((distance * (67)))
+	rover.moveRover("s")
 
 # assumes that 0 degrees is north
 # possibly add if elif else statments to accodmetate for angles over 180 degrees
