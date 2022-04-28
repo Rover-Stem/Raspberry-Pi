@@ -44,45 +44,13 @@ class motors:
 
 			# Creates Wheel Pair Variables
 
-			self.__frontWheels = PCA9685(0x40, debug = False)
-			self.__backWheels = PCA9685(0x44, debug = False)
+			self.__frontWheels = PCA9685(0x44, debug = False)
+			self.__backWheels = PCA9685(0x40, debug = False)
 
 			self.__frontWheels.setPWMFreq(1000)
 			self.__backWheels.setPWMFreq(1000)
 
 	def forwards (self, wheel, speed):
-
-		for i in wheel:
-
-			if (i == "A"):
-
-				self.__frontWheels.setDutycycle(self.PWMA, speed)
-
-				self.__frontWheels.setLevel(self.ANeg, 0)
-				self.__frontWheels.setLevel(self.APos, 1)
-
-			elif (i == "B"):
-
-				self.__frontWheels.setDutycycle(self.PWMB, speed)
-
-				self.__frontWheels.setLevel(self.BNeg, 0)
-				self.__frontWheels.setLevel(self.BPos, 1)
-
-			elif (i == "C"):
-
-				self.__backWheels.setDutycycle(self.PWMC, speed)
-
-				self.__backWheels.setLevel(self.CNeg, 0)
-				self.__backWheels.setLevel(self.CPos, 1)
-
-			elif (i == "D"):
-
-				self.__backWheels.setDutycycle(self.PWMD, speed)
-
-				self.__backWheels.setLevel(self.DNeg, 0)
-				self.__backWheels.setLevel(self.DPos, 1)
-
-	def backwards (self, wheel, speed):
 
 		for i in wheel:
 
@@ -113,6 +81,38 @@ class motors:
 
 				self.__backWheels.setLevel(self.DNeg, 1)
 				self.__backWheels.setLevel(self.DPos, 0)
+
+	def backwards (self, wheel, speed):
+
+		for i in wheel:
+
+			if (i == "A"):
+
+				self.__frontWheels.setDutycycle(self.PWMA, speed)
+
+				self.__frontWheels.setLevel(self.ANeg, 0)
+				self.__frontWheels.setLevel(self.APos, 1)
+
+			elif (i == "B"):
+
+				self.__frontWheels.setDutycycle(self.PWMB, speed)
+
+				self.__frontWheels.setLevel(self.BNeg, 0)
+				self.__frontWheels.setLevel(self.BPos, 1)
+
+			elif (i == "C"):
+
+				self.__backWheels.setDutycycle(self.PWMC, speed)
+
+				self.__backWheels.setLevel(self.CNeg, 0)
+				self.__backWheels.setLevel(self.CPos, 1)
+
+			elif (i == "D"):
+
+				self.__backWheels.setDutycycle(self.PWMD, speed)
+
+				self.__backWheels.setLevel(self.DNeg, 0)
+				self.__backWheels.setLevel(self.DPos, 1)
 
 	def stop (self, wheel):
 
