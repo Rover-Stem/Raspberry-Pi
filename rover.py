@@ -401,6 +401,8 @@ class rover:
 
 		else:
 
+			count = 5
+
 			while True:
 
 				try:
@@ -424,6 +426,14 @@ class rover:
 				except:
 
 					print("Error")
+
+					count -= 1
+
+					if (count == -1):
+
+						distance = 10000000
+
+						break
 
 					pass
 
