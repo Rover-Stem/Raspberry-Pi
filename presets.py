@@ -256,6 +256,7 @@ def obstacleAvoidance2_Strafe (rover, numObstacles):
 # for type use: 0 = unknown/automonous 1 = stop 2 = forward 3 = right 4 = left
 # Need code for detecting the end of the lane (camera sensor analysis)
 def intersectionTest (rover, type):
+	rover.moveRover("f")
 	if type == 1:
 		rover.moveRover("s")
 	elif type == 2:
