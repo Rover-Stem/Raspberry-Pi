@@ -47,90 +47,92 @@ class motors:
 			self.__frontWheels = PCA9685(0x40, debug = False)
 			self.__backWheels = PCA9685(0x44, debug = False)
 
-			self.__frontWheels.setPWMFreq(50)
-			self.__backWheels.setPWMFreq(50)
+			self.__frontWheels.setPWMFreq(1000)
+			self.__backWheels.setPWMFreq(1000)
 
 	def forwards (self, wheel, speed):
 
-		if ("A" in wheel):
+		for i in wheel:
 
-			print("A")
-			self.__frontWheels.setDutycycle(self.PWMA, speed)
+			if (i == "A"):
 
-			self.__frontWheels.setLevel(self.ANeg, 0)
-			self.__frontWheels.setLevel(self.APos, 1)
+				self.__frontWheels.setDutycycle(self.PWMA, speed)
 
-		if ("B" in wheel):
+				self.__frontWheels.setLevel(self.ANeg, 0)
+				self.__frontWheels.setLevel(self.APos, 1)
 
-			print("B")
-			self.__frontWheels.setDutycycle(self.PWMB, speed)
+			elif (i == "B"):
 
-			self.__frontWheels.setLevel(self.BNeg, 0)
-			self.__frontWheels.setLevel(self.BPos, 1)
+				self.__frontWheels.setDutycycle(self.PWMB, speed)
 
-		if ("C" in wheel):
+				self.__frontWheels.setLevel(self.BNeg, 0)
+				self.__frontWheels.setLevel(self.BPos, 1)
 
-			print("C")
-			self.__backWheels.setDutycycle(self.PWMC, speed)
+			elif (i == "C"):
 
-			self.__backWheels.setLevel(self.CNeg, 0)
-			self.__backWheels.setLevel(self.CPos, 1)
+				self.__backWheels.setDutycycle(self.PWMC, speed)
 
-		if ("D" in wheel):
+				self.__backWheels.setLevel(self.CNeg, 0)
+				self.__backWheels.setLevel(self.CPos, 1)
 
-			print("D")
-			self.__backWheels.setDutycycle(self.PWMD, speed)
+			elif (i == "D"):
 
-			self.__backWheels.setLevel(self.DNeg, 0)
-			self.__backWheels.setLevel(self.DPos, 1)
+				self.__backWheels.setDutycycle(self.PWMD, speed)
+
+				self.__backWheels.setLevel(self.DNeg, 0)
+				self.__backWheels.setLevel(self.DPos, 1)
 
 	def backwards (self, wheel, speed):
 
-		if ("A" in wheel):
+		for i in wheel:
 
-			self.__frontWheels.setDutycycle(self.PWMA, speed)
+			if (i == "A"):
 
-			self.__frontWheels.setLevel(self.ANeg, 1)
-			self.__frontWheels.setLevel(self.APos, 0)
+				self.__frontWheels.setDutycycle(self.PWMA, speed)
 
-		if ("B" in wheel):
+				self.__frontWheels.setLevel(self.ANeg, 1)
+				self.__frontWheels.setLevel(self.APos, 0)
 
-			self.__frontWheels.setDutycycle(self.PWMB, speed)
+			elif (i == "B"):
 
-			self.__frontWheels.setLevel(self.BNeg, 1)
-			self.__frontWheels.setLevel(self.BPos, 0)
+				self.__frontWheels.setDutycycle(self.PWMB, speed)
 
-		if ("C" in wheel):
+				self.__frontWheels.setLevel(self.BNeg, 1)
+				self.__frontWheels.setLevel(self.BPos, 0)
 
-			self.__backWheels.setDutycycle(self.PWMC, speed)
+			elif (i == "C"):
 
-			self.__backWheels.setLevel(self.CNeg, 1)
-			self.__backWheels.setLevel(self.CPos, 0)
+				self.__backWheels.setDutycycle(self.PWMC, speed)
 
-		if ("D" in wheel):
+				self.__backWheels.setLevel(self.CNeg, 1)
+				self.__backWheels.setLevel(self.CPos, 0)
 
-			self.__backWheels.setDutycycle(self.PWMD, speed)
+			elif (i == "D"):
 
-			self.__backWheels.setLevel(self.DNeg, 1)
-			self.__backWheels.setLevel(self.DPos, 0)
+				self.__backWheels.setDutycycle(self.PWMD, speed)
+
+				self.__backWheels.setLevel(self.DNeg, 1)
+				self.__backWheels.setLevel(self.DPos, 0)
 
 	def stop (self, wheel):
 
-		if ("A" in wheel):
+		for i in wheel:
 
-			self.__frontWheels.setDutycycle(self.PWMA, 0)
+			if (i == "A"):
 
-		if ("B" in wheel):
+				self.__frontWheels.setDutycycle(self.PWMA, 0)
 
-			self.__frontWheels.setDutycycle(self.PWMB, 0)
+			elif (i == "B"):
 
-		if ("C" in wheel):
+				self.__frontWheels.setDutycycle(self.PWMB, 0)
 
-			self.__backWheels.setDutycycle(self.PWMC, 0)
+			elif (i == "C"):
 
-		if ("D" in wheel):
+				self.__backWheels.setDutycycle(self.PWMC, 0)
 
-			self.__backWheels.setDutycycle(self.PWMD, 0)
+			elif (i == "D"):
+
+				self.__backWheels.setDutycycle(self.PWMD, 0)
 
 	def stopAll (self):
 
@@ -154,87 +156,63 @@ class motors:
 
 			elif (movementOption == "r"):
 
-				self.backwards(["A"], speed)
-				self.forwards(["B"], speed)
-				self.forwards(["C"], speed)
-				self.backwards(["D"], speed)
+				self.forwards(["B", "C"], speed)
+				self.backwards(["A", "D"], speed)
 
 			elif (movementOption == "l"):
 
-				self.forwards(["A"], speed)
-				self.backwards(["B"], speed)
-				self.backwards(["C"], speed)
-				self.forwards(["D"], speed)
+				self.forwards(["A", "D"], speed)
+				self.backwards(["B", "C"], speed)
 
 			elif (movementOption == "dfr"):
 
-				self.stop(["A"], speed)
-				self.forwards(["B"], speed)
-				self.forwards(["C"], speed)
-				self.stop(["D"], speed)
+				self.forwards(["B", "C"], speed)
+				self.stop(["A", "D"], speed)
 
 			elif (movementOption == "dfl"):
 
-				self.forwards(["A"], speed)
-				self.stop(["B"], speed)
-				self.stop(["C"], speed)
-				self.forwards(["D"], speed)
+				self.forwards(["A", "D"], speed)
+				self.stop(["B", "C"], speed)
 
 			elif (movementOption == "dbr"):
 
-				self.backwards(["A"], speed)
-				self.stop(["B"], speed)
-				self.stop(["C"], speed)
-				self.backwards(["D"], speed)
+				self.backwards(["A", "D"], speed)
+				self.stop(["B", "C"], speed)
 
 			elif (movementOption == "dbl"):
 
-				self.stop(["A"], speed)
-				self.backwards(["B"], speed)
-				self.backwards(["C"], speed)
-				self.stop(["D"], speed)
+				self.backwards(["B", "C"], speed)
+				self.stop(["A", "D"], speed)
 
 			elif (movementOption == "cfr"):
 
-				self.forwards(["A"], (speed * ratio))
-				self.forwards(["B"], speed)
-				self.forwards(["C"], (speed * ratio))
-				self.forwards(["D"], speed)
+				self.forwards(["B", "D"], speed)
+				self.forwards(["A", "C"], (speed * ratio))
 
 			elif (movementOption == "cfl"):
 
-				self.forwards(["A"], speed)
-				self.forwards(["B"], (speed * ratio))
-				self.forwards(["C"], speed)
-				self.forwards(["D"], (speed * ratio))
+				self.forwards(["A", "C"], speed)
+				self.forwards(["B", "D"], (speed * ratio))
 
 			elif (movementOption == "cbr"):
 
-				self.backwards(["A"], (speed * ratio))
-				self.backwards(["B"], speed)
-				self.backwards(["C"], (speed * ratio))
-				self.backwards(["D"], speed)
+				self.backwards(["B", "D"], speed)
+				self.backwards(["A", "C"], (speed * ratio))
 
 			elif (movementOption == "cbl"):
 
-				self.backwards(["A"], speed)
-				self.backwards(["B"], (speed * ratio))
-				self.backwards(["C"], speed)
-				self.backwards(["D"], (speed * ratio))
+				self.backwards(["A", "C"], speed)
+				self.backwards(["B", "D"], (speed * ratio))
 
 			elif (movementOption == "rr"):
 
-				self.backwards(["A"], speed)
-				self.forwards(["B"], speed)
-				self.backwards(["C"], speed)
-				self.forwards(["D"], speed)
+				self.forwards(["B", "D"], speed)
+				self.backwards(["A", "C"], speed)
 
 			elif (movementOption == "rl"):
 
-				self.forwards(["A"], speed)
-				self.backwards(["B"], speed)
-				self.forwards(["C"], speed)
-				self.backwards(["D"], speed)
+				self.forwards(["A", "C"], speed)
+				self.backwards(["B", "D"], speed)
 
 			elif (movementOption == "s"):
 
