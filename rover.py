@@ -58,38 +58,6 @@ class motors:
 
 				self.__frontWheels.setDutycycle(self.PWMA, speed)
 
-				self.__frontWheels.setLevel(self.ANeg, 1)
-				self.__frontWheels.setLevel(self.APos, 0)
-
-			elif (i == "B"):
-
-				self.__frontWheels.setDutycycle(self.PWMB, speed)
-
-				self.__frontWheels.setLevel(self.BNeg, 1)
-				self.__frontWheels.setLevel(self.BPos, 0)
-
-			elif (i == "C"):
-
-				self.__backWheels.setDutycycle(self.PWMC, speed)
-
-				self.__backWheels.setLevel(self.CNeg, 1)
-				self.__backWheels.setLevel(self.CPos, 0)
-
-			elif (i == "D"):
-
-				self.__backWheels.setDutycycle(self.PWMD, speed)
-
-				self.__backWheels.setLevel(self.DNeg, 1)
-				self.__backWheels.setLevel(self.DPos, 0)
-
-	def backwards (self, wheel, speed):
-
-		for i in wheel:
-
-			if (i == "A"):
-
-				self.__frontWheels.setDutycycle(self.PWMA, speed)
-
 				self.__frontWheels.setLevel(self.ANeg, 0)
 				self.__frontWheels.setLevel(self.APos, 1)
 
@@ -113,6 +81,38 @@ class motors:
 
 				self.__backWheels.setLevel(self.DNeg, 0)
 				self.__backWheels.setLevel(self.DPos, 1)
+
+	def backwards (self, wheel, speed):
+
+		for i in wheel:
+
+			if (i == "A"):
+
+				self.__frontWheels.setDutycycle(self.PWMA, speed)
+
+				self.__frontWheels.setLevel(self.ANeg, 1)
+				self.__frontWheels.setLevel(self.APos, 0)
+
+			elif (i == "B"):
+
+				self.__frontWheels.setDutycycle(self.PWMB, speed)
+
+				self.__frontWheels.setLevel(self.BNeg, 1)
+				self.__frontWheels.setLevel(self.BPos, 0)
+
+			elif (i == "C"):
+
+				self.__backWheels.setDutycycle(self.PWMC, speed)
+
+				self.__backWheels.setLevel(self.CNeg, 1)
+				self.__backWheels.setLevel(self.CPos, 0)
+
+			elif (i == "D"):
+
+				self.__backWheels.setDutycycle(self.PWMD, speed)
+
+				self.__backWheels.setLevel(self.DNeg, 1)
+				self.__backWheels.setLevel(self.DPos, 0)
 
 	def stop (self, wheel):
 
