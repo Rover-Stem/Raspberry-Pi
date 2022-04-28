@@ -148,8 +148,7 @@ class motors:
 
 			if (movementOption == "f"):
 
-				self.forwards(["A", "C"], speed)
-				self.forwards(["B", "D"], speed * 0.9)
+				self.forwards(["A", "B", "C", "D"], speed)
 
 			elif (movementOption == "b"):
 
