@@ -55,7 +55,7 @@ def obstacleAvoidance1 (rover):
 def distanceChallenge (rover, distance):
 
 	rover.moveRover("f", throttle = 1)
-	time.sleep((distance * (67)))
+	time.sleep((distance / (67)))
 	rover.moveRover("s")
 
 # assumes that 0 degrees is north
