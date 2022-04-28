@@ -167,22 +167,22 @@ class motors:
 			elif (movementOption == "dfr"):
 
 				self.forwards(["B", "C"], speed)
-				self.stop(["A", "D"], speed)
+				self.stop(["A", "D"])
 
 			elif (movementOption == "dfl"):
 
 				self.forwards(["A", "D"], speed)
-				self.stop(["B", "C"], speed)
+				self.stop(["B", "C"])
 
 			elif (movementOption == "dbr"):
 
 				self.backwards(["A", "D"], speed)
-				self.stop(["B", "C"], speed)
+				self.stop(["B", "C"])
 
 			elif (movementOption == "dbl"):
 
 				self.backwards(["B", "C"], speed)
-				self.stop(["A", "D"], speed)
+				self.stop(["A", "D"])
 
 			elif (movementOption == "cfr"):
 
