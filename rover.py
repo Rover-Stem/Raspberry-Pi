@@ -266,7 +266,7 @@ class rover:
 
 		except Exception as e:
 
-			print(e)
+			print(f"Motor Exception: {e}")
 
 			self.__motorError = True
 
