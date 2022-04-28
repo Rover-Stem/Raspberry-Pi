@@ -158,7 +158,7 @@ def parallelParking (rover, left = False):
 		rover.moveServo(1)
 		rover.moveRover("r", throttle = 0.5)
 
-	while (rover.measureDistance(True) > 20):
+	while (rover.measureDistance(True) > 35):
 
 		pass
 
