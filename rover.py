@@ -54,6 +54,7 @@ class motors:
 
 		if ("A" in wheel):
 
+			print("A")
 			self.__frontWheels.setDutycycle(self.PWMA, speed)
 
 			self.__frontWheels.setLevel(self.ANeg, 0)
@@ -61,6 +62,7 @@ class motors:
 
 		if ("B" in wheel):
 
+			print("B")
 			self.__frontWheels.setDutycycle(self.PWMB, speed)
 
 			self.__frontWheels.setLevel(self.BNeg, 0)
@@ -68,6 +70,7 @@ class motors:
 
 		if ("C" in wheel):
 
+			print("C")
 			self.__backWheels.setDutycycle(self.PWMC, speed)
 
 			self.__backWheels.setLevel(self.CNeg, 0)
@@ -75,6 +78,7 @@ class motors:
 
 		if ("D" in wheel):
 
+			print("D")
 			self.__backWheels.setDutycycle(self.PWMD, speed)
 
 			self.__backWheels.setLevel(self.DNeg, 0)
