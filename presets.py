@@ -84,6 +84,7 @@ def directionChallenge (rover, target):
 def obstacleAvoidance2 (rover, numObstacles = 1):
 
 	count = 0
+	times = 2.5
 
 	while True:
 
@@ -105,21 +106,14 @@ def obstacleAvoidance2 (rover, numObstacles = 1):
 
 		rover.moveRover("cfl", throttle = 0.5)
 		rover.moveServo(-1)
-		timeStart = time.time()
-
-		while (rover.measureDistance() <= 10):
-
-			pass
-
-		time.sleep(2)
-
+		time.sleep(times)
 		timeEnd = time.time()
 		rover.moveRover("cfr", throttle = 0.5)
-		time.sleep(timeEnd - timeStart + 0.2)
+		time.sleep(times + 0.2)
 		rover.moveRover("cfr", throttle = 0.5)
-		time.sleep(timeEnd - timeStart + 0.2)
+		time.sleep(times + 0.2)
 		rover.moveRover("cfl", throttle = 0.5)
-		time.sleep(timeEnd - timeStart + 0.2)
+		time.sleep(times + 0.2)
 		#direction2 = rover.getDirection()
 
 		rover.moveRover("s")
