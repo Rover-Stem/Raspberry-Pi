@@ -156,63 +156,87 @@ class motors:
 
 			elif (movementOption == "r"):
 
-				self.forwards(["B", "C"], speed)
-				self.backwards(["A", "D"], speed)
+				self.backwards(["A"], speed)
+				self.forwards(["B"], speed)
+				self.forwards(["C"], speed)
+				self.backwards(["D"], speed)
 
 			elif (movementOption == "l"):
 
-				self.forwards(["A", "D"], speed)
-				self.backwards(["B", "C"], speed)
+				self.forwards(["A"], speed)
+				self.backwards(["B"], speed)
+				self.backwards(["C"], speed)
+				self.forwards(["D"], speed)
 
 			elif (movementOption == "dfr"):
 
-				self.forwards(["B", "C"], speed)
-				self.stop(["A", "D"])
+				self.stop(["A"])
+				self.forwards(["B"], speed)
+				self.forwards(["C"], speed)
+				self.stop(["D"])
 
 			elif (movementOption == "dfl"):
 
-				self.forwards(["A", "D"], speed)
-				self.stop(["B", "C"])
+				self.forwards(["A"], speed)
+				self.stop(["B"])
+				self.stop(["C"])
+				self.forwards(["D"], speed)
 
 			elif (movementOption == "dbr"):
 
-				self.backwards(["A", "D"], speed)
-				self.stop(["B", "C"])
+				self.backwards(["A"], speed)
+				self.stop(["B"])
+				self.stop(["C"])
+				self.backwards(["D"], speed)
 
 			elif (movementOption == "dbl"):
 
-				self.backwards(["B", "C"], speed)
-				self.stop(["A", "D"])
+				self.stop(["A"])
+				self.backwards(["B"], speed)
+				self.backwards(["C"], speed)
+				self.stop(["D"])
 
 			elif (movementOption == "cfr"):
 
-				self.forwards(["B", "D"], speed)
-				self.forwards(["A", "C"], (speed * ratio))
+				self.forwards(["A"], (speed * ratio))
+				self.forwards(["B"], speed)
+				self.forwards(["C"], (speed * ratio))
+				self.forwards(["D"], speed)
 
 			elif (movementOption == "cfl"):
 
-				self.forwards(["A", "C"], speed)
-				self.forwards(["B", "D"], (speed * ratio))
+				self.forwards(["A"], speed)
+				self.forwards(["B"], (speed * ratio))
+				self.forwards(["C"], speed)
+				self.forwards(["D"], (speed * ratio))
 
 			elif (movementOption == "cbr"):
 
-				self.backwards(["B", "D"], speed)
-				self.backwards(["A", "C"], (speed * ratio))
+				self.backwards(["A"], (speed * ratio))
+				self.backwards(["B"], speed)
+				self.backwards(["C"], (speed * ratio))
+				self.backwards(["D"], speed)
 
 			elif (movementOption == "cbl"):
 
-				self.backwards(["A", "C"], speed)
-				self.backwards(["B", "D"], (speed * ratio))
+				self.backwards(["A"], speed)
+				self.backwards(["B"], (speed * ratio))
+				self.backwards(["C"], speed)
+				self.backwards(["D"], (speed * ratio))
 
 			elif (movementOption == "rr"):
 
-				self.forwards(["B", "D"], speed)
-				self.backwards(["A", "C"], speed)
+				self.backwards(["A"], speed)
+				self.forwards(["B"], speed)
+				self.backwards(["C"], speed)
+				self.forwards(["D"], speed)
 
 			elif (movementOption == "rl"):
 
-				self.forwards(["A", "C"], speed)
-				self.backwards(["B", "D"], speed)
+				self.forwards(["A"], speed)
+				self.backwards(["B"], speed)
+				self.forwards(["C"], speed)
+				self.backwards(["D"], speed)
 
 			elif (movementOption == "s"):
 
