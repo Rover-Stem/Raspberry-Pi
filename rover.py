@@ -431,7 +431,7 @@ class rover:
 
 					if (count == -1):
 
-						distance = 10000000
+						distance = -1
 
 						break
 
