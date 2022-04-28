@@ -150,12 +150,12 @@ def parallelParking (rover, left = False):
 
 	if left:
 
-		rover.moveServo(1)
+		rover.moveServo(-1)
 		rover.moveRover("l", throttle = 0.5)
 
 	else:
 
-		rover.moveServo(-1)
+		rover.moveServo(1)
 		rover.moveRover("r", throttle = 0.5)
 
 	while (rover.measureDistance(True) > 40):
