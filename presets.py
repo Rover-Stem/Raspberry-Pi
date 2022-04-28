@@ -166,6 +166,8 @@ def parallelParking (rover, left = False):
 
 def stayInYourLane (rover):
 
+	rover.moveRover("f", throttle = 0.23)
+
 	while True:
 
 		diff = np.round(getPath(), 1)
@@ -176,11 +178,11 @@ def stayInYourLane (rover):
 
 		elif (diff < 0):
 
-			rover.moveRover("cfr")
+			rover.moveRover("cfr", throttle = 0.24)
 
 		elif (diff > 0):
 
-			rover.moveRover("cfl")
+			rover.moveRover("cfl", throttle = 0.24)
 
 # Intersections are binary
 # stop = [0,0]
