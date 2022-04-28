@@ -1,6 +1,7 @@
 import cv2
 import sys
 import time
+import picamera
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -67,7 +68,19 @@ def difference (arr, y, thresholdImage):
 
 	return diffArr
 
-def getPath (imgPath):
+def getPath (imgPath = None):
+
+	if (imgPath == None):
+
+		camera = picamera.PiCamera()
+		camera.start_preview()
+
+		date_string = strftime("%Y-%m-%d-%H:%M")
+
+		camera.capture(f"/home/pi/Raspberry-Pi/images/{date_string}.png")
+		camera.stop_preview()
+
+		imgPath = f"/home/pi/Raspberry-Pi/images/{date_string}.png"
 
 	paths = False
 	images = False
