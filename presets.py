@@ -131,8 +131,10 @@ def parallelParking (rover, left = False):
 def stayInYourLane (rover):
 
 	while True:
-
-		pass
+		if rover.pingIR1() == True:
+			pass
+		else:
+			pass
 
 # Intersections are binary
 # stop = [0,0]
