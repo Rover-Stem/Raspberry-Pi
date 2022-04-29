@@ -3,6 +3,9 @@ import math
 import numpy as np
 
 #from imageProcessor import getPath
+def IRTest(rover):
+	if rover.pingIR1() == True:
+		print("White")
 
 def square (rover, sideTime = 1):
 
@@ -129,19 +132,7 @@ def stayInYourLane (rover):
 
 	while True:
 
-		diff = np.round(getPath(), 1)
-
-		if (diff == 0):
-
-			pass
-
-		elif (diff < 0):
-
-			rover.moveRover("cfr")
-
-		elif (diff > 0):
-
-			rover.moveRover("cfl")
+		pass
 
 # Intersections are binary
 # stop = [0,0]
