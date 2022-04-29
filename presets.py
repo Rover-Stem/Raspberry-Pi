@@ -1,4 +1,4 @@
-import time
+from time import sleep, time, strftime
 
 import numpy as np
 
