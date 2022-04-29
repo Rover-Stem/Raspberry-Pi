@@ -43,7 +43,7 @@ def directionChallenge (rover, target):
 
 	rover.moveRover("rr", 0.5)
 	time.sleep(target / 200)
-	rover.moveRover("f")
+	rover.moveRover("f", 0.5)
 	time.sleep(3)
 	rover.moveRover("s")
 
