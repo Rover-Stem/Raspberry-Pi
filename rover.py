@@ -255,11 +255,6 @@ class rover:
 		self.__timeOfFlight = None
 
 		self.__limit = 90
-		#self.__correction = -0.15
-		#self.__servo_correction = -0.23
-
-		#self.__minPW = (1.0 - self.__correction) / 1000
-		#self.__maxPW = (2.0 + self.__correction + self.__servo_correction) / 1000
 
 		self.__servoPin = servoPin
 
@@ -301,6 +296,13 @@ class rover:
 		else:
 
 			import board
+			import RPi.GPIO as GPIO
+
+			GPIO.setmode(GPIO.BCM)
+			GPIO.setup(22, GPIO.IN)
+			GPIO.setup(23, GPIO.IN)
+			GPIO.setup(24, GPIO.IN)
+			GPIO.setup(27, GPIO.IN)
 
 			if (self.__cameraNeeded):
 
@@ -697,6 +699,46 @@ class rover:
 
 			storage.messagesOut.put("file")
 			storage.messagesOut.put(f"/home/pi/Raspberry-Pi/images/{date_string}.png")
+
+	def pingIR1 (self):
+
+		out = GPIO.input(24)
+
+		if (out == 0):
+
+			return False
+
+		return True
+
+	def pingIR2 (self):
+
+		out = GPIO.input(27)
+
+		if (out == 0):
+
+			return False
+
+		return True
+
+	def pingIR3 (self):
+
+		out = GPIO.input(22)
+
+		if (out == 0):
+
+			return False
+
+		return True
+
+	def pingIR4 (self):
+
+		out = GPIO.input(23)
+
+		if (out == 0):
+
+			return False
+
+		return True
 
 	def redoMotors (self):
 
