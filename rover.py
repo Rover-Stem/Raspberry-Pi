@@ -2,6 +2,7 @@ import queue
 import storage
 
 import numpy as np
+import RPi.GPIO as GPIO
 
 from time import sleep, time, strftime
 from distanceFinder import findDistanceTraveled
@@ -296,13 +297,6 @@ class rover:
 		else:
 
 			import board
-			import RPi.GPIO as GPIO
-
-			GPIO.setmode(GPIO.BCM)
-			GPIO.setup(22, GPIO.IN)
-			GPIO.setup(23, GPIO.IN)
-			GPIO.setup(24, GPIO.IN)
-			GPIO.setup(27, GPIO.IN)
 
 			if (self.__cameraNeeded):
 
@@ -702,6 +696,9 @@ class rover:
 
 	def pingIR1 (self):
 
+		GPIO.setmode(GPIO.BCM)
+		GPIO.setup(24, GPIO.IN)
+
 		out = GPIO.input(24)
 
 		if (out == 0):
@@ -711,6 +708,9 @@ class rover:
 		return True
 
 	def pingIR2 (self):
+
+		GPIO.setmode(GPIO.BCM)
+		GPIO.setup(27, GPIO.IN)
 
 		out = GPIO.input(27)
 
@@ -722,6 +722,9 @@ class rover:
 
 	def pingIR3 (self):
 
+		GPIO.setmode(GPIO.BCM)
+		GPIO.setup(22, GPIO.IN)
+
 		out = GPIO.input(22)
 
 		if (out == 0):
@@ -731,6 +734,9 @@ class rover:
 		return True
 
 	def pingIR4 (self):
+
+		GPIO.setmode(GPIO.BCM)
+		GPIO.setup(23, GPIO.IN)
 
 		out = GPIO.input(23)
 
