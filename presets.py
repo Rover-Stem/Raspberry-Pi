@@ -1,5 +1,5 @@
 import time
-
+import math
 import numpy as np
 
 #from imageProcessor import getPath
@@ -48,7 +48,7 @@ def directionChallenge (rover, target):
 		rover.moveRover("s")
 	else:
 		rover.moveRover("rl", 0.5)
-		time.sleep((target + 360) / 200)
+		time.sleep(abs(target) / 200)
 		rover.moveRover("f", 0.5)
 		time.sleep(3.2)
 		rover.moveRover("s")
