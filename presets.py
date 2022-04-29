@@ -41,7 +41,7 @@ def directionChallenge (rover, target):
 
 	print("Found Angle")
 
-	rover.moveRover("rr")
+	rover.moveRover("rr", 0.5)
 	time.sleep(target / 170)
 	rover.moveRover("f")
 	time.sleep(3)
