@@ -40,12 +40,18 @@ def distanceChallenge (rover, distance):
 def directionChallenge (rover, target):
 
 	print("Found Angle")
-
-	rover.moveRover("rr", 0.5)
-	time.sleep(target / 200)
-	rover.moveRover("f", 0.5)
-	time.sleep(3)
-	rover.moveRover("s")
+	if target > 0:
+		rover.moveRover("rr", 0.5)
+		time.sleep(target / 200)
+		rover.moveRover("f", 0.5)
+		time.sleep(3.2)
+		rover.moveRover("s")
+	else:
+		rover.moveRover("rl", 0.5)
+		time.sleep((target + 360) / 200)
+		rover.moveRover("f", 0.5)
+		time.sleep(3.2)
+		rover.moveRover("s")
 
 def obstacleAvoidance2 (rover, numObstacles):
 
