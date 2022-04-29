@@ -132,9 +132,13 @@ def stayInYourLane (rover):
 
 	while True:
 		if rover.pingIR1() == True:
-			pass
+			rover.moveRover("f")
+			time.sleep(0.5)
+			rover.moveRover("s")
 		else:
-			pass
+			rover.moveRover("rr")
+			time.sleep(0.5)
+			rover.moveRover("s")
 
 # Intersections are binary
 # stop = [0,0]
