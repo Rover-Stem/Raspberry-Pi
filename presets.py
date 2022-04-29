@@ -1,4 +1,4 @@
-from time import sleep, time, strftime
+import time
 
 import numpy as np
 
@@ -42,9 +42,9 @@ def directionChallenge (rover, target):
 	print("Found Angle")
 
 	rover.moveRover("rr")
-	rover.sleep(target / 170)
+	time.sleep(target / 170)
 	rover.moveRover("f")
-	rover.sleep(5)
+	time.sleep(5)
 
 def obstacleAvoidance2 (rover, numObstacles):
 
