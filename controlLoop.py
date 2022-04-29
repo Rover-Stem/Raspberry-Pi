@@ -227,7 +227,7 @@ def runPreset (cmd):
 
 		storage.messagesOut.put("F")
 
-	elif (cmd[1] == "distancechallange"):
+	elif (cmd[1] == "distancechallenge"):
 
 		try:
 
@@ -237,7 +237,7 @@ def runPreset (cmd):
 
 			storage.messagesOut.put("E,Distance must be provided")
 
-	elif (cmd[1] == "directionchallange"):
+	elif (cmd[1] == "directionchallenge"):
 
 		try:
 
