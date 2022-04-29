@@ -38,6 +38,9 @@ def distanceChallenge (rover, distance):
 # assumes that 0 degrees is north
 # possibly add if elif else statments to accodmetate for angles over 180 degrees
 def directionChallenge (rover, target):
+
+	print("Found Angle")
+
 	rover.moveRover("rr")
 	rover.sleep(target / 170)
 	rover.moveRover("f")

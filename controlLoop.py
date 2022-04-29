@@ -243,7 +243,9 @@ def runPreset (cmd):
 
 			pr.directionChallange(rover, float(cmd[2]))
 
-		except:
+		except Exception as e:
+
+			print(e)
 
 			storage.messagesOut.put("E,Angle must be provided")
 
