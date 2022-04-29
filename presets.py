@@ -2,7 +2,7 @@ import time
 
 import numpy as np
 
-from imageProcessor import getPath
+#from imageProcessor import getPath
 
 def square (rover, sideTime = 1):
 
