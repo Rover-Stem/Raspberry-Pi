@@ -231,7 +231,7 @@ def runPreset (cmd):
 
 		try:
 
-			pr.distanceChallange(rover, float(cmd[2]))
+			pr.distanceChallenge(rover, float(cmd[2]))
 
 		except:
 
@@ -241,7 +241,7 @@ def runPreset (cmd):
 
 		try:
 
-			pr.directionChallange(rover, float(cmd[2]))
+			pr.directionChallenge(rover, float(cmd[2]))
 
 		except Exception as e:
 
