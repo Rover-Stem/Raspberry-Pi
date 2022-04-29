@@ -44,9 +44,9 @@ def directionChallenge (rover, target):
 	rover.moveRover("rr")
 	time.sleep(target / 170)
 	rover.moveRover("f")
-	time.sleep(5)
+	time.sleep(3)
 	rover.moveRover("s")
-	
+
 def obstacleAvoidance2 (rover, numObstacles):
 
 	count = 0
