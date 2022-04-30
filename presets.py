@@ -33,7 +33,9 @@ def obstacleAvoidance1 (rover):
 
 	angle = -1
 
-	while ((rover.measureDistance() > 10) or (rover.measureDistance() < 0)):
+	distance = rover.measureDistance(cm = True)
+
+	while ((distance > 10) or (distance < 0)):
 
 		angle += 0.1
 		angle = angle % 2
