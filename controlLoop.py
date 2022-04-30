@@ -282,6 +282,8 @@ def runPreset (cmd):
 	elif (cmd[1] == "getdirectionloop"):
 
 		pr.getDirectionLoop(rover)
+	elif (cmd[1] == "intersectiontest"):
+		pr.intersectionTest(rover)
 
 	else:
 
