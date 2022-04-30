@@ -261,4 +261,4 @@ def intersectionTest(rover):
 		else:
 			rover.moveRover("rr", 0.5)
 			time.sleep(1.8)
-			print("Squishy: He has kiled me Mother")
+			print("Squishy: He has killed me, Mother")
