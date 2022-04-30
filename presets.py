@@ -31,34 +31,16 @@ def obstacleAvoidance1 (rover):
 
 	distance = rover.measureDistance(cm = True)
 
-	angle = -1
-	countUp = True
+	#print(distance)
 
-	distance = rover.measureDistance(cm = True)
+	angle = 1
 
-	while ((distance > 10) or (distance < 0)):
+	while ((rover.measureDistance() > 10) or (rover.measureDistance() < 0)):
 
-		if (countUp):
+		#print(distance)
 
-			angle += 0.1
-
-			if (angle > 2):
-
-				countUp = False
-
-				angle = (2 - (angle - 2))
-
-		else:
-
-			angle -= 0.1
-
-			if (angle < 0):
-
-				countUp = True
-
-				angle = -1 * angle
-
-		print(f"Angle: {angle}")
+		angle += 0.05
+		angle = angle % 2
 
 		rover.moveServo(-1 + angle)
 
@@ -103,16 +85,16 @@ def obstacleAvoidance2 (rover, numObstacles = 1):
 
 	while True:
 
-		rover.moveServo(-1)
+		rover.moveServo(0)
 
 		#direction = rover.getDirection(True)
 		rover.moveRover("f", throttle = 0.25)
 
-		angle = -1
+		angle = 1
 
 		while ((rover.measureDistance() > 25) or (rover.measureDistance() < 0)):
 
-			angle += 0.1
+			angle += 0.05
 			angle = angle % 2
 
 			rover.moveServo(-1 + angle)
@@ -248,58 +230,35 @@ def obstacleAvoidance2_Strafe (rover, numObstacles):
 
 			break
 def intersectionTest(rover):
-
 	rover.moveRover("f")
-
 	if rover.pingIR1() == True:
-
 		rover.moveRover("f", 0.5)
-
 		while count < 15:
-
 			if rover.pingIR1() == True:
-
 				line1 = True
-
 			else:
-
 				line1 = False
-
 		while count < 15:
-
 			if rover.pingIR1() == True:
-
-				line2 = True
-
+				line2= True
 			else:
-
 				line2 = False
-
-		if (line1 == False) and (line2 == False):
-
+		if (line 1 == False) and (line2 == False):
 			rover.moveRover("s")
 			print("Squishy: I wish I was high on potenuse")
-
 		elif (line1 == False) and (line2 == True):
-
 			rover.moveRover("f")
 			time.sleep(2)
 			print("Squishy: I wish I was high on potenuse")
-
 		elif (line1 == True) and (line2 == False):
-
 			rover.moveRover("cfr", 0.5)
 			time.sleep(3)
 			print("Squishy: I wish I was high on potenuse")
-
 		elif (line1 == True) and (line2 == True):
-
 			rover.moveRover("cfl", 0.5)
 			time.sleep(3)
 			print("Squishy: I wish I was high on potenuse")
-
 		else:
-
 			rover.moveRover("rr", 0.5)
 			time.sleep(1.8)
-			print("Squishy: He has killed me, Mother")
+			print("Squishy: He has kiled me Mother Zade: What you egg")
