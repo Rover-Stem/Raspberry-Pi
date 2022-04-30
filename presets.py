@@ -165,12 +165,12 @@ def parallelParking (rover, left = False):
 
 	if left:
 
-		rover.moveServo(-1)
+		#rover.moveServo(-1)
 		rover.moveRover("l")
 
 	else:
 
-		rover.moveServo(1)
+		#rover.moveServo(1)
 		rover.moveRover("r")
 
 	distance = rover.measureDistance()
