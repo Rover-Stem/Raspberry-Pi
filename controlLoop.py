@@ -237,6 +237,8 @@ def runPreset (cmd):
 
 			storage.messagesOut.put("E,Distance must be provided")
 
+			rover.moveRover("s")
+
 	elif (cmd[1] == "directionchallenge"):
 
 		try:
@@ -248,6 +250,8 @@ def runPreset (cmd):
 			print(e)
 
 			storage.messagesOut.put("E,Angle must be provided")
+
+			rover.moveRover("s")
 
 	elif (cmd[1] == "obstacleavoidance2"):
 
@@ -282,7 +286,9 @@ def runPreset (cmd):
 	elif (cmd[1] == "getdirectionloop"):
 
 		pr.getDirectionLoop(rover)
+
 	elif (cmd[1] == "intersectiontest"):
+		
 		pr.intersectionTest(rover)
 
 	else:
