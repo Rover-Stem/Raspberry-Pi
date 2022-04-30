@@ -398,15 +398,12 @@ class rover:
 		else:
 
 			count = 5
-			print("Starting")
 
 			while True:
 
 				try:
 
 					self.__timeOfFlight.start_ranging()
-
-					print("Ranging")
 
 					while True:
 
