@@ -243,7 +243,7 @@ def intersectionTest(rover):
 				line2= True
 			else:
 				line2 = False
-		if (line 1 == False) and (line2 == False):
+		if (line1 == False) and (line2 == False):
 			rover.moveRover("s")
 			print("Squishy: I wish I was high on potenuse")
 		elif (line1 == False) and (line2 == True):
