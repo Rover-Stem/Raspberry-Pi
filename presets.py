@@ -56,8 +56,6 @@ def obstacleAvoidance1 (rover):
 
 				angle = -1 * angle
 
-		print(f"Angle: {-1 + angle}")
-
 		rover.moveServo(-1 + angle)
 
 		distance = rover.measureDistance(cm = True)
@@ -139,14 +137,14 @@ def parallelParking (rover, left = False):
 	if left:
 
 		rover.moveServo(-1)
-		rover.moveRover("l")
+		rover.moveRover("l", throttle = 0.25)
 
 	else:
 
 		rover.moveServo(1)
-		rover.moveRover("r")
+		rover.moveRover("r", throttle = 0.25)
 
-	while (rover.measureDistance() > 3):
+	while (rover.measureDistance() > 5):
 
 		pass
 
