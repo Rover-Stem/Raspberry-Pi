@@ -27,17 +27,17 @@ def getDirectionLoop (rover):
 
 def obstacleAvoidance1 (rover):
 
-	rover.moveRover("f")
+	rover.moveRover("f", throttle = 0.25)
 
 	distance = rover.measureDistance(cm = True)
 
 	print(distance)
 
-	while (distance > 25):
+	while (distance > 10):
 
 		print(distance)
 
-		distance = rover.measureDistance()
+		distance = rover.measureDistance(cm = True)
 
 		pass
 
