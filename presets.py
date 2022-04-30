@@ -145,6 +145,8 @@ def obstacleAvoidance2 (rover, numObstacles = 1):
 		timeEnd = time.time()
 		rover.moveRover("cfr", 0.5, 0.5)
 		time.sleep(times + 0.2)
+		rover.moveRover("f")
+		time.sleep(times)
 		rover.moveRover("cfr", throttle = 0.5)
 		time.sleep(times + 0.3)
 		rover.moveRover("cfl", throttle = 0.5)
