@@ -79,7 +79,7 @@ def directionChallenge (rover, target):
 	if (target > 0):
 
 		rover.moveRover("rr")
-		time.sleep(target / 131)
+		time.sleep(target / 150)
 		rover.moveRover("f")
 		time.sleep(3.2)
 		rover.moveRover("s")
@@ -87,7 +87,7 @@ def directionChallenge (rover, target):
 	else:
 
 		rover.moveRover("rl")
-		time.sleep(abs(target) /131)
+		time.sleep(abs(target) /150)
 		rover.moveRover("f")
 		time.sleep(3.2)
 		rover.moveRover("s")
