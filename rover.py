@@ -435,6 +435,7 @@ class rover:
 				except Exception as e:
 
 					print(f"Error: {e}")
+					print(f"I can't see you; you can't see me!")
 
 					count -= 1
 
