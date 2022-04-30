@@ -39,7 +39,7 @@ def obstacleAvoidance1 (rover):
 
 		#print(distance)
 
-		angle += 0.05
+		angle += 0.1
 		angle = angle % 2
 
 		rover.moveServo(-1 + angle)
@@ -94,7 +94,7 @@ def obstacleAvoidance2 (rover, numObstacles = 1):
 
 		while ((rover.measureDistance() > 25) or (rover.measureDistance() < 0)):
 
-			angle += 0.05
+			angle += 0.1
 			angle = angle % 2
 
 			rover.moveServo(-1 + angle)
