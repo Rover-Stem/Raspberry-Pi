@@ -133,9 +133,9 @@ def stayInYourLane (rover):
 		rover.moveRover("f")
 		if rover.pingIR1() == True:
 			rover.moveRover("cfr")
-			time.sleep(0.25)
+			time.sleep(2)
 			rover.moveRover("cfl")
-			time.sleep(0.25)
+			time.sleep(2)
 
 
 
