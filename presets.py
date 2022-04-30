@@ -66,7 +66,7 @@ def obstacleAvoidance1 (rover):
 
 def distanceChallenge (rover, distance):
 
-	rover.moveRover("f", 0.5)
+	rover.moveRover("f")
 	time.sleep(distance / 28.5)
 	rover.moveRover("s")
 
