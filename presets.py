@@ -27,7 +27,7 @@ def getDirectionLoop (rover):
 
 def obstacleAvoidance1 (rover):
 
-	rover.moveRover("f", throttle = 0.25)
+	rover.moveRover("f", throttle = 0.5)
 
 	distance = rover.measureDistance(cm = True)
 
