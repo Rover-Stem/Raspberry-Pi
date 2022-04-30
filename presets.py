@@ -31,7 +31,7 @@ def obstacleAvoidance1 (rover):
 
 	distance = rover.measureDistance()
 
-	while ( > 25):
+	while (distance > 25):
 
 		print(distance)
 
