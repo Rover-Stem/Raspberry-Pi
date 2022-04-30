@@ -1,5 +1,7 @@
+import board
 import queue
 import storage
+import adafruit_vl53l1x
 
 import numpy as np
 import RPi.GPIO as GPIO
@@ -296,8 +298,6 @@ class rover:
 
 		else:
 
-			import board
-
 			if (self.__cameraNeeded):
 
 				try:
@@ -350,8 +350,6 @@ class rover:
 
 				try:
 
-					import adafruit_vl53l1x
-
 					self.__i2c = board.I2C()
 
 					self.__timeOfFlight = adafruit_vl53l1x.VL53L1X(self.__i2c)
@@ -396,6 +394,21 @@ class rover:
 			print("Measure Distance")
 
 		else:
+
+			try:
+
+				self.__i2c = board.I2C()
+
+				self.__timeOfFlight = adafruit_vl53l1x.VL53L1X(self.__i2c)
+
+				self.__timeOfFlight.distance_mode = 2
+				self.__timeOfFlight.timing_budget = 50
+
+			except Exception as e:
+
+				print(f"Error with creation: {e}")
+
+				return -1
 
 			count = 5
 
