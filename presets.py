@@ -35,10 +35,11 @@ def obstacleAvoidance1 (rover):
 	countUp = True
 
 	angle = 1
+	countUp = True
 
 	while ((rover.measureDistance() > 10) or (rover.measureDistance() < 0)):
 
-		#print(distance)
+		if (countUp):
 
 			angle += 0.1
 
@@ -299,7 +300,7 @@ def intersectionTest(rover):
 			print("Squishy: I wish I was high on potenuse")
 
 		else:
-			
+
 			rover.moveRover("rr", 0.5)
 			time.sleep(1.8)
 			print("Squishy: He has kiled me Mother Zade: What you egg")
