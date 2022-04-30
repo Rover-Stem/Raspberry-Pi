@@ -85,7 +85,7 @@ def obstacleAvoidance2 (rover, numObstacles = 1):
 
 	while True:
 
-		rover.moveServo(0)
+		rover.moveServo(-1)
 
 		#direction = rover.getDirection(True)
 		rover.moveRover("f", throttle = 0.25)
