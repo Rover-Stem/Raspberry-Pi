@@ -95,7 +95,7 @@ def directionChallenge (rover, target):
 def obstacleAvoidance2 (rover, numObstacles = 1):
 
 	count = 0
-	times = 2.2
+	times = 2.3
 
 	while True:
 
