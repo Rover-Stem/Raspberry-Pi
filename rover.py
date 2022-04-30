@@ -47,7 +47,7 @@ class motors:
 
 			# Creates Wheel Pair Variables
 
-			self.__frontWheels = PCA9685(0x44, debug = False)
+			self.__frontWheels = PCA9685(0x5c, debug = False)
 			self.__backWheels = PCA9685(0x40, debug = False)
 
 			self.__frontWheels.setPWMFreq(40)
