@@ -109,7 +109,7 @@ def obstacleAvoidance2 (rover, numObstacles = 1):
 		angle = 0
 		countUp = True
 
-		while ((distance > 25) or (distance < 0)):
+		while ((distance > 20) or (distance < 0)):
 
 			if (countUp):
 
@@ -154,6 +154,8 @@ def obstacleAvoidance2 (rover, numObstacles = 1):
 		if (count == numObstacles):
 
 			break
+
+	rover.moveRover("s")
 
 def parallelParking (rover, left = False):
 
