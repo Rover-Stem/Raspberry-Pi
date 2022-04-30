@@ -148,9 +148,9 @@ def obstacleAvoidance2 (rover, numObstacles = 1):
 		rover.moveRover("f")
 		time.sleep(0.5)
 		rover.moveRover("cfr", throttle = 0.5)
-		time.sleep(times + 0.2)
+		time.sleep(times + 0.1)
 		rover.moveRover("cfl", throttle = 0.5)
-		time.sleep(times + 0.2)
+		time.sleep(times + 0.1)
 		rover.moveRover("f", throttle = 0.5)
 
 		count += 1
