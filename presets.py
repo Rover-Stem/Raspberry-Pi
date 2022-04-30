@@ -31,11 +31,11 @@ def obstacleAvoidance1 (rover):
 
 	distance = rover.measureDistance(cm = True)
 
-	print(distance)
+	#print(distance)
 
 	while (distance > 10):
 
-		print(distance)
+		#print(distance)
 
 		distance = rover.measureDistance(cm = True)
 
