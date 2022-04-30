@@ -31,12 +31,8 @@ def obstacleAvoidance1 (rover):
 
 	distance = rover.measureDistance(cm = True)
 
-<<<<<<< HEAD
 	angle = 0
 	countUp = True
-=======
-	#print(distance)
->>>>>>> 7ffc1c5cebc5b78bf1c3a771fe2ae6a597b7f630
 
 	angle = 1
 
@@ -44,7 +40,6 @@ def obstacleAvoidance1 (rover):
 
 		#print(distance)
 
-<<<<<<< HEAD
 			angle += 0.1
 
 			if (angle > 2):
@@ -64,10 +59,6 @@ def obstacleAvoidance1 (rover):
 				angle = -1 * angle
 
 		print(f"Angle: {-1 + angle}")
-=======
-		angle += 0.05
-		angle = angle % 2
->>>>>>> 7ffc1c5cebc5b78bf1c3a771fe2ae6a597b7f630
 
 		rover.moveServo(-1 + angle)
 
@@ -257,35 +248,58 @@ def obstacleAvoidance2_Strafe (rover, numObstacles):
 
 			break
 def intersectionTest(rover):
+
 	rover.moveRover("f")
+
 	if rover.pingIR1() == True:
+
 		rover.moveRover("f", 0.5)
+
 		while count < 15:
+
 			if rover.pingIR1() == True:
+
 				line1 = True
+
 			else:
+
 				line1 = False
+
 		while count < 15:
+
 			if rover.pingIR1() == True:
+
 				line2= True
+
 			else:
+
 				line2 = False
-		if (line 1 == False) and (line2 == False):
+
+		if (line1 == False) and (line2 == False):
+
 			rover.moveRover("s")
 			print("Squishy: I wish I was high on potenuse")
+
 		elif (line1 == False) and (line2 == True):
+
 			rover.moveRover("f")
 			time.sleep(2)
 			print("Squishy: I wish I was high on potenuse")
+
 		elif (line1 == True) and (line2 == False):
+
 			rover.moveRover("cfr", 0.5)
 			time.sleep(3)
 			print("Squishy: I wish I was high on potenuse")
+
 		elif (line1 == True) and (line2 == True):
+
 			rover.moveRover("cfl", 0.5)
 			time.sleep(3)
 			print("Squishy: I wish I was high on potenuse")
+
 		else:
+			
 			rover.moveRover("rr", 0.5)
 			time.sleep(1.8)
 			print("Squishy: He has kiled me Mother Zade: What you egg")
