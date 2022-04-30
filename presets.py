@@ -21,7 +21,7 @@ def getDirectionLoop (rover):
 
 	for i in range(20):
 
-		print(rover.getDirection())
+		print(rover.measureDistance())
 
 		time.sleep(1)
 
