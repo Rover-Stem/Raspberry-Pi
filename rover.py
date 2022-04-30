@@ -410,7 +410,7 @@ class rover:
 
 				return -1
 
-			count = 5
+			count = 1
 
 			while True:
 
@@ -728,32 +728,6 @@ class rover:
 		GPIO.setup(27, GPIO.IN)
 
 		out = GPIO.input(27)
-
-		if (out == 0):
-
-			return False
-
-		return True
-
-	def pingIR3 (self):
-
-		GPIO.setmode(GPIO.BCM)
-		GPIO.setup(22, GPIO.IN)
-
-		out = GPIO.input(22)
-
-		if (out == 0):
-
-			return False
-
-		return True
-
-	def pingIR4 (self):
-
-		GPIO.setmode(GPIO.BCM)
-		GPIO.setup(23, GPIO.IN)
-
-		out = GPIO.input(23)
 
 		if (out == 0):
 
