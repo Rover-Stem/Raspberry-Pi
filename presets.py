@@ -29,7 +29,14 @@ def obstacleAvoidance1 (rover):
 
 	rover.moveRover("f")
 
-	while (rover.measureDistance() > 25):
+	distance = rover.measureDistance()
+
+	while ( > 25):
+
+		print(distance)
+
+		distance = rover.measureDistance()
+
 		pass
 
 	rover.moveRover("s")
@@ -45,13 +52,17 @@ def distanceChallenge (rover, distance):
 def directionChallenge (rover, target):
 
 	print("Found Angle")
-	if target > 0:
+
+	if (target > 0):
+
 		rover.moveRover("rr", 0.5)
 		time.sleep(target / 200)
 		rover.moveRover("f", 0.5)
 		time.sleep(3.2)
 		rover.moveRover("s")
+
 	else:
+
 		rover.moveRover("rl", 0.5)
 		time.sleep(abs(target) / 200)
 		rover.moveRover("f", 0.5)
@@ -129,17 +140,28 @@ def parallelParking (rover, left = False):
 	rover.moveRover("s")
 
 def stayInYourLane (rover):
+
 	while True:
+
 		rover.moveRover("f")
+
 		if rover.pingIR1() == True:
+
 			rover.moveRover("cfr")
 			time.sleep(1.5)
 			rover.moveRover("cfl")
 			time.sleep(1.5)
 
+#def stayInYourLaneTry (rover):
 
+#	while True:
 
+#		rover.moveRover("f", target = 0.25)
 
+#		if (rover.pingIR1()):
+
+#			rover.moveRover("cfr", target = 0.25)
+#			rover.moveRover("cfl", target = 0.25)
 
 # Intersections are binary
 # stop = [0,0]
