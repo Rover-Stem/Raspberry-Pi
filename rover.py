@@ -419,13 +419,15 @@ class rover:
 
 					break
 
-				except:
+				except Exception as e:
 
-					print("Error")
+					print(f"Error: {e}")
 
 					count -= 1
 
-					if (count == -1):
+					print(f"Count: {count}")
+
+					if (count == 0):
 
 						distance = -1
 
