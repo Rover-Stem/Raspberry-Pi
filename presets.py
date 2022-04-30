@@ -109,7 +109,7 @@ def obstacleAvoidance2 (rover, numObstacles = 1):
 		angle = 0
 		countUp = True
 
-		while ((distance > 15) or (distance < 0)):
+		while ((distance > 18) or (distance < 0)):
 
 			if (countUp):
 
