@@ -38,7 +38,7 @@ def obstacleAvoidance1 (rover):
 
 		if (countUp):
 
-			angle += 0.1
+			angle += 0.2
 
 			if (angle > 2):
 
