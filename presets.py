@@ -21,7 +21,7 @@ def getDirectionLoop (rover):
 
 	for i in range(20):
 
-		print(rover.measureDistance())
+		print(rover.measureDistance(cm = True))
 
 		time.sleep(1)
 
@@ -29,7 +29,7 @@ def obstacleAvoidance1 (rover):
 
 	rover.moveRover("f")
 
-	distance = rover.measureDistance()
+	distance = rover.measureDistance(cm = True)
 
 	print(distance)
 
