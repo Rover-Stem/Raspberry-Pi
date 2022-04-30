@@ -58,7 +58,7 @@ def directionChallenge (rover, target):
 		time.sleep(3.2)
 		rover.moveRover("s")
 
-def obstacleAvoidance2 (rover, numObstacles):
+def obstacleAvoidance2 (rover):
 
 	count = 0
 
@@ -106,7 +106,7 @@ def obstacleAvoidance2 (rover, numObstacles):
 
 		count += 1
 
-		if (count == numObstacles):
+		if (count == 1):
 
 			break
 
@@ -129,16 +129,17 @@ def parallelParking (rover, left = False):
 	rover.moveRover("s")
 
 def stayInYourLane (rover):
-
 	while True:
+		rover.moveRover("f")
 		if rover.pingIR1() == True:
-			rover.moveRover("f")
-			time.sleep(0.5)
-			rover.moveRover("s")
-		else:
-			rover.moveRover("rr")
-			time.sleep(0.5)
-			rover.moveRover("s")
+			rover.moveRover("cfr")
+			time.sleep(0.25)
+			rover.moveRover("cfl")
+			time.sleep(0.25)
+
+
+
+
 
 # Intersections are binary
 # stop = [0,0]
