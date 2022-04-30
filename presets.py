@@ -46,7 +46,7 @@ def obstacleAvoidance1 (rover):
 
 				countUp = False
 
-				angle = (1 - (angle - 2))
+				angle = (2 - (angle - 2))
 
 		else:
 
@@ -57,6 +57,8 @@ def obstacleAvoidance1 (rover):
 				countUp = True
 
 				angle = -1 * angle
+
+		print(f"Angle: {angle}")
 
 		rover.moveServo(-1 + angle)
 
