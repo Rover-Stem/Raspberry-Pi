@@ -279,58 +279,58 @@ def obstacleAvoidance2_Strafe (rover, numObstacles):
 
 			break
 def intersectionTest(rover):
+	while True:
 
-	rover.moveRover("f")
+		rover.moveRover("f")
 
-	if rover.pingIR1() == True:
+		if rover.pingIR1() == True:
 
-		rover.moveRover("f", 0.5)
+			rover.moveRover("f", 0.5)
 
-		while count < 15:
+			while count < 15:
 
-			if rover.pingIR1() == True:
+				if rover.pingIR1() == True:
 
-				line1 = True
+					line1 = True
+
+				else:
+
+					line1 = False
+
+			while count < 15:
+
+				if rover.pingIR1() == True:
+
+					line2= True
+
+				else:
+
+					line2 = False
+
+			if (line1 == False) and (line2 == False):
+
+				rover.moveRover("s")
+				print("Squishy: I wish I was high on potenuse")
+
+			elif (line1 == False) and (line2 == True):
+
+				rover.moveRover("f")
+				print("Squishy: I wish I was high on potenuse")
+
+			elif (line1 == True) and (line2 == False):
+
+				rover.moveRover("cfr", 0.5)
+				time.sleep(3)
+				print("Squishy: I wish I was high on potenuse")
+
+			elif (line1 == True) and (line2 == True):
+
+				rover.moveRover("cfl", 0.5)
+				time.sleep(3)
+				print("Squishy: I wish I was high on potenuse")
 
 			else:
 
-				line1 = False
-
-		while count < 15:
-
-			if rover.pingIR1() == True:
-
-				line2= True
-
-			else:
-
-				line2 = False
-
-		if (line1 == False) and (line2 == False):
-
-			rover.moveRover("s")
-			print("Squishy: I wish I was high on potenuse")
-
-		elif (line1 == False) and (line2 == True):
-
-			rover.moveRover("f")
-			time.sleep(2)
-			print("Squishy: I wish I was high on potenuse")
-
-		elif (line1 == True) and (line2 == False):
-
-			rover.moveRover("cfr", 0.5)
-			time.sleep(3)
-			print("Squishy: I wish I was high on potenuse")
-
-		elif (line1 == True) and (line2 == True):
-
-			rover.moveRover("cfl", 0.5)
-			time.sleep(3)
-			print("Squishy: I wish I was high on potenuse")
-
-		else:
-
-			rover.moveRover("rr", 0.5)
-			time.sleep(1.8)
-			print("Squishy: He has kiled me Mother Zade: What you egg")
+				rover.moveRover("rr", 0.5)
+				time.sleep(1.8)
+				print("Squishy: He has kiled me Mother Zade: What you egg")
