@@ -32,13 +32,31 @@ def obstacleAvoidance1 (rover):
 	distance = rover.measureDistance(cm = True)
 
 	angle = -1
+	countUp = True
 
 	distance = rover.measureDistance(cm = True)
 
 	while ((distance > 10) or (distance < 0)):
 
-		angle += 0.1
-		angle = angle % 2
+		if (countUp):
+
+			angle += 0.1
+
+			if (angle > 2):
+
+				countUp = False
+
+				angle = (1 - (angle - 2))
+
+		else:
+
+			angle -= 0.1
+
+			if (angle < 0):
+
+				countUp = True
+
+				angle = -1 * angle
 
 		rover.moveServo(-1 + angle)
 
