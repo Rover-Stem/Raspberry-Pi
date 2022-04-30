@@ -33,9 +33,16 @@ def obstacleAvoidance1 (rover):
 
 	#print(distance)
 
-	while (distance > 10):
+	angle = 1
+
+	while ((rover.measureDistance() > 10) or (rover.measureDistance() < 0)):
 
 		#print(distance)
+
+		angle += 0.05
+		angle = angle % 2
+
+		rover.moveServo(-1 + angle)
 
 		distance = rover.measureDistance(cm = True)
 
@@ -71,55 +78,43 @@ def directionChallenge (rover, target):
 		time.sleep(3.2)
 		rover.moveRover("s")
 
-def obstacleAvoidance2 (rover):
+def obstacleAvoidance2 (rover, numObstacles = 1):
 
 	count = 0
+	times = 2
 
 	while True:
 
-		direction = rover.getDirection()
-		rover.moveRover("f")
-
-		while (rover.measureDistance() > 5):
-
-			pass
-
-		rover.moveRover("cfl")
-		rover.moveServo(1)
-		timeStart = time.time()
-
-		while (rover.measureDistance() > 10):
-
-			pass
-
-		timeEnd = time.time()
-		rover.moveRover("cfr")
-		time.sleep(timeEnd - timeStart)
-		direction2 = rover.getDirection()
-
-		# TODO: Work on fixing logic
-		while True:
-
-			cross = np.cross(direction2, direction)
-
-			if (np.round(direction, 1) == np.round(direction2, 1)):
-
-				break
-
-			elif (cross > 0):
-
-				rover.moveRover("cfl")
-
-			elif (cross < 0):
-
-				rover.moveRover("cfr")
-
-		rover.moveRover("f")
 		rover.moveServo(0)
+
+		#direction = rover.getDirection(True)
+		rover.moveRover("f", throttle = 0.25)
+
+		angle = 1
+
+		while ((rover.measureDistance() > 25) or (rover.measureDistance() < 0)):
+
+			angle += 0.05
+			angle = angle % 2
+
+			rover.moveServo(-1 + angle)
+
+			pass
+
+		rover.moveRover("cfl", throttle = 0.5)
+		rover.moveServo(-1)
+		time.sleep(times)
+		timeEnd = time.time()
+		rover.moveRover("cfr", throttle = 0.5)
+		time.sleep(times + 0.2)
+		rover.moveRover("cfr", throttle = 0.5)
+		time.sleep(times + 0.3)
+		rover.moveRover("cfl", throttle = 0.5)
+		time.sleep(times + 0.3)
 
 		count += 1
 
-		if (count == 1):
+		if (count == numObstacles):
 
 			break
 
