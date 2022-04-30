@@ -155,7 +155,7 @@ def obstacleAvoidance2 (rover, numObstacles = 1):
 
 			break
 
-	rover.moveRover("s")
+	rover.moveRover("f")
 
 def parallelParking (rover, left = False):
 
